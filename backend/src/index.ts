@@ -17,6 +17,7 @@ app.use(cors());
 
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
+
 app.listen(7000, () => {    
   console.log(`Server is running on port 7000`);
 });
