@@ -34,5 +34,17 @@ router.post(
     , userController.register
 );
 
+router.put('/me', verifyToken, userController.update);
+
+router.put('/change-password', verifyToken, [
+  check("currentPassword", "Current password is required").notEmpty(),
+  check(
+    "newPassword",
+    "New password with 6 or more characters required"
+  ).isLength({
+    min: 6,
+  }),
+  check("confirmNewPassword", "Confirm new password is required").notEmpty(),
+], userController.changePassword);
 
 export default router;

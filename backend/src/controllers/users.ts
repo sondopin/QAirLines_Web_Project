@@ -11,6 +11,7 @@ const userController = {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
             res.status(400).json({ message: errors.array() });  
+            return;
         }
 
         // Find user in database
@@ -21,6 +22,7 @@ const userController = {
 
         if (user) {
             res.status(400).json({ message: "User already exists" });
+            return;
         }
 
         // Create new user
@@ -42,7 +44,8 @@ const userController = {
             secure: process.env.NODE_ENV === "production",
             maxAge: 86400000,
         });
-            res.status(200).send({ message: "User registered OK" });
+        res.status(200).send({ message: "User registered OK" });
+        return;
         } catch (error) {
         console.log(error);
         res.status(500).send({ message: "Something went wrong" });
@@ -51,18 +54,67 @@ const userController = {
 
     'me': async (req: Request, res: Response) =>  {
         const userId = req.userId;
-      
         try {
             const user = await User.findById(userId).select("-password");
             if (!user) {
                 res.status(400).json({ message: "User not found" });
+                return;
             }
             res.json(user);
         } catch (error) {
             console.log(error);
             res.status(500).json({ message: "something went wrong" });
         }
-      }
+      },
+    'update': async (req: Request, res: Response) => {
+        const userId = req.userId;
+        const updates = req.body;
+      
+        try {
+          const user = await User.findByIdAndUpdate(userId, updates, { new: true });
+          if (!user) {
+            res.status(404).json({ message: "User not found" });
+            return;
+          }
+          res.json(user);
+        } catch (error) {
+          console.log(error);
+          res.status(500).json({ message: "Something went wrong" });
+        }
+      },
+    'changePassword': async (req: Request, res: Response) => {
+        const userId = req.userId;
+        const { currentPassword, newPassword, confirmNewPassword } = req.body;
+    
+        if (newPassword !== confirmNewPassword) {
+           res.status(400).json({ message: "New passwords do not match" });
+           return;
+        }
+    
+        try {
+          const user = await User.findById(userId);
+          if (!user) {
+             res.status(404).json({ message: "User not found" });
+             return;
+          }
+    
+          const isMatch = await bcrypt.compare(currentPassword, user.password);
+          if (!isMatch) {
+            res
+              .status(400)
+              .json({ message: "Current password is incorrect" });
+            return;
+          }
+    
+          user.password = newPassword;
+          await user.save();
+    
+          res.json({ message: "Password changed successfully" });
+        } catch (error) {
+          console.log(error);
+          res.status(500).json({ message: "Something went wrong" });
+        }
+      },
 }
 
 export default userController;

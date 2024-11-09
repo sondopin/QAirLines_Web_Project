@@ -1,3 +1,4 @@
+import { log } from "console";
 import { NextFunction, Request, Response } from "express";
 import jwt, { JwtPayload } from "jsonwebtoken";
 
@@ -10,7 +11,7 @@ declare global {
 }
 
 const verifyToken = (req: Request, res: Response, next: NextFunction) => {
-  const token = req.cookies["auth_token"];
+  const token = req.cookies.auth_token;
   if (!token) {
      res.status(401).json({ message: "unauthorized" });
   }

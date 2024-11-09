@@ -29,6 +29,7 @@ const authController = {
             const isMatch = await bcrypt.compare(password, user.password);
             if (!isMatch) {
                 res.status(400).json({ message: "Invalid Credentials" });
+                return;
             }
 
             // Create token with id and role
@@ -51,7 +52,16 @@ const authController = {
             console.log(error);
             res.status(500).json({ message: "Something went wrong" });
             }
-        }
+        },
+    'validateToken': (req: Request, res: Response) => {
+        res.status(200).send({ userId: req.userId });
+      },
+    'logout': (req: Request, res: Response) => {
+        res.cookie("auth_token", "", {
+          expires: new Date(0),
+        });
+        res.send();
+    }
 }
 
 

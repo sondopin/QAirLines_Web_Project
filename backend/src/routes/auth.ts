@@ -28,4 +28,8 @@ router.post(
     , authController.login
   );
 
+  router.get("/validate-token", verifyToken, authController.validateToken);
+
+  router.post("/logout", authController.logout);
+
 export default router;
