@@ -1,0 +1,181 @@
+.footer {
+  background-color: #1F2227;
+  color: #FFFFFF;
+  padding: 51px 80px;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.footerContent {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 40px;
+}
+
+.companyInfo {
+  flex: 1;
+  max-width: 298px;
+}
+
+.footerLogo {
+  width: 84px;
+  height: 50px;
+  object-fit: contain;
+}
+
+.companyDescription {
+  font-size: 12px;
+  line-height: 1.5;
+  opacity: 0.75;
+  margin-top: 18px;
+}
+
+.socialIcons {
+  width: 135px;
+  height: 35px;
+  object-fit: contain;
+  margin-top: 38px;
+}
+
+.footerNav {
+  display: flex;
+  gap: 152px;
+}
+
+.navColumn {
+  min-width: 107px;
+}
+
+.navTitle {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 15px;
+}
+
+.navList {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.navList li {
+  margin-bottom: 11px;
+}
+
+.navList a {
+  color: #FFFFFF;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 500;
+  opacity: 0.75;
+  transition: opacity 0.3s ease;
+}
+
+.navList a:hover,
+.navList a:focus {
+  opacity: 1;
+}
+
+.subscribe {
+  flex: 1;
+  max-width: 338px;
+}
+
+.subscribeTitle {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 15px;
+}
+
+.subscribeForm {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.subscribeInput {
+  flex-grow: 1;
+  padding: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #FFFFFF;
+  font-size: 14px;
+  border-radius: 4px 0 0 4px;
+}
+
+.subscribeButton {
+  background-color: #77A0E0;
+  border: none;
+  padding: 12px 20px;
+  cursor: pointer;
+  border-radius: 0 4px 4px 0;
+  transition: background-color 0.3s ease;
+}
+
+.subscribeButton:hover,
+.subscribeButton:focus {
+  background-color: #5A8AD6;
+}
+
+.subscribeButton img {
+  width: 24px;
+  height: 24px;
+}
+
+.subscribeDescription {
+  font-size: 12px;
+  line-height: 1.5;
+  opacity: 0.75;
+}
+
+.footerDivider {
+  border: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  margin: 42px 0;
+}
+
+.footerBottom {
+  display: flex;
+  justify-content: center;
+}
+
+.legalLinks {
+  display: flex;
+  gap: 20px;
+}
+
+.legalLinks a {
+  color: #FFFFFF;
+  text-decoration: none;
+  font-size: 14px;
+  opacity: 0.75;
+  transition: opacity 0.3s ease;
+}
+
+.legalLinks a:hover,
+.legalLinks a:focus {
+  opacity: 1;
+}
+
+@media (max-width: 991px) {
+  .footer {
+    padding: 40px 20px;
+  }
+
+  .footerContent {
+    flex-direction: column;
+  }
+
+  .companyInfo,
+  .subscribe {
+    max-width: 100%;
+  }
+
+  .footerNav {
+    flex-wrap: wrap;
+    gap: 40px;
+  }
+
+  .navColumn {
+    flex-basis: calc(50% - 20px);
+  }
+}

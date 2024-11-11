@@ -1,0 +1,85 @@
+.header {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px;
+  font: 16px Poppins, sans-serif;
+  letter-spacing: 0.96px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #61A8FA;
+  z-index: 100;
+}
+
+.logo {
+  width: 235px;
+  object-fit: contain;
+}
+
+.navigation {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+}
+
+.navLink {
+  color: #283841;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.navLink:hover {
+  color: #223a60;
+}
+
+.authButtons {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.signIn,
+.signUp {
+  padding: 12px 32px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.signIn {
+  color: #283841;
+  background: none;
+  border: none;
+}
+
+.signUp {
+  color: #fff;
+  background-color: #223a60;
+  border: none;
+}
+
+@media (max-width: 991px) {
+  .header {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+  }
+
+  .navigation {
+    order: 3;
+    width: 100%;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .authButtons {
+    order: 2;
+  }
+
+  .signIn,
+  .signUp {
+    padding: 10px 20px;
+  }
+}

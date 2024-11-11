@@ -1,0 +1,107 @@
+.whyChooseUs {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  padding: 80px 20px;
+  position: relative;
+}
+
+.sectionImage {
+  width: 50%;
+  max-width: 611px;
+  border-radius: 20px;
+}
+
+.content {
+  flex: 1;
+}
+
+.sectionTitle {
+  font-size: 56px;
+  font-weight: 700;
+  color: #223a60;
+  margin-bottom: 24px;
+}
+
+.highlight {
+  color: #77a0e0;
+}
+
+.sectionDescription {
+  font-size: 18px;
+  color: #283841;
+  margin-bottom: 40px;
+}
+
+.featureList {
+  list-style-type: none;
+  padding: 0;
+}
+
+.featureItem {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  font-size: 16px;
+  color: #283841;
+}
+
+.featureItem::before {
+  content: '';
+  display: inline-block;
+  width: 23px;
+  height: 23px;
+  background-color: #c08b7d;
+  margin-right: 14px;
+  flex-shrink: 0;
+}
+
+.conclusion {
+  font-size: 16px;
+  color: rgba(40, 56, 65, 0.6);
+  line-height: 1.6;
+}
+
+.ratingBadge {
+  position: absolute;
+  top: -30px;
+  right: 20px;
+  background-color: #fff;
+  border-radius: 59px;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ratingIcon {
+  width: 32px;
+  height: 32px;
+}
+
+.ratingScore {
+  font-size: 22px;
+  font-weight: 700;
+  color: #283841;
+}
+
+@media (max-width: 991px) {
+  .whyChooseUs {
+    flex-direction: column;
+    padding: 60px 20px;
+  }
+
+  .sectionImage {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .sectionTitle {
+    font-size: 40px;
+  }
+
+  .ratingBadge {
+    position: static;
+    margin-top: 20px;
+  }
+}
