@@ -31,7 +31,7 @@ const userController = {
 
         // Create token
         const token = jwt.sign(
-            { userId: user.id },
+            { user_id: user.id },
             process.env.JWT_SECRET_KEY as string,
             {
             expiresIn: "1d",
@@ -53,9 +53,9 @@ const userController = {
     },
 
     'me': async (req: Request, res: Response) =>  {
-        const userId = req.userId;
+        const user_id = req.user_id;
         try {
-            const user = await User.findById(userId).select("-password");
+            const user = await User.findById(user_id).select("-password");
             if (!user) {
                 res.status(400).json({ message: "User not found" });
                 return;
@@ -67,11 +67,11 @@ const userController = {
         }
       },
     'update': async (req: Request, res: Response) => {
-        const userId = req.userId;
+        const user_id = req.user_id;
         const updates = req.body;
       
         try {
-          const user = await User.findByIdAndUpdate(userId, updates, { new: true });
+          const user = await User.findByIdAndUpdate(user_id, updates, { new: true });
           if (!user) {
             res.status(404).json({ message: "User not found" });
             return;
@@ -83,7 +83,7 @@ const userController = {
         }
       },
     'changePassword': async (req: Request, res: Response) => {
-        const userId = req.userId;
+        const user_id = req.user_id;
         const { currentPassword, newPassword, confirmNewPassword } = req.body;
     
         if (newPassword !== confirmNewPassword) {
@@ -92,7 +92,7 @@ const userController = {
         }
     
         try {
-          const user = await User.findById(userId);
+          const user = await User.findById(user_id);
           if (!user) {
              res.status(404).json({ message: "User not found" });
              return;
