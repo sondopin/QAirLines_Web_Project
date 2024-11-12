@@ -12,6 +12,7 @@ const userSchema = new mongoose.Schema<UserType>({
     address: { type: String },
     phone: { type: String },
     passport: { type: String },
+    date_of_birth: { type: Date },
     role: { type: String, enum: ["Customer","Admin"], required: true }
   });
 

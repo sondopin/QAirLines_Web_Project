@@ -3,9 +3,9 @@ import { TicketType } from "./types";
 
 // Ticket schema
 const ticketSchema = new mongoose.Schema<TicketType>({
-    id_user: { type: String, required: true },
-    id_flight: { type: String, required: true },
-    idx_seat: { type: Number, required: true },
+    booking_id: { type: String, required: true },
+    seat_id: { type: String, required: true },
+    passenger_name: { type: String, required: true },
     price: { type: Number, required: true },
   });
 
