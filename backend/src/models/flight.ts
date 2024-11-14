@@ -16,7 +16,8 @@ const flightSchema = new mongoose.Schema<FlightType>({
     actual_arrival: { type: Date },
     nums_busi_seat_avail: { type: Number, required: true },
     nums_eco_seat_avail: { type: Number, required: true },
-    base_price: { type: Number, required: true }
+    base_price: { type: Number, required: true },
+    revenue: { type: Number, default: 0 ,immutable: true},
   });
 const Flight = mongoose.model<FlightType>("Flight", flightSchema);
 

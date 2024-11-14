@@ -9,6 +9,7 @@ export type UserType = {
     passport: string;
     date_of_birth: Date;
     role: string;
+    nums_booking_changed: number;
 };
   
 export type FlightType = {
@@ -24,6 +25,7 @@ export type FlightType = {
     nums_busi_seat_avail: number;
     nums_eco_seat_avail: number;
     base_price: number;
+    revenue: number;
 };
 
 export type SeatType = {
@@ -59,8 +61,8 @@ export type BookingType = {
     _id: string;
     user_id: string;
     flight_id: string;
-    nums_adult: number;
-    nums_child: number;
+    nums_busi: number;
+    nums_eco: number;
     booking_date: Date;
     status: string;
     total_ammount: number;
