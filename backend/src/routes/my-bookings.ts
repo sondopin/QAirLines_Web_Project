@@ -1,0 +1,14 @@
+import express, { Request, Response } from "express";
+import { AircraftType } from "../models/types";
+import verifyToken from "../middleware/auth";
+import { body } from "express-validator";
+import myBookingController from "../controllers/my-bookings";
+
+const router = express.Router();
+
+router.get("/get",verifyToken, myBookingController.getMyBookings);
+router.get("/get/:booking_id",verifyToken, myBookingController.getBookingById);
+router.delete("/cancel/:booking_id",verifyToken, myBookingController.cancelBooking);
+
+
+export default router;  

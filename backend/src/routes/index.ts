@@ -8,6 +8,8 @@ const router = (app: Application) => {
     app.use("/auth", authRoutes);
     app.use("/users", userRoutes);
     app.use("/my-aircrafts",verifyToken, myAircraftRoutes);
+    app.use("/flights", myAircraftRoutes);
+    app.use("/my-bookings",verifyToken, myAircraftRoutes);
 }
 
 export default router;

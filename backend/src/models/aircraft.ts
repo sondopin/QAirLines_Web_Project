@@ -9,7 +9,7 @@ const AircraftSchema = new mongoose.Schema<AircraftType>({
   manufactured_year: { type: Number, required: true },
   model: { type: String, required: true },
   nums_seat: { type: Number, required: true },
-  total_revenue: { type: Number ,default: 0},
+  total_revenue: { type: Number ,default: 0, immutable: true},
   last_updated: { type: Date, default: Date.now },
 });
 
