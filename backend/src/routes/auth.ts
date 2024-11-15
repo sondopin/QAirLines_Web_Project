@@ -6,9 +6,7 @@ import jwt from "jsonwebtoken";
 import verifyToken from "../middleware/auth";
 import authController from "../controllers/auth";
 
-
 const router = express.Router();
-
 
 /**
  * @route POST /api/auth/login
@@ -17,19 +15,10 @@ const router = express.Router();
  * @param {Request} req - The request object containing user credentials
  * @param {Response} res - The response object to send data back
  */
-router.post(
-    "/login",
-    [
-      check("email", "Email is required").isEmail(),
-      check("password", "Password with 6 or more characters required").isLength({
-        min: 6,
-      }),
-    ] // Validate user input
-    , authController.login
-  );
+router.post("/login", authController.login);
 
-  router.get("/validate-token", verifyToken, authController.validateToken);
+router.get("/validate-token", verifyToken, authController.validateToken);
 
-  router.post("/logout", authController.logout);
+router.post("/logout", authController.logout);
 
 export default router;
