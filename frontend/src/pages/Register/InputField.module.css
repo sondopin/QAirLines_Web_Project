@@ -1,0 +1,39 @@
+.inputField {
+    border-radius: 6px;
+    background-color: rgba(217, 217, 217, 0.5);
+    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.25);
+    display: flex;
+    width: 100%;
+    align-items: center;
+    gap: 10px;
+    overflow: hidden;
+    padding: 10px;
+  }
+  
+  .inputIcon {
+    aspect-ratio: 1;
+    object-fit: contain;
+    object-position: center;
+    width: 24px;
+    align-self: stretch;
+    margin: auto 0;
+  }
+  
+  .input {
+    align-self: stretch;
+    flex: 1;
+    border: none;
+    background: transparent;
+    color: rgba(34, 58, 96, 0.5);
+    font: inherit;
+  }
+  
+  .input::placeholder {
+    color: rgba(34, 58, 96, 0.5);
+  }
+  
+  @media (max-width: 991px) {
+    .inputField {
+      max-width: 100%;
+    }
+  }
