@@ -6,9 +6,12 @@ import myBookingController from "../controllers/my-bookings";
 
 const router = express.Router();
 
-router.get("/get",verifyToken, myBookingController.getMyBookings);
-router.get("/get/:booking_id",verifyToken, myBookingController.getBookingById);
-router.delete("/cancel/:booking_id",verifyToken, myBookingController.cancelBooking);
+router.get("/get/:booking_id", verifyToken, myBookingController.getBookingById);
+router.get("/get", verifyToken, myBookingController.getMyBookings);
+router.delete(
+  "/cancel/:booking_id",
+  verifyToken,
+  myBookingController.cancelBooking
+);
 
-
-export default router;  
+export default router;
