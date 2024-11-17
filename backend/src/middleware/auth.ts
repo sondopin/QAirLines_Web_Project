@@ -5,23 +5,23 @@ import jwt, { JwtPayload } from "jsonwebtoken";
 declare global {
   namespace Express {
     interface Request {
-      userId: string;
+      user_id: string;
     }
   }
 }
 
 const verifyToken = (req: Request, res: Response, next: NextFunction) => {
-  const token = req.cookies.auth_token;
+  const token = req.headers["authorization"]?.replace("Bearer ", "") || "";
   if (!token) {
-     res.status(401).json({ message: "unauthorized" });
+    res.status(401).json({ message: "unauthorized" });
   }
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY as string);
-    req.userId = (decoded as JwtPayload).userId;
+    req.user_id = (decoded as JwtPayload).user_id;
     next();
   } catch (error) {
-     res.status(401).json({ message: "unauthorized" });
+    res.status(401).json({ message: "unauthorized" });
   }
 };
 
