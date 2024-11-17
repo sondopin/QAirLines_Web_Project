@@ -1,0 +1,10 @@
+.tag {
+    align-self: stretch;
+    border-radius: 6px;
+    background-color: rgba(34, 58, 96, 1);
+    color: #fff;
+    white-space: nowrap;
+    letter-spacing: 0.96px;
+    padding: 10px 17px;
+    font: 500 16px DM Sans, sans-serif;
+}

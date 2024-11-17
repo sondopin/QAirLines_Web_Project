@@ -3,10 +3,6 @@ import styles from './InputEmail.module.css';
 
 interface InputEmailProps {
   onSubmit: (email: string) => void;
-  type: string;
-  placeholder: string;
-  icon: string;
-  alt: string;
 }
 
 const InputEmail: React.FC<InputEmailProps> = ({ onSubmit }) => {
@@ -36,11 +32,7 @@ const InputEmail: React.FC<InputEmailProps> = ({ onSubmit }) => {
         onChange={(e) => setEmail(e.target.value)}
         placeholder="Email"
         aria-label="Enter your email"
-        required
       />
-      <button type="submit" className={styles.visuallyHidden}>
-        Submit
-      </button>
     </form>
   );
 };

@@ -2,10 +2,11 @@ import React from 'react';
 import styles from './InputPassword.module.css';
 
 interface InputPasswordProps {
+  id: string;
   placeholder?: string;
 }
 
-const InputPassword: React.FC<InputPasswordProps> = ({ placeholder = 'Password' }) => {
+const InputPassword: React.FC<InputPasswordProps> = ({ id, placeholder = 'Password' }) => {
   return (
     <div className={styles.inputWrapper}>
       <img 
@@ -14,15 +15,14 @@ const InputPassword: React.FC<InputPasswordProps> = ({ placeholder = 'Password' 
         className={styles.icon} 
         alt=""
       />
-      <label htmlFor="passwordInput" className={styles.visuallyHidden}>
+      <label htmlFor={id} className={styles.visuallyHidden}>
         Enter your password
       </label>
       <input
         type="password"
-        id="passwordInput"
+        id={id}
         className={styles.inputField}
         placeholder={placeholder}
-        aria-label="Enter your password"
       />
     </div>
   );

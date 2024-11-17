@@ -5,6 +5,7 @@ import App from "./App.tsx";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import { AppProvider } from "./context/app.context.tsx";
+
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
