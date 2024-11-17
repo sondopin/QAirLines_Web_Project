@@ -1,16 +1,18 @@
-.inputField {
-    border-radius: 6px;
+.dateInput {
+    border-radius: 5px;
     background-color: rgba(217, 217, 217, 0.5);
     box-shadow: 0 5px 5px rgba(0, 0, 0, 0.25);
     display: flex;
-    width: 100%;
     align-items: center;
     gap: 10px;
     overflow: hidden;
-    padding: 10px;
+    color: rgba(34, 58, 96, 0.5);
+    letter-spacing: 0.96px;
+    padding: 5px 0;
+    font: 500 16px DM Sans, sans-serif;
   }
   
-  .inputIcon {
+  .dateIcon {
     aspect-ratio: 1;
     object-fit: contain;
     object-position: center;
@@ -19,21 +21,15 @@
     margin: auto 0;
   }
   
-  .input {
+  .dateLabel {
     align-self: stretch;
     flex: 1;
-    border: none;
-    background: transparent;
-    color: rgba(34, 58, 96, 0.5);
-    font: inherit;
-  }
-  
-  .input::placeholder {
-    color: rgba(34, 58, 96, 0.5);
+    flex-basis: 0%;
+    margin: auto 0;
   }
   
   @media (max-width: 991px) {
-    .inputField {
+    .dateLabel {
       max-width: 100%;
     }
   }
