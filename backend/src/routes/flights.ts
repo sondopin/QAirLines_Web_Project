@@ -1,7 +1,7 @@
 import express, { Request, Response } from "express";
 
 import flightController from "../controllers/flights";
-import verifyToken from "../middleware/auth";
+import { verifyToken } from "../middleware/auth";
 
 const router = express.Router();
 

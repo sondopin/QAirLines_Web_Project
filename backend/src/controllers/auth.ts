@@ -3,7 +3,6 @@ import { check, validationResult } from "express-validator";
 import User from "../models/user";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import verifyToken from "../middleware/auth";
 
 const authController = {
   login: async (req: Request, res: Response) => {
@@ -45,7 +44,7 @@ const authController = {
         secure: process.env.NODE_ENV === "production",
         maxAge: 86400000,
       });
-      res.status(200).json({ token });
+      res.status(200).json({ token, role: user.role });
     } catch (error) {
       console.log(error);
       res.status(500).json({ message: "Something went wrong" });

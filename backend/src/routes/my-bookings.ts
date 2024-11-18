@@ -1,6 +1,6 @@
 import express, { Request, Response } from "express";
 import { AircraftType } from "../models/types";
-import verifyToken from "../middleware/auth";
+import { verifyToken } from "../middleware/auth";
 import { body } from "express-validator";
 import myBookingController from "../controllers/my-bookings";
 
