@@ -18,14 +18,26 @@ const authController = {
     try {
       let user = await User.findOne({ email });
       if (!user) {
-        res.status(400).json({ message: "Invalid Credentials" });
+        res.status(400).json({
+          message: "Invalid credentials",
+          data: {
+            email: "Incorrect username or password",
+            password: "Incorrect username or password",
+          },
+        });
         return;
       }
 
       // Check if password is match with the hashed password
       const isMatch = await bcrypt.compare(password, user.password);
       if (!isMatch) {
-        res.status(400).json({ message: "Invalid Credentials" });
+        res.status(400).json({
+          message: "Invalid credentials",
+          data: {
+            email: "Incorrect username or password",
+            password: "Incorrect username or password",
+          },
+        });
         return;
       }
 
@@ -48,6 +60,56 @@ const authController = {
     } catch (error) {
       console.log(error);
       res.status(500).json({ message: "Something went wrong" });
+    }
+  },
+  register: async (req: Request, res: Response) => {
+    // Check for errors
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      res.status(400).json({ message: errors.array() });
+      return;
+    }
+
+    // Find user in database
+    try {
+      let user = await User.findOne({
+        email: req.body.email,
+      });
+
+      if (user) {
+        res.status(400).json({
+          message: "Invalid credentials",
+          data: {
+            email: "Email already exists",
+          },
+        });
+        return;
+      }
+
+      // Create new user
+      user = new User(req.body);
+      await user.save();
+
+      // Create token
+      const token = jwt.sign(
+        { user_id: user.id },
+        process.env.JWT_SECRET_KEY as string,
+        {
+          expiresIn: "1d",
+        }
+      );
+
+      // Save the token into web browser's cookie for authenticate user
+      res.cookie("auth_token", token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        maxAge: 86400000,
+      });
+      res.status(200).send({ token, role: user.role });
+      return;
+    } catch (error) {
+      console.log(error);
+      res.status(500).send({ message: "Something went wrong" });
     }
   },
   validateToken: (req: Request, res: Response) => {

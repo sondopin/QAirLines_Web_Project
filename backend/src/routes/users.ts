@@ -17,7 +17,6 @@ router.get("/me", verifyToken, userController.me);
  * @param {Request} req - The request object containing user data
  * @param {Response} res - The response object to send data back
  */
-router.post("/register", userController.register);
 
 router.put("/me", verifyToken, userController.update);
 
