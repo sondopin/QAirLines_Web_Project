@@ -3,7 +3,7 @@ import { check, validationResult } from "express-validator";
 import User from "../models/user";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import verifyToken from "../middleware/auth";
+import { verifyToken } from "../middleware/auth";
 import authController from "../controllers/auth";
 
 const router = express.Router();
@@ -16,6 +16,8 @@ const router = express.Router();
  * @param {Response} res - The response object to send data back
  */
 router.post("/login", authController.login);
+
+router.post("/register", authController.register);
 
 router.get("/validate-token", verifyToken, authController.validateToken);
 
