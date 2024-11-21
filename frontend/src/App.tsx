@@ -1,5 +1,6 @@
 import React from "react";
 import createRoutes from "./routes";
+import "./App.css";
 
 const App: React.FC = () => {
   const routes = createRoutes();

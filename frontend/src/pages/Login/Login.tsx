@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./Login.module.css";
 import InputField from "../../components/InputFeild";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { loginSchema, Schema } from "../../utils/rule";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -9,6 +9,8 @@ import { useMutation } from "@tanstack/react-query";
 import { login } from "../../apis/auth.api";
 import { isAxiosUnprocessableEntity } from "../../utils/utils";
 import { ErrorResponse } from "../../types/utils.type";
+import { useContext } from "react";
+import { AppContext } from "../../context/app.context";
 
 type LoginForm = Omit<Schema, "confirm_password">;
 
@@ -26,10 +28,15 @@ const LoginPage: React.FC = () => {
     mutationFn: (body: LoginForm) => login(body),
   });
 
+  const navigate = useNavigate();
+  const { setIsAuthenticated } = useContext(AppContext);
+
   const onSubmit = handleSubmit((data) => {
     loginMutaion.mutate(data, {
       onSuccess: () => {
         console.log("Success Login");
+        setIsAuthenticated(true);
+        navigate("/");
       },
       onError: (error) => {
         if (isAxiosUnprocessableEntity<ErrorResponse<LoginForm>>(error)) {
