@@ -5,6 +5,12 @@ import { PATH } from "./constants/path";
 import LoginPage from "./pages/Login/Login";
 import RegisterPage from "./pages/Register/Register";
 import Error from "./pages/Error";
+import Header from "./components/Header";
+import Hero from "./components/Hero";
+import SearchBar from "./components/SearchBar";
+import Layout from "./layouts/Layout";
+import LatestNews from "./components/LatestNews";
+import Home from "./pages/Home";
 
 function ProtectedRoute() {
   const { isAuthenticated } = useContext(AppContext);
@@ -53,7 +59,9 @@ export default function createRoutes() {
     {
       path: PATH.home,
       index: true,
-      element: <></>,
+      element: <Layout>
+        <Home />
+      </Layout>,
     },
   ]);
 
