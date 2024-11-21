@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./Login.module.css";
 import InputField from "../../components/InputFeild";
-import { Link, useNavigate, useLocation} from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { loginSchema, Schema } from "../../utils/rule";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -11,7 +11,6 @@ import { isAxiosUnprocessableEntity } from "../../utils/utils";
 import { ErrorResponse } from "../../types/utils.type";
 import { useContext } from "react";
 import { AppContext } from "../../context/app.context";
-
 
 type LoginForm = Omit<Schema, "confirm_password">;
 
@@ -30,8 +29,7 @@ const LoginPage: React.FC = () => {
   });
 
   const navigate = useNavigate();
-  const location = useLocation();
-  const { setIsAuthenticated } = useContext(AppContext)
+  const { setIsAuthenticated } = useContext(AppContext);
 
   const onSubmit = handleSubmit((data) => {
     loginMutaion.mutate(data, {
