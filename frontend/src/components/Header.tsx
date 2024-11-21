@@ -1,14 +1,13 @@
-
-import { NavLink, useLocation } from 'react-router-dom';
-import { useContext } from 'react';
-import {AppContext} from '../context/app.context';
-import {Dropdown} from 'antd';
+import { NavLink, useLocation } from "react-router-dom";
+import { Fragment, useContext } from "react";
+import { AppContext } from "../context/app.context";
+import { Dropdown } from "antd";
+import { logout } from "../apis/auth.api";
 
 const Header = () => {
   const location = useLocation();
-  const { isAuthenticated, isAdmin } = useContext(AppContext);
-
-  console.log(isAuthenticated, isAdmin);
+  const { isAuthenticated, isAdmin, setIsAuthenticated } =
+    useContext(AppContext);
 
   const menuItems = [
     {
@@ -18,20 +17,26 @@ const Header = () => {
           className="font-semibold  h-6 flex items-center text-base"
           to="/user-profile"
         >
-          <img src='./my_account.png' className="h-6 mr-2" /> My Account
+          <img src="./my_account.png" className="h-6 mr-2" /> My Account
         </NavLink>
       ),
     },
     {
       key: "2",
       label: (
-        <NavLink to="/" className=" mt-5px h-6 flex items-center font-semibold text-base bg-white">
-          <img src='log_out.png' className="h-6 mr-2" /> Sign Out
+        <NavLink
+          to="/"
+          className=" mt-5px h-6 flex items-center font-semibold text-base bg-white"
+          onClick={() => {
+            logout();
+            setIsAuthenticated(false);
+          }}
+        >
+          <img src="log_out.png" className="h-6 mr-2" /> Sign Out
         </NavLink>
       ),
     },
   ];
-
 
   return (
     <div className="bg-white py-6">
@@ -97,14 +102,22 @@ const Header = () => {
         <div className="flex space-x-4">
           {isAuthenticated ? (
             <Dropdown menu={{ items: menuItems }}>
-            <div className="flex items-center">
-              <img src='./account.png' className="w-8 h-8 text-2xl cursor-pointer" />
-            </div>
-          </Dropdown>
+              <div className="flex items-center">
+                <img
+                  src="./account.png"
+                  className="w-8 h-8 text-2xl cursor-pointer"
+                />
+              </div>
+            </Dropdown>
           ) : (
-            <NavLink to="/login" className="flex items-center text-2xl">
-              <img src='./account.png' className='w-8 h-8'/>
-            </NavLink>
+            <Fragment>
+              <NavLink to="/login" className="flex items-center text-2xl">
+                Login
+              </NavLink>
+              <NavLink to="/register" className="flex items-center text-2xl">
+                Register
+              </NavLink>
+            </Fragment>
           )}
         </div>
       </div>

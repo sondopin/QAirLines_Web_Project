@@ -60,14 +60,16 @@ const LatestNews = () => {
         </div>
 
         <Slider {...settings}>
-          {blogs_data?.map((blog: BlogCard, index: number) => (
-            <LatestNewsCard
-              key={index}
-              title={blog.title}
-              description={blog.description}
-              image_url={blog.image_url}
-            />
-          ))}
+          {Array.isArray(blogs_data)
+            ? blogs_data?.map((blog: BlogCard, index: number) => (
+                <LatestNewsCard
+                  key={index}
+                  title={blog.title}
+                  description={blog.description}
+                  image_url={blog.image_url}
+                />
+              ))
+            : null}
         </Slider>
       </div>
     </div>
