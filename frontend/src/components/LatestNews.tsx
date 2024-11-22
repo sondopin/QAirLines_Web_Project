@@ -51,7 +51,7 @@ const LatestNews = () => {
   });
 
   return (
-    <div className="w-full bg-white ml-10 ">
+    <div className="w-3/4 bg-white ml-10 p-4">
       <div className="md:max-w-[1480px] m-auto max-w-[800px] md:px-0">
         <div className="py-4">
           <h1 className="text-3xl font-bold justify-center">
