@@ -1,8 +1,8 @@
 import Slider from "react-slick";
 import LatestNewsCard from "./LatestNewsCard";
-import { CardProps } from '../types/utils.type';
-
-
+import { BlogCard } from "../types/blogs.type";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
+import { getLatestBlogs } from "../apis/blogs.api";
 
 const LatestNews = () => {
   const settings = {
@@ -42,28 +42,13 @@ const LatestNews = () => {
     ],
   };
 
-  const cardsData: CardProps[] = [
-    {
-      title: "Title with limited letter. Ideally for 2 lines.",
-      description: "Description also with limited character. Ideally for 2 lines",
-      imageUrl: "https://cdn.builder.io/api/v1/image/assets/TEMP/4d4f106385f2afefe8e52a966a195054d604efe0dd4c21a31d14ae11ba95ac57?placeholderIfAbsent=true&apiKey=cdf4ef6bf30f4b36bc29a527c8e3e010"
+  const { data: blogs_data } = useQuery({
+    queryKey: ["blogs"],
+    queryFn: () => {
+      return getLatestBlogs();
     },
-    {
-      title: "Title with limited letter. Ideally for 2 lines.",
-      description: "Description also with limited character. Ideally for 2 lines",
-      imageUrl: "https://cdn.builder.io/api/v1/image/assets/TEMP/4d4f106385f2afefe8e52a966a195054d604efe0dd4c21a31d14ae11ba95ac57?placeholderIfAbsent=true&apiKey=cdf4ef6bf30f4b36bc29a527c8e3e010"
-    },
-    {
-      title: "Title with limited letter. Ideally for 2 lines.",
-      description: "Description also with limited character. Ideally for 2 lines",
-      imageUrl: "https://cdn.builder.io/api/v1/image/assets/TEMP/4d4f106385f2afefe8e52a966a195054d604efe0dd4c21a31d14ae11ba95ac57?placeholderIfAbsent=true&apiKey=cdf4ef6bf30f4b36bc29a527c8e3e010"
-    },
-    {
-        title: "ABC",
-        description: "DEF",
-        imageUrl: "https://cdn.builder.io/api/v1/image/assets/TEMP/4d4f106385f2afefe8e52a966a195054d604efe0dd4c21a31d14ae11ba95ac57?placeholderIfAbsent=true&apiKey=cdf4ef6bf30f4b36bc29a527c8e3e010"
-    }
-  ];
+    placeholderData: keepPreviousData,
+  });
 
   return (
     <div className="w-3/4 bg-white ml-10 p-4">
@@ -75,14 +60,16 @@ const LatestNews = () => {
         </div>
 
         <Slider {...settings}>
-            {cardsData.map((card, index) => (
+          {Array.isArray(blogs_data)
+            ? blogs_data?.map((blog: BlogCard, index: number) => (
                 <LatestNewsCard
-                key={index}
-                title={card.title}
-                description={card.description}
-                imageUrl={card.imageUrl}
+                  key={index}
+                  title={blog.title}
+                  description={blog.description}
+                  image_url={blog.image_url}
                 />
-            ))}
+              ))
+            : null}
         </Slider>
       </div>
     </div>

@@ -1,16 +1,19 @@
-import Search from "antd/es/transfer/search";
+import Hero from "../components/Hero";
 import LatestNews from "../components/LatestNews";
+import SearchBar from "../components/SearchBar";
 import WhyChooseUs from "../components/WhyChooseUs";
 
-
 const Home = () => {
-    return (
-        <div className="flex flex-col items-center justify-center space-y-10">   
-            <LatestNews/>
-            <WhyChooseUs />
-        </div>
-    );
-}
+  return (
+    <div>
+      <Hero />
+      <div className="container mx-auto mt-[-140px] w-5/6">
+        <SearchBar />
+      </div>
+      <LatestNews />
+      <WhyChooseUs />
+    </div>
+  );
+};
 
-
-export default Home;    
+export default Home;

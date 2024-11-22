@@ -3,10 +3,13 @@ import { BlogType } from "./types";
 
 // Blog schema
 const blogSchema = new mongoose.Schema<BlogType>({
-    content: { type: String, required: true },
-    header: { type: String, required: true },
-    footer: { type: String },
-  });
+  content: { type: String },
+  header: { type: String },
+  footer: { type: String },
+  title: { type: String },
+  description: { type: String },
+  image_url: { type: String },
+});
 
 const Blog = mongoose.model<BlogType>("Blog", blogSchema);
 export default Blog;
