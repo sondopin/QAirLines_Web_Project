@@ -1,6 +1,6 @@
 const Hero = () => {
     return (
-      <section className="flex overflow-hidden relative flex-col justify-center items-center px-6 py-20 mt-2.5 w-full text-white min-h-[300px] max-md:px-5 max-md:max-w-full">
+      <section className="flex overflow-hidden relative flex-col justify-center items-center px-6 py-20 w-full text-white min-h-[300px] max-md:px-5 max-md:max-w-full">
         <img
           loading="lazy"
           src="./hero.png"

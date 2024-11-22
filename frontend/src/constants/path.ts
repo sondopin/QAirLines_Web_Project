@@ -1,3 +1,4 @@
+
 export const PATH = {
   home: "/",
   login: "/login",
@@ -5,4 +6,5 @@ export const PATH = {
   admin: {
     base: "/admin",
   },
+  search: "/search",
 } as const;
