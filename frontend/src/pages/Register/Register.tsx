@@ -8,6 +8,7 @@ import { useMutation } from "@tanstack/react-query";
 import { registerAccount } from "../../apis/auth.api";
 import { isAxiosUnprocessableEntity } from "../../utils/utils";
 import { ErrorResponse } from "../../types/utils.type";
+import { Link } from "react-router-dom";
 
 type RegisterForm = Schema;
 
@@ -114,6 +115,10 @@ const RegisterPage: React.FC = () => {
             >
               Register
             </button>
+            <Link to="/login">
+              <p className={styles.noAccountText}>Already have an account?</p>
+              <p className={styles.createAccountLink}>Login</p>
+            </Link>
           </form>
         </section>
       </div>
