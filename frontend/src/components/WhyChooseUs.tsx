@@ -21,14 +21,14 @@ export const WhyChooseUs = () => {
       );
 
   return (
-    <section className="flex flex-wrap gap-20 items-center px-5 p-4 w-3/4">
+    <section className="flex gap-20 items-center px-5 p-4 w-4/5">
       <img
         loading="lazy"
         src="https://cdn.builder.io/api/v1/image/assets/TEMP/9d2bca20508a599eebcf197f0bf74f3ce7bf36184819ff6b3af0a020dc4a2aff?placeholderIfAbsent=true&apiKey=cdf4ef6bf30f4b36bc29a527c8e3e010"
         alt="QAirline travel experience illustration"
         className="object-contain self-stretch my-auto rounded-none aspect-[1.08] min-w-[240px] w-1/2 max-md:max-w-full"
       />
-      <article className="flex flex-col flex-1 shrink self-stretch p-5 my-auto rounded-xl basis-0 bg-blue-400 bg-opacity-20 min-w-[200px] max-md:max-w-full w-1/2">
+      <article className="flex flex-col flex-1 shrink self-stretch p-5 my-auto rounded-xl basis-0 bg-blue-400 bg-opacity-20 min-w-[200px] max-md:max-w-full">
         <header className="flex flex-col w-full max-md:max-w-full">
           <h2 className="self-start text-6xl font-bold text-center text-slate-800 max-md:text-4xl">
             <span className="text-indigo-400">Why</span> choose us

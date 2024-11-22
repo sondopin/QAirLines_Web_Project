@@ -5,13 +5,15 @@ import WhyChooseUs from "../components/WhyChooseUs";
 
 const Home = () => {
   return (
-    <div>
+    <div className="">
       <Hero />
       <div className="container mx-auto mt-[-140px] w-5/6">
         <SearchBar />
       </div>
-      <LatestNews />
-      <WhyChooseUs />
+      <div className="flex flex-col items-center">
+        <LatestNews />
+        <WhyChooseUs />
+      </div>
     </div>
   );
 };

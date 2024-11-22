@@ -2,7 +2,7 @@ import * as React from 'react';
 
 export const SearchBar: React.FC = () => {
   return (
-    <div className="container mx-auto mt-[-140px] w-5/6">
+    <div className="container mx-auto mt-[-140px]">
       <div className="flex flex-col text-base tracking-wider" style={{position: "relative"}}>
         <header className="flex gap-5 justify-center items-center self-start p-7 font-medium text-white whitespace-nowrap rounded-t-3xl bg-slate-200 max-md:px-5">
           <div className="flex overflow-hidden gap-6 justify-center items-center self-stretch px-4 py-1.5 my-auto rounded-md bg-slate-700 min-h-[41px]">
