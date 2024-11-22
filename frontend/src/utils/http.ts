@@ -54,7 +54,7 @@ class Http {
           clearJWTFromLocalStorage();
           clearRoleFromLocalStorage();
         }
-        return response.data;
+        return response;
       },
       (errors) => {
         return Promise.reject(errors);
