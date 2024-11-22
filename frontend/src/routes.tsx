@@ -1,7 +1,7 @@
 import { useRoutes } from "react-router-dom";
 import { PATH } from "./constants/path";
-import LoginPage from "./pages/Login/Login";
-import RegisterPage from "./pages/Register/Register";
+import LoginPage from "./pages/Login";
+import RegisterPage from "./pages/Register";
 import Layout from "./layouts/Layout";
 import Home from "./pages/Home";
 import PrivateRoute from "./guards/PrivateRoute";

@@ -1,16 +1,16 @@
 import React from "react";
 import styles from "./Login.module.css";
-import InputField from "../../components/InputFeild";
+import InputField from "../components/InputFeild";
 import { Link, useNavigate } from "react-router-dom";
-import { loginSchema, Schema } from "../../utils/rule";
+import { loginSchema, Schema } from "../utils/rule";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useMutation } from "@tanstack/react-query";
-import { login } from "../../apis/auth.api";
-import { isAxiosUnprocessableEntity } from "../../utils/utils";
-import { ErrorResponse } from "../../types/utils.type";
+import { login } from "../apis/auth.api";
+import { isAxiosUnprocessableEntity } from "../utils/utils";
+import { ErrorResponse } from "../types/utils.type";
 import { useContext } from "react";
-import { AppContext } from "../../context/app.context";
+import { AppContext } from "../context/app.context";
 
 type LoginForm = Omit<Schema, "confirm_password">;
 

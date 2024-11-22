@@ -1,12 +1,12 @@
 import React from "react";
-import InputField from "../../components/InputFeild";
-import { registerSchema, Schema } from "../../utils/rule";
+import InputField from "../components/InputFeild";
+import { registerSchema, Schema } from "../utils/rule";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useMutation } from "@tanstack/react-query";
-import { registerAccount } from "../../apis/auth.api";
-import { isAxiosUnprocessableEntity } from "../../utils/utils";
-import { ErrorResponse } from "../../types/utils.type";
+import { registerAccount } from "../apis/auth.api";
+import { isAxiosUnprocessableEntity } from "../utils/utils";
+import { ErrorResponse } from "../types/utils.type";
 import { Link } from "react-router-dom";
 
 type RegisterForm = Schema;
