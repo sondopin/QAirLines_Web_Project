@@ -1,5 +1,4 @@
 import React from "react";
-import styles from "./Login.module.css";
 import InputField from "../components/InputFeild";
 import { Link, useNavigate } from "react-router-dom";
 import { loginSchema, Schema } from "../utils/rule";

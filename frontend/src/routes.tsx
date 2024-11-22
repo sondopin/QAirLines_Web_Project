@@ -7,6 +7,7 @@ import Home from "./pages/Home";
 import PrivateRoute from "./guards/PrivateRoute";
 import AdminRoute from "./guards/AdminRoute";
 import RejectedRoute from "./guards/RejectedRoute";
+import Search from "./pages/Search";
 
 export default function createRoutes() {
   // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -42,6 +43,15 @@ export default function createRoutes() {
         </Layout>
       ),
     },
+    {
+      path: PATH.search,
+      index: true,
+      element: (
+        <Layout>
+          <Search />
+        </Layout>
+      ),
+    }
   ]);
 
   return router_elements;

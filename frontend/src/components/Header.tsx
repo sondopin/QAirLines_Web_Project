@@ -39,7 +39,7 @@ const Header = () => {
   ];
 
   return (
-    <div className="bg-white py-6">
+    <div className="bg-white mt-3">
       <div className="max-w-[1232px] mx-auto flex justify-between">
         <span className="text-3xl text-white font-bold tracking-tight md:mx-auto">
           <NavLink to="/">

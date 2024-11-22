@@ -7,7 +7,7 @@ const Home = () => {
   return (
     <div className="">
       <Hero />
-      <div className="container mx-auto mt-[-140px] w-5/6">
+      <div className="container mx-auto mt-[-150px] w-5/6">
         <SearchBar />
       </div>
       <div className="flex flex-col items-center">
