@@ -45,13 +45,12 @@ export default function createRoutes() {
     },
     {
       path: PATH.search,
-      index: true,
       element: (
         <Layout>
           <Search />
         </Layout>
       ),
-    }
+    },
   ]);
 
   return router_elements;

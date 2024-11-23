@@ -51,7 +51,7 @@ const LatestNews = () => {
   });
 
   return (
-    <div className="w-3/4 bg-white ml-10 p-4">
+    <div className="w-full bg-white ml-10 ">
       <div className="md:max-w-[1480px] m-auto max-w-[800px] md:px-0">
         <div className="py-4">
           <h1 className="text-3xl font-bold justify-center">
@@ -60,16 +60,14 @@ const LatestNews = () => {
         </div>
 
         <Slider {...settings}>
-          {Array.isArray(blogs_data)
-            ? blogs_data?.map((blog: BlogCard, index: number) => (
-                <LatestNewsCard
-                  key={index}
-                  title={blog.title}
-                  description={blog.description}
-                  image_url={blog.image_url}
-                />
-              ))
-            : null}
+          {blogs_data?.data.map((blog: BlogCard, index: number) => (
+            <LatestNewsCard
+              key={index}
+              title={blog.title}
+              description={blog.description}
+              image_url={blog.image_url}
+            />
+          ))}
         </Slider>
       </div>
     </div>
