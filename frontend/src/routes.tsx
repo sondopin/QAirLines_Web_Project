@@ -46,7 +46,6 @@ export default function createRoutes() {
     },
     {
       path: PATH.search,
-      index: true,
       element: (
         <Layout>
           <SearchPage />
@@ -61,7 +60,7 @@ export default function createRoutes() {
           <BookingPage />
         </Layout>
       ),
-    }
+    },
   ]);
 
   return router_elements;
