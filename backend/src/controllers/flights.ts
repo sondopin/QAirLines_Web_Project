@@ -5,14 +5,18 @@ import Booking from "../models/booking";
 import Ticket from "../models/ticket";
 import User from "../models/user";
 import { SeatType } from "../models/types";
+import Airport from "../models/airport";
 
 const flightController = {
   searchFlights: async (req: Request, res: Response) => {
-    try {
-      const { ori_airport, des_airport, departure, nums_busi, nums_eco } =
-        req.body;
+    console.log(req.body);
 
-      const departureTime = new Date(departure);
+    try {
+      const { ori_airport, des_airport, departure_time, nums_eco, nums_busi } =
+        req.body;
+      console.log(departure_time);
+
+      const departureTime = new Date(departure_time);
 
       const flights = await Flight.find({
         ori_airport,
@@ -22,19 +26,20 @@ const flightController = {
       });
 
       if (flights.length === 0) {
-        res.status(404).json({ message: "No flights found matching criteria" });
+        res.status(200).json([]);
         return;
       }
 
-      const flights_result = flights.filter(
-        (flight) => flight.actual_departure.getDate() == departureTime.getDate()
-      );
+      const flights_result = flights.filter((flight) => {
+        return flight.actual_departure.getDate() == departureTime.getDate();
+      });
 
-      res.status(200).json({ flights_result });
+      res.status(200).json(flights_result);
     } catch (error) {
       res.status(500).json({ message: "Error searching for flights" });
     }
   },
+
   makeBooking: async (req: Request, res: Response) => {
     try {
       const { flight_id, listInfo, nums_busi, nums_eco, discount_code } =
@@ -149,6 +154,16 @@ const flightController = {
     } catch (error) {
       res.status(500).json({ message: "Error creating booking" });
     }
+  },
+
+  getAirports: async (req: Request, res: Response) => {
+    const airport_list = await Airport.find();
+    res.status(200).json(airport_list);
+  },
+
+  getAllFlights: async (req: Request, res: Response) => {
+    const flights = await Flight.find();
+    res.status(200).json(flights);
   },
 };
 
