@@ -70,6 +70,18 @@ export const SearchBar: React.FC = () => {
         </header>
 
         <section className="flex flex-col justify-center py-5 w-full text-center rounded-3xl rounded-tl-none bg-slate-200 shadow-[0px_5px_5px_rgba(0,0,0,0.25)] text-slate-800 max-md:max-w-full">
+          <div className="w-1/6 ml-10 mb-3">
+            <div className="flex flex-row gap-4">
+              <div className="flex flex-row items-center justify-center">
+                <div className="w-4 h-4 rounded-full border-2 flex items-center justify-center mr-2 border-red-600"></div>
+                <label className="flex items-center cursor-pointer"> Return</label>
+              </div>
+              <div className="flex flex-row items-center justify-center">
+                <div className="w-4 h-4 rounded-full border-2 flex items-center justify-center mr-2 border-red-600"></div>
+                <label className="flex items-center cursor-pointer"> One-way</label>
+              </div>
+            </div>
+          </div>
           <form className="flex flex-col" onSubmit={() => handleSubmit()}>
             <div className="flex flex-wrap gap-2.5 justify-center items-center w-full max-md:max-w-full">
               <div className="flex flex-col self-stretch my-auto min-w-[240px] w-[280px]">

@@ -1,12 +1,17 @@
 import InputField from "./InputFeild";
+import React from "react";
 
-const Ticket = () => {
+interface TicketProps {
+    index: number;
+}
+
+const Ticket : React.FC<TicketProps> = ({ index }) => {
 
 return (
 <div className="flex flex-col text-base tracking-wider">
-    <div className="flex gap-5 justify-center items-center self-start p-7 font-medium text-white rounded-t-2xl bg-blue-400 bg-opacity-20 max-md:px-5">
+    <div className="flex gap-5 justify-center items-center self-start font-medium text-white rounded-t-2xl bg-blue-400 bg-opacity-20 max-md:px-5">
         <div className="overflow-hidden gap-6 self-stretch px-4 py-2.5 my-auto rounded-md bg-slate-700 min-h-[41px]">
-        Ticket 1
+            Ticket {index}
         </div>
     </div>
     <form className="flex flex-wrap gap-16 justify-center items-end p-5 w-full rounded-none bg-blue-400 bg-opacity-20 max-md:max-w-full">

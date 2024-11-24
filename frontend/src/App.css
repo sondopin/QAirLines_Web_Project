@@ -9,22 +9,15 @@
      font-size: 40px;
 }
 
-.slick-next:before{
-  position: absolute;
-  right:0;
-}
 
 .slick-next {
-  z-index: 99999;
+  z-index: 9999;
+  margin-right: 10px;
 }
-.slick-prev
-{
-  position: absolute;
-  right: 10px;
- }
 
 .slick-prev{
-  z-index: 99999;
+  z-index: 9999;
+  margin-right: 7px;
 }
 
 .category-card:hover .arrow-icon{

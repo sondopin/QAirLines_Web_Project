@@ -1,4 +1,6 @@
+import { Input } from "antd";
 import Ticket from "../components/Ticket";
+import InputField from "../components/InputFeild";
 
 
 const Booking = () => {
@@ -19,7 +21,7 @@ const Booking = () => {
     ];
     
       const tickets = [2,3];
-
+    
 
 
 
@@ -82,7 +84,47 @@ const Booking = () => {
                 <p>Please fill in these feilds neccessary information for us. We commits in protecting your information and only use for the flight.</p>
                 <p>Feild marked with <span className="text-red-500">*</span> are compulsory.</p>
             </div>
-            <Ticket />
+            {tickets[0] > 0 ?(
+            <div className="px-10">
+                <h2 className="text-bold text-3xl">Business Tickets</h2>
+                {Array.from({ length: tickets[0] }, (_, index) => (
+                    <div key={index} className="my-5">
+                        <Ticket index={index + 1}/>
+                    </div>
+                ))}
+            </div>) :null} 
+            {tickets[1] > 0 ?(
+            <div className="px-10">
+                <h2 className="text-bold text-3xl">Economy Tickets</h2>
+                {Array.from({ length: tickets[0] }, (_, index) => (
+                    <div key={index} className="my-5">
+                        <Ticket index={index + 1}/>
+                    </div>
+                ))}
+            </div>) :null}
+            <section className="flex overflow-hidden flex-col justify-center px-24 py-14 text-right text-black max-md:px-5">
+                <div className="w-1/5 self-end mb-5">
+                    <label className="text-bold">Discount Code</label>
+                    <InputField 
+                        placeholder="Enter your discount code"
+                        name="discount"
+                        type="text"
+                    />
+                </div>
+
+                <h2 className="text-4xl tracking-[2.4px] max-md:max-w-full">
+                    Total price:
+                </h2>
+                <p className="mt-8 text-5xl font-bold tracking-[2.88px] max-md:max-w-full max-md:text-4xl">
+                    361,500,000 VND
+                </p>
+                <p className="mt-8 text-2xl tracking-widest max-md:max-w-full">
+                    Total price for all passengers (including taxes, fees and discounts).
+                </p>
+                <button className="gap-2.5 self-end px-8 py-6 mt-8 text-3xl font-bold tracking-widest text-center text-white whitespace-nowrap rounded-lg bg-slate-700 max-w-[300px] min-h-[93px] w-[300px] max-md:px-5">
+                    Next
+                </button>
+            </section>
         </div>
     );
 
