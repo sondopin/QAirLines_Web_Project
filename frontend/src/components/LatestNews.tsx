@@ -51,15 +51,15 @@ const LatestNews = () => {
   });
 
   return (
-    <div className="w-full bg-white ml-10 ">
-      <div className="md:max-w-[1480px] m-auto max-w-[800px] md:px-0">
+    <div className="bg-white justify-center w-2/3">
+      <div className="md:max-w-[1480px] md:px-0">
         <div className="py-4">
           <h1 className="text-3xl font-bold justify-center">
             <span className="text-black-600">Latest News</span>
           </h1>
         </div>
 
-        <Slider {...settings}>
+        <Slider {...settings} className="gap-5">
           {blogs_data?.data.map((blog: BlogCard, index: number) => (
             <LatestNewsCard
               key={index}

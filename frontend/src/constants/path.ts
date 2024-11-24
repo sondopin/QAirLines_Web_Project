@@ -7,4 +7,5 @@ export const PATH = {
     base: "/admin",
   },
   search: "/search",
+  booking: "/booking",
 } as const;

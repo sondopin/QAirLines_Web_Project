@@ -70,15 +70,17 @@ const LoginPage: React.FC = () => {
             </p>
           </div>
           <form onSubmit={onSubmit} className="flex flex-col">
-            <InputField
-              name="email"
-              type="text"
-              placeholder="Email"
-              iconSrc="https://cdn.builder.io/api/v1/image/assets/f8ff8e6c001546d0b8b7d8599eb812e4/89d1af211486f8a9cd21fd16209f0d9061374f9e65e163a37e7d9fc23b74a0e0?apiKey=f8ff8e6c001546d0b8b7d8599eb812e4&"
-              iconAlt="Email icon"
-              register={register}
-              error={errors.email?.message}
-            />
+            <div className="mb-10">
+              <InputField
+                name="email"
+                type="text"
+                placeholder="Email"
+                iconSrc="https://cdn.builder.io/api/v1/image/assets/f8ff8e6c001546d0b8b7d8599eb812e4/89d1af211486f8a9cd21fd16209f0d9061374f9e65e163a37e7d9fc23b74a0e0?apiKey=f8ff8e6c001546d0b8b7d8599eb812e4&"
+                iconAlt="Email icon"
+                register={register}
+                error={errors.email?.message}
+              />
+            </div>
             <InputField
               name="password"
               type="password"

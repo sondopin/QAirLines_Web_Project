@@ -78,24 +78,28 @@ const RegisterPage: React.FC = () => {
             </p>
           </div>
           <form onSubmit={onSubmit} className="mb-10 flex flex-col">
-            <InputField
-              name="email"
-              type="text"
-              placeholder="Email"
-              iconSrc="https://cdn.builder.io/api/v1/image/assets/f8ff8e6c001546d0b8b7d8599eb812e4/89d1af211486f8a9cd21fd16209f0d9061374f9e65e163a37e7d9fc23b74a0e0?apiKey=f8ff8e6c001546d0b8b7d8599eb812e4&"
-              iconAlt="Email icon"
-              register={register}
-              error={errors.email?.message}
-            />
-            <InputField
-              name="password"
-              type="password"
-              placeholder="Password"
-              iconSrc="https://cdn.builder.io/api/v1/image/assets/f8ff8e6c001546d0b8b7d8599eb812e4/4f99d8f408629bd8675a6a08d50091c811acac04e457a14f936a41b2fdfc8e5a?apiKey=f8ff8e6c001546d0b8b7d8599eb812e4&"
-              iconAlt="Password icon"
-              register={register}
-              error={errors.password?.message}
-            />
+            <div className="mb-8">
+              <InputField
+                name="email"
+                type="text"
+                placeholder="Email"
+                iconSrc="https://cdn.builder.io/api/v1/image/assets/f8ff8e6c001546d0b8b7d8599eb812e4/89d1af211486f8a9cd21fd16209f0d9061374f9e65e163a37e7d9fc23b74a0e0?apiKey=f8ff8e6c001546d0b8b7d8599eb812e4&"
+                iconAlt="Email icon"
+                register={register}
+                error={errors.email?.message}
+              />
+            </div>
+            <div className="mb-8">
+              <InputField
+                name="password"
+                type="password"
+                placeholder="Password"
+                iconSrc="https://cdn.builder.io/api/v1/image/assets/f8ff8e6c001546d0b8b7d8599eb812e4/4f99d8f408629bd8675a6a08d50091c811acac04e457a14f936a41b2fdfc8e5a?apiKey=f8ff8e6c001546d0b8b7d8599eb812e4&"
+                iconAlt="Password icon"
+                register={register}
+                error={errors.password?.message}
+              />
+            </div>
             <InputField
               name="confirm_password"
               type="password"

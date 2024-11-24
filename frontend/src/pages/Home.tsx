@@ -10,10 +10,10 @@ const Home = () => {
       <div className="container mx-auto mt-[-150px] w-5/6">
         <SearchBar />
       </div>
-      <div className="flex flex-col items-center">
+      <div className="flex flex-col mx-auto items-center justify-center">
         <LatestNews />
-        <WhyChooseUs />
       </div>
+      <WhyChooseUs />
     </div>
   );
 };
