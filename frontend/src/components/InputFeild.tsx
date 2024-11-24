@@ -32,6 +32,7 @@ const InputField: React.FC<InputFieldProps> = ({
         placeholder={placeholder}
         className="self-stretch bg-[rgba(217,217,217,0.5)] flex-1 basis-0 my-auto md:max-w-full"
         aria-label={placeholder}
+        {...register(name)}
       />
       {error ? (<div>{error}</div>): null}
     </div>
