@@ -3,14 +3,19 @@ import {
   getJWTFromLocalStorage,
   setJWTToLocalStorage,
   clearJWTFromLocalStorage,
+  getRoleFromLocalStorage,
+  setRoleToLocalStorage,
+  clearRoleFromLocalStorage,
 } from "./auth";
 
 class Http {
   instance: AxiosInstance;
   private access_token: string;
+  private role: string;
 
   constructor() {
     this.access_token = getJWTFromLocalStorage();
+    this.role = getRoleFromLocalStorage();
     this.instance = axios.create({
       baseURL: "http://localhost:7000",
       timeout: 10000,
@@ -22,6 +27,7 @@ class Http {
     this.instance.interceptors.request.use(
       (config) => {
         config.headers.Authorization = `Bearer ${this.access_token}`;
+        config.headers.Role = this.role;
         return config;
       },
       (errors) => {
@@ -35,17 +41,20 @@ class Http {
 
         if (url === "/auth/login" || url === "/auth/register") {
           try {
-            const { token } = response.data;
+            const { token, role } = response.data;
             this.access_token = token;
+            this.role = role;
             setJWTToLocalStorage(token);
+            setRoleToLocalStorage(role);
           } catch (error) {
             console.log(error);
           }
         } else if (url === "/auth/logout") {
           this.access_token = "";
           clearJWTFromLocalStorage();
+          clearRoleFromLocalStorage();
         }
-        return response.data;
+        return response;
       },
       (errors) => {
         return Promise.reject(errors);

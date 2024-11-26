@@ -6,6 +6,7 @@ declare global {
   namespace Express {
     interface Request {
       user_id: string;
+      role: string;
     }
   }
 }
@@ -19,10 +20,19 @@ const verifyToken = (req: Request, res: Response, next: NextFunction) => {
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY as string);
     req.user_id = (decoded as JwtPayload).user_id;
+    req.role = (decoded as JwtPayload).role;
     next();
   } catch (error) {
-    res.status(401).json({ message: "unauthorized" });
+    res.status(401).json({ message: "Unauthorized" });
   }
 };
 
-export default verifyToken;
+const verifyRole = (req: Request, res: Response, next: NextFunction) => {
+  if (req.role === "Admin") {
+    next();
+  } else {
+    res.status(401).json({ message: "You are not admin" });
+  }
+};
+
+export { verifyToken, verifyRole };
