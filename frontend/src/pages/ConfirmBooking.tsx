@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { number } from "yup";
 
 interface ConfirmBookingProps {
   departurePlace: string;
@@ -11,6 +10,21 @@ interface ConfirmBookingProps {
   planeNumber: string;
   totalPrice: number;
 }
+
+/**
+ * ConfirmBooking component displays the booking confirmation details.
+ *
+ * @param {Object} props - The properties object.
+ * @param {string} props.departurePlace - The place of departure.
+ * @param {string} props.departureDate - The date of departure.
+ * @param {string} props.destination - The destination place.
+ * @param {string} props.returnDate - The date of return.
+ * @param {Array<number>} props.numberOfTickets - The number of tickets, where the first element is the number of business tickets and the second element is the number of economy tickets.
+ * @param {string} props.planeNumber - The plane number.
+ * @param {string} props.totalPrice - The total price of the booking in VND.
+ *
+ * @returns {JSX.Element} The JSX element representing the booking confirmation details.
+ */
 
 const ConfirmBooking: React.FC<ConfirmBookingProps> = ({
   departurePlace,
@@ -28,7 +42,7 @@ const ConfirmBooking: React.FC<ConfirmBookingProps> = ({
       </h1>
       <div className="flex flex-row gap-[10px] w-full text-[20px] text-[#223A60] justify-start">
         <div className="font-bold">Departure Place:</div>
-        <div className="opacity-[60%]">{departureDate}</div>
+        <div className="opacity-[60%]">{departurePlace}</div>
       </div>
       <div className="flex flex-row gap-[10px] w-full text-[20px] text-[#223A60] justify-start">
         <div className="font-bold">Departure Date:</div>
