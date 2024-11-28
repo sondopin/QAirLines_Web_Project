@@ -26,7 +26,7 @@ const SearchedFlightInfo: React.FC<SearchedFlightInfoProps> = ({
   economyTickets,
 }) => {
   return (
-    <div className="flex flex-col md:flex-row w-full gap-[20px] md:gap-[52px] px-[20px] md:px-[61px] py-[11px] shadow-lg rounded-[20px] bg-[#EAF0F0]">
+    <div className="flex flex-col md:flex-row w-full gap-[20px] md:gap-[52px] px-[20px] md:px-[61px] py-[11px] shadow-lg rounded-[20px] bg-[#EAF0F0] scale-[0.8] hover:scale-[0.82] transform transition-transform duration-200">
       {/* Place */}
       <div className="flex flex-row gap-auto items-center w-full justify-center items-center">
         <div className="flex flex-col w-full items-center">
