@@ -1,10 +1,13 @@
 import React from "react";
-import createRoutes from "./routes";
-import "./App.css";
+import { Routes, Route } from "react-router-dom";
+import MyBooking from "./pages/MyBooking";
 
 const App: React.FC = () => {
-  const routes = createRoutes();
-  return <div className="App">{routes}</div>;
+  return (
+    <Routes>
+      <Route path="/" element={<MyBooking />} />
+    </Routes>
+  );
 };
 
 export default App;
