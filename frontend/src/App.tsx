@@ -1,11 +1,11 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import FinalConfirmCancel from "./pages/FinalConfirmCancel";
+import HomeAdmin from "./pages/HomeAdmin";
 
 const App: React.FC = () => {
   return (
     <Routes>
-      <Route path="/" element={<FinalConfirmCancel />} />
+      <Route path="/" element={<HomeAdmin />} />
     </Routes>
   );
 };
