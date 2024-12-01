@@ -4,10 +4,16 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        serif: ['DM Serif Display', '-apple-system', 'Roboto', 'Helvetica', 'sans-serif'],
-      }
+        serif: [
+          "DM Serif Display",
+          "-apple-system",
+          "Roboto",
+          "Helvetica",
+          "sans-serif",
+        ],
+        sans: ["DM Sans", "sans-serif"],
+      },
     },
   },
   plugins: [],
-}
-
+};
