@@ -8,7 +8,8 @@ import PrivateRoute from "./guards/PrivateRoute";
 import AdminRoute from "./guards/AdminRoute";
 import RejectedRoute from "./guards/RejectedRoute";
 import SearchPage from "./pages/Search";
-import BookingPage from "./pages/Booking";
+import Booking from "./pages/Booking";
+import MyBooking from "./pages/MyBooking";
 
 export default function createRoutes() {
   // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -54,10 +55,17 @@ export default function createRoutes() {
     },
     {
       path: PATH.booking,
-      index: true,
       element: (
         <Layout>
-          <BookingPage />
+          <Booking />
+        </Layout>
+      ),
+    },
+    {
+      path: PATH.mybooking,
+      element: (
+        <Layout>
+          <MyBooking />
         </Layout>
       ),
     },

@@ -1,11 +1,12 @@
 import Hero from "../components/Hero";
 import SearchResultCard from "../components/SearchResultCard";
 import { useQuery } from "@tanstack/react-query";
-import { getAirports, getFlights } from "../apis/flight.api";
+import { getFlights } from "../apis/flight.api";
 import { formatDate } from "../utils/utils";
 import { useQueryForm } from "../hooks/useQueryForm";
-import { Airport, Flight } from "../types/flight.type";
+import { Flight } from "../types/flight.type";
 import { useState } from "react";
+import { useGetAirports } from "../hooks/useGetAirports";
 
 type SortType = {
   base_price?: "asc" | "desc";
@@ -15,22 +16,16 @@ type SortType = {
 const Search = () => {
   const search_query = useQueryForm();
   const [sort, setSort] = useState<SortType>({});
-  const { data: airport_list } = useQuery({
-    queryKey: ["airport"],
-    queryFn: () => getAirports(),
-  });
 
-  const departure_airport = airport_list?.data.find(
-    (airport: Airport) => airport._id === search_query.ori_airport
-  );
+  const airports = useGetAirports();
 
-  const departure_time = formatDate(search_query.departure_time);
+  const departure_airport = airports[search_query?.ori_airport];
 
-  const arrival_airport = airport_list?.data.find(
-    (airport: Airport) => airport._id === search_query.des_airport
-  );
+  const departure_time = formatDate(search_query?.departure_time);
 
-  const arrival_time = formatDate(search_query.arrival_time);
+  const arrival_airport = airports[search_query?.des_airport];
+
+  const arrival_time = formatDate(search_query?.arrival_time);
 
   const { data: flights_query } = useQuery({
     queryKey: ["flights", search_query],
@@ -72,67 +67,66 @@ const Search = () => {
 
   return (
     <div>
-      <Hero />
-      <section className="flex flex-row text-center mx-auto mt-2 overflow-hidden flex-wrap gap-14 justify-center items-center py-7 w-full font-bold text-black rounded-3xl bg-slate-200 bg-opacity-90 shadow-[0px_4px_4px_rgba(0,0,0,0.25)] max-md:max-w-full">
-        <div className="flex flex-row flex-wrap flex-1 shrink justify-between items-center self-stretch my-auto basis-0 max-w-[452px] min-w-[320px] max-md:max-w-full">
-          <div className="flex flex-col flex-1 shrink self-stretch my-auto basis-0 max-w-[200px] min-w-[200px]">
-            <h2 className="text-3xl tracking-widest">
-              {departure_airport?.name}
-            </h2>
-            <p className="mt-4 text-xl tracking-wider">
-              {departure_airport?.city}
-            </p>
-          </div>
-          <img
-            loading="lazy"
-            src="https://cdn.builder.io/api/v1/image/assets/TEMP/86c8eaeaaf632188c747159665b41f690effb9db85d1ba6debed68d88ac936c6?placeholderIfAbsent=true&apiKey=cdf4ef6bf30f4b36bc29a527c8e3e010"
-            alt=""
-            className="object-contain shrink self-stretch aspect-[2.16] basis-0 w-[52px]"
-          />
-          <div className="flex flex-col flex-1 shrink self-stretch my-auto basis-0 max-w-[200px] min-w-[200px]">
-            <h2 className="text-3xl tracking-widest">
-              {arrival_airport?.name}
-            </h2>
-            <p className="mt-4 text-xl tracking-wider">
-              {arrival_airport?.city}
-            </p>
-          </div>
-        </div>
-        <img
-          loading="lazy"
-          src="https://cdn.builder.io/api/v1/image/assets/TEMP/81e762ee6663a4186273daa6127fc4a9dbe66ef847afd8d79aa1a5fd7098b606?placeholderIfAbsent=true&apiKey=cdf4ef6bf30f4b36bc29a527c8e3e010"
-          alt=""
-          className="object-contain shrink-0 self-stretch my-auto aspect-[0.04] w-[3px]"
-        />
-        <div className="flex flex-wrap flex-1 shrink gap-5 items-start justify-center self-stretch my-auto text-xl tracking-wider basis-0 max-w-[449px] min-w-[320px] max-md:max-w-full">
-          <div className="flex flex-col flex-1 shrink items-start basis-0 max-w-[209px] min-w-[209px]">
-            <h3>Departure Date</h3>
-            <p className="mt-2.5">{departure_time}</p>
-          </div>
-          <div className="flex flex-col flex-1 shrink items-start basis-0 max-w-[209px] min-w-[209px]">
-            <h3>Return Date</h3>
-            <p className="mt-2.5">{arrival_time}</p>
-          </div>
-        </div>
-        <img
-          loading="lazy"
-          src="https://cdn.builder.io/api/v1/image/assets/TEMP/81e762ee6663a4186273daa6127fc4a9dbe66ef847afd8d79aa1a5fd7098b606?placeholderIfAbsent=true&apiKey=cdf4ef6bf30f4b36bc29a527c8e3e010"
-          alt=""
-          className="object-contain shrink-0 self-stretch my-auto aspect-[0.04] w-[3px]"
-        />
-        <div className="flex flex-col flex-1 shrink justify-center self-stretch my-auto text-xl tracking-wider basis-0 max-w-[369px] min-w-[369px]">
-          <div className="flex items-start w-full">
-            <div className="flex-1 shrink basis-0">Business Tickets</div>
-            <div className="flex-1 shrink basis-0">
-              {search_query.nums_busi}
+      <Hero>
+        <section className="flex items-center justify-evenly p-6 w-full bg-white bg-opacity-90 rounded-3xl shadow-md font-sans">
+          {/* Airport Information */}
+          <div className="flex items-center space-x-4">
+            {/* Departure Airport */}
+            <div className="text-center">
+              <h2 className="text-2xl font-bold">{departure_airport?.name}</h2>
+              <p className="text-gray-600">{departure_airport?.city}</p>
+            </div>
+
+            {/* Divider */}
+            <div className="h-8 w-[1px] bg-gray-300"></div>
+
+            {/* Icon */}
+            <div>
+              <span className="text-2xl">⇆</span>
+            </div>
+
+            {/* Divider */}
+            <div className="h-8 w-[1px] bg-gray-300"></div>
+
+            {/* Arrival Airport */}
+            <div className="text-center">
+              <h2 className="text-2xl font-bold">{arrival_airport?.name}</h2>
+              <p className="text-gray-600">{arrival_airport?.city}</p>
             </div>
           </div>
-          <div className="flex items-start w-full">
-            <div className="flex-1 shrink basis-0">Economy Tickets</div>
-            <div className="flex-1 shrink basis-0">{search_query.nums_eco}</div>
+
+          {/* Divider */}
+          <div className="h-16 w-[1px] bg-gray-300"></div>
+
+          {/* Dates Information */}
+          <div className="text-center">
+            <div>
+              <h3 className="text-lg font-semibold">Departure Date</h3>
+              <p className="text-gray-600">{departure_time}</p>
+            </div>
+            <div className="mt-4">
+              <h3 className="text-lg font-semibold">Return Date</h3>
+              <p className="text-gray-600">{arrival_time}</p>
+            </div>
           </div>
-        </div>
-      </section>
+
+          {/* Divider */}
+          <div className="h-16 w-[1px] bg-gray-300"></div>
+
+          {/* Ticket Information */}
+          <div className="text-center space-y-4">
+            <div className="flex justify-between space-x-4">
+              <span className="text-lg font-semibold">Business Tickets</span>
+              <span className="text-lg">{search_query?.nums_busi}</span>
+            </div>
+            <div className="flex justify-between space-x-4">
+              <span className="text-lg font-semibold">Economy Tickets</span>
+              <span className="text-lg">{search_query?.nums_eco}</span>
+            </div>
+          </div>
+        </section>
+      </Hero>
+      {/* End hero */}
       {/* End general information */}
       <section
         role="alert"
@@ -163,53 +157,56 @@ const Search = () => {
       </h1>
 
       <div className="flex overflow-hidden flex-col text-black mt-5">
-        <section className="flex overflow-hidden flex-wrap gap-2.5 items-start px-44 py-2.5 w-full max-md:px-5 max-md:max-w-full">
-          <p className="flex-1 shrink text-base tracking-wider leading-6 basis-12 min-w-[320px] max-md:max-w-full">
-            ❗Flights are displayed in the default order selected by QAirline.
+        <section className="flex flex-wrap gap-4 items-start px-16 py-4 w-full bg-gray-50 rounded-lg max-md:px-4">
+          <p className="flex-1 text-sm italic text-gray-600 tracking-wide leading-6 min-w-[320px] max-md:max-w-full">
+            ❗❗❗ Flights are displayed in the default order selected by
+            QAirline.
+            <br />
             Please select the feature (Sort) to change the display order as
             needed.
             <br />
             Price displayed is the lowest and can be varied from business class
             economy ticket classes.
           </p>
+
+          {/* Button for Sorting by Time */}
           <button
-            className="flex flex-1 shrink gap-0.5 items-center px-6 text-4xl font-bold leading-none text-center whitespace-nowrap rounded-2xl basis-0 bg-zinc-300 max-w-[233px] min-h-[59px] min-w-[233px] tracking-[2.16px] max-md:px-5"
+            className="flex items-center gap-2 px-6 py-3 text-xl font-bold text-gray-800 bg-gray-200 rounded-lg hover:bg-gray-300 transition-transform transform hover:-translate-y-1 min-w-[233px]"
             onClick={() => handleSort("actual_departure")}
           >
             <img
               loading="lazy"
               src={
-                sort.actual_departure
-                  ? sort.actual_departure == "asc"
-                    ? "../../up-arrow.png"
-                    : "../../down-arrow.png"
+                sort.actual_departure === "asc"
+                  ? "../../up-arrow.png"
+                  : sort.actual_departure === "desc"
+                  ? "../../down-arrow.png"
                   : "../../sort.png"
               }
-              className="object-contain flex-1 shrink self-stretch my-auto aspect-[1.74] basis-0 w-[92px]"
-              alt=""
+              className="w-6 h-6 object-contain"
+              alt="Sort by Time"
             />
-            <span className="flex-1 shrink self-stretch my-auto basis-0">
-              Time
-            </span>
+            <span>Time</span>
           </button>
+
+          {/* Button for Sorting by Price */}
           <button
-            className="flex flex-1 shrink gap-0.5 items-center px-6 text-4xl font-bold leading-none text-center whitespace-nowrap rounded-2xl basis-0 bg-zinc-300 max-w-[233px] min-h-[59px] min-w-[233px] tracking-[2.16px] max-md:px-5"
+            className="flex items-center gap-2 px-6 py-3 text-xl font-bold text-gray-800 bg-gray-200 rounded-lg hover:bg-gray-300 transition-transform transform hover:-translate-y-1 min-w-[233px]"
             onClick={() => handleSort("base_price")}
           >
             <img
               loading="lazy"
               src={
-                sort.base_price
-                  ? sort.base_price == "asc"
-                    ? "../../up-arrow.png"
-                    : "../../down-arrow.png"
+                sort.base_price === "asc"
+                  ? "../../up-arrow.png"
+                  : sort.base_price === "desc"
+                  ? "../../down-arrow.png"
                   : "../../sort.png"
               }
-              className="object-contain flex-1 shrink self-stretch my-auto aspect-[1.74] basis-0 w-[92px]"
+              className="w-6 h-6 object-contain"
+              alt="Sort by Price"
             />
-            <span className="flex-1 shrink self-stretch my-auto basis-0">
-              Price
-            </span>
+            <span>Price</span>
           </button>
         </section>
         <section className="flex overflow-hidden flex-col px-16 py-16 w-full text-2xl tracking-widest max-md:px-5 max-md:max-w-full">
