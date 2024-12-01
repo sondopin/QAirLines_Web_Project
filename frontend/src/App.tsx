@@ -1,11 +1,11 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import AirplaneManagement from "./pages/AirplaneManagement";
+import ViewFlight from "./pages/ViewFlight";
 
 const App: React.FC = () => {
   return (
     <Routes>
-      <Route path="/" element={<AirplaneManagement />} />
+      <Route path="/" element={<ViewFlight flightNumber="QA01" />} />
     </Routes>
   );
 };
