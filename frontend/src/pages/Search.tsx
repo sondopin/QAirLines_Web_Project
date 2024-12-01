@@ -19,13 +19,13 @@ const Search = () => {
 
   const airports = useGetAirports();
 
-  const departure_airport = airports[search_query.ori_airport];
+  const departure_airport = airports[search_query?.ori_airport];
 
-  const departure_time = formatDate(search_query.departure_time);
+  const departure_time = formatDate(search_query?.departure_time);
 
-  const arrival_airport = airports[search_query.des_airport];
+  const arrival_airport = airports[search_query?.des_airport];
 
-  const arrival_time = formatDate(search_query.arrival_time);
+  const arrival_time = formatDate(search_query?.arrival_time);
 
   const { data: flights_query } = useQuery({
     queryKey: ["flights", search_query],
@@ -117,11 +117,11 @@ const Search = () => {
           <div className="text-center space-y-4">
             <div className="flex justify-between space-x-4">
               <span className="text-lg font-semibold">Business Tickets</span>
-              <span className="text-lg">{search_query.nums_busi}</span>
+              <span className="text-lg">{search_query?.nums_busi}</span>
             </div>
             <div className="flex justify-between space-x-4">
               <span className="text-lg font-semibold">Economy Tickets</span>
-              <span className="text-lg">{search_query.nums_eco}</span>
+              <span className="text-lg">{search_query?.nums_eco}</span>
             </div>
           </div>
         </section>
