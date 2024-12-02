@@ -6,15 +6,13 @@ import Ticket from "../models/ticket";
 import User from "../models/user";
 import { SeatType } from "../models/types";
 import Airport from "../models/airport";
+import { log } from "console";
 
 const flightController = {
   searchFlights: async (req: Request, res: Response) => {
-    console.log(req.body);
-
     try {
       const { ori_airport, des_airport, departure_time, nums_eco, nums_busi } =
         req.body;
-      console.log(departure_time);
 
       const departureTime = new Date(departure_time);
 
@@ -42,7 +40,7 @@ const flightController = {
 
   makeBooking: async (req: Request, res: Response) => {
     try {
-      const { flight_id, listInfo, nums_busi, nums_eco, discount_code } =
+      const { flight_id, tickets, busi_tickets, eco_tickets, discount_code } =
         req.body;
       const user_id = req.user_id;
 
@@ -58,24 +56,27 @@ const flightController = {
       }
 
       let businessSeats: any = [];
-      if (nums_busi != 0) {
+      if (busi_tickets != 0) {
         businessSeats = await Seat.find({
           flight_id,
           seat_class: "Business",
           is_available: true,
-        }).limit(nums_busi);
+        }).limit(busi_tickets);
       }
 
       let economySeats: any = [];
-      if (nums_eco != 0) {
+      if (eco_tickets != 0) {
         economySeats = await Seat.find({
           flight_id,
           seat_class: "Economy",
           is_available: true,
-        }).limit(nums_eco);
+        }).limit(eco_tickets);
       }
 
-      if (businessSeats.length < nums_busi || economySeats.length < nums_eco) {
+      if (
+        businessSeats.length < busi_tickets ||
+        economySeats.length < eco_tickets
+      ) {
         res.status(400).json({ message: "Not enough seats available" });
         return;
       }
@@ -92,30 +93,30 @@ const flightController = {
         cancellation_deadline = max_deadline;
       }
 
+      let total_amount = 0;
+      let seatCounter = 0;
+
       const booking = new Booking({
         user_id,
         flight_id,
-        nums_busi,
-        nums_eco,
+        busi_tickets,
+        eco_tickets,
         booking_date: new Date(),
         status: "Confirmed",
         cancellation_deadline,
+        total_amount,
       });
-
-      let total_amount = 0;
-      let seatCounter = 0;
 
       for (const seat of businessSeats) {
         const price = flight.base_price * 1.5 * discount;
         seat.is_available = false;
         await seat.save();
 
-        const passenger = listInfo[seatCounter];
+        const passenger = tickets[seatCounter];
         const ticket = new Ticket({
           booking_id: booking._id,
           seat_id: seat._id,
-          passenger_name: passenger,
-          price,
+          ...passenger,
         });
         await ticket.save();
 
@@ -128,12 +129,11 @@ const flightController = {
         seat.is_available = false;
         await seat.save();
 
-        const passenger = listInfo[seatCounter];
+        const passenger = tickets[seatCounter];
         const ticket = new Ticket({
           booking_id: booking._id,
           seat_id: seat._id,
-          passenger_name: passenger,
-          price,
+          ...passenger,
         });
         await ticket.save();
 
@@ -141,10 +141,13 @@ const flightController = {
         seatCounter++;
       }
 
-      booking.total_ammount = total_amount;
+      booking.total_amount = total_amount;
+
       await booking.save();
 
-      flight.revenue = flight.revenue + booking.total_ammount;
+      flight.revenue = flight.revenue + booking.total_amount;
+      flight.nums_busi_seat_avail -= busi_tickets;
+      flight.nums_eco_seat_avail -= eco_tickets;
 
       await flight.save();
 

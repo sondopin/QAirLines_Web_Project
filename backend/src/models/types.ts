@@ -61,11 +61,11 @@ export type BookingType = {
   _id: string;
   user_id: string;
   flight_id: string;
-  nums_busi: number;
-  nums_eco: number;
+  busi_tickets: number;
+  eco_tickets: number;
   booking_date: Date;
   status: string;
-  total_ammount: number;
+  total_amount: number;
   cancellation_deadline: Date;
 };
 
@@ -73,8 +73,12 @@ export type TicketType = {
   _id: string;
   booking_id: string;
   seat_id: string;
-  passenger_name: string;
-  price: number;
+  dob: Date | null;
+  name: string;
+  nationality: string;
+  email: string;
+  phone: string;
+  passport: string;
 };
 
 export type BlogType = {
