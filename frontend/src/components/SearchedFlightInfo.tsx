@@ -1,77 +1,99 @@
 import React from "react";
+import { formatDate, formatTime } from "../utils/utils";
 
 interface SearchedFlightInfoProps {
-  departureCityCode: string;
-  destinationCityCode: string;
-  departureCityName: string;
-  destinationCityName: string;
-  departureDate: string;
-  departureTime?: string;
-  returnDate: string;
-  returnTime?: string;
-  businessTickets: number;
-  economyTickets: number;
+  _id: string;
+  actual_departure: Date;
+  actual_arrival: Date;
+  ori_airport: string;
+  ori_code: string;
+  ori_city: string;
+  des_airport: string;
+  des_code: string;
+  des_city: string;
+  number: string;
+  base_price: number;
+  nums_busi_seat_avail: number;
+  nums_eco_seat_avail: number;
+  nums_busi_book: number;
+  nums_eco_book: number;
 }
 
 const SearchedFlightInfo: React.FC<SearchedFlightInfoProps> = ({
-  departureCityCode,
-  departureCityName,
-  destinationCityCode,
-  destinationCityName,
-  departureDate,
-  departureTime,
-  returnDate,
-  returnTime,
-  businessTickets,
-  economyTickets,
+  actual_departure,
+  actual_arrival,
+  ori_code,
+  des_code,
+  ori_city,
+  des_city,
+  nums_busi_book,
+  nums_eco_book,
 }) => {
+  const departure_date = formatDate(actual_departure);
+  const depature_time = formatTime(actual_departure);
+  const arrival_date = formatDate(actual_arrival);
+  const arrival_time = formatTime(actual_arrival);
+
   return (
-    <div className="flex flex-col md:flex-row w-full gap-[20px] md:gap-[52px] px-[20px] md:px-[61px] py-[11px] shadow-lg rounded-[20px] bg-[#EAF0F0] scale-[0.8] hover:scale-[0.82] transform transition-transform duration-200">
-      {/* Place */}
-      <div className="flex flex-row gap-auto items-center w-full justify-center items-center">
-        <div className="flex flex-col w-full items-center">
-          <div className="font-bold text-[32px]">{departureCityCode}</div>
-          <div className="font-semibold text-[20px]">{departureCityName}</div>
+    <section className="flex flex-col md:flex-row items-center justify-center md:justify-evenly p-6 w-full bg-gray-200 bg-opacity-90 rounded-3xl shadow-md font-sans gap-6">
+      {/* Airport Information */}
+      <div className="flex items-center space-x-4">
+        {/* Departure Airport */}
+        <div className="text-center">
+          <h2 className="text-2xl font-bold">{ori_code}</h2>
+          <p className="text-gray-600">{ori_city}</p>
         </div>
-        <img
-          src="./arrow_switch_horizontal.png"
-          alt=""
-          className="w-[40px] h-[24px]"
-        />
-        <div className="flex flex-col w-full items-center">
-          <div className="font-bold text-[32px]">{destinationCityCode}</div>
-          <div className="font-semibold text-[20px]">{destinationCityName}</div>
+
+        {/* Divider */}
+        <div className="hidden md:block h-8 w-[1px] bg-gray-300"></div>
+
+        {/* Icon */}
+        <div>
+          <span className="text-2xl">⇆</span>
         </div>
-      </div>
-      <img
-        src="./verticle_line.png"
-        alt="Line"
-        className="hidden md:block scale-[0.8]"
-      />
-      {/* Schedule */}
-      <div className="flex flex-col md:flex-row gap-[18px] w-full text-[20px] font-semibold justify-center items-center">
-        <div className="flex flex-col gap-[10px] w-full items-center">
-          <div>Departure Date</div>
-          <div>{departureDate}</div>
-          <div>{departureTime}</div>
-        </div>
-        <div className="flex flex-col gap-[10px] w-full items-center">
-          <div>Return Date</div>
-          <div>{returnDate}</div>
-          <div>{returnTime}</div>
+
+        {/* Divider */}
+        <div className="hidden md:block h-8 w-[1px] bg-gray-300"></div>
+
+        {/* Arrival Airport */}
+        <div className="text-center">
+          <h2 className="text-2xl font-bold">{des_code}</h2>
+          <p className="text-gray-600">{des_city}</p>
         </div>
       </div>
-      <img
-        src="./verticle_line.png"
-        alt="Line"
-        className="hidden md:block scale-[0.8]"
-      />
-      {/* Tickets */}
-      <div className="flex flex-col w-full gap-[10px] justify-center items-center font-semibold text-[20px]">
-        <div>Business Tickets: {businessTickets}</div>
-        <div>Economy Tickets: {economyTickets}</div>
+
+      {/* Divider */}
+      <div className="hidden md:block h-16 w-[1px] bg-gray-300"></div>
+
+      {/* Dates Information */}
+      <div className="text-center">
+        <div>
+          <h3 className="text-lg font-semibold">Departure Date</h3>
+          <p className="text-gray-600">
+            {depature_time + " " + departure_date}
+          </p>
+        </div>
+        <div className="mt-4">
+          <h3 className="text-lg font-semibold">Return Date</h3>
+          <p className="text-gray-600">{arrival_time + " " + arrival_date}</p>
+        </div>
       </div>
-    </div>
+
+      {/* Divider */}
+      <div className="hidden md:block h-16 w-[1px] bg-gray-300"></div>
+
+      {/* Ticket Information */}
+      <div className="text-center space-y-4">
+        <div className="flex justify-between space-x-4">
+          <span className="text-lg font-semibold">Business Tickets</span>
+          <span className="text-lg">{nums_busi_book}</span>
+        </div>
+        <div className="flex justify-between space-x-4">
+          <span className="text-lg font-semibold">Economy Tickets</span>
+          <span className="text-lg">{nums_eco_book}</span>
+        </div>
+      </div>
+    </section>
   );
 };
 

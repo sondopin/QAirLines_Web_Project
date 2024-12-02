@@ -1,16 +1,58 @@
-import { Flight } from "../types/flight.type";
+import { useNavigate } from "react-router-dom";
 import { formatTime } from "../utils/utils";
+interface SearchResultCardProps {
+  _id: string;
+  actual_departure: Date;
+  actual_arrival: Date;
+  ori_airport: string;
+  ori_code: string;
+  ori_city: string;
+  des_airport: string;
+  des_code: string;
+  des_city: string;
+  number: string;
+  base_price: number;
+  nums_busi_seat_avail: number;
+  nums_eco_seat_avail: number;
+  nums_busi_book: number;
+  nums_eco_book: number;
+}
 
 const SearchResultCard = ({
+  _id,
   actual_departure,
   actual_arrival,
   ori_airport,
   des_airport,
+  ori_code,
+  des_code,
+  ori_city,
+  des_city,
   number,
   base_price,
   nums_busi_seat_avail,
   nums_eco_seat_avail,
-}: Flight) => {
+  nums_busi_book,
+  nums_eco_book,
+}: SearchResultCardProps) => {
+  const flight_infor = {
+    _id,
+    actual_departure,
+    actual_arrival,
+    ori_airport,
+    des_airport,
+    number,
+    base_price,
+    nums_busi_seat_avail,
+    nums_eco_seat_avail,
+    ori_code,
+    des_code,
+    ori_city,
+    des_city,
+  };
+
+  const navigate = useNavigate();
+
   return (
     <div className="flex flex-wrap gap-6 items-center bg-blue-400 bg-opacity-20 rounded-xl shadow-md p-4 max-w-full transition-transform duration-300 hover:scale-105">
       {/* General Information */}
@@ -92,7 +134,14 @@ const SearchResultCard = ({
         </div>
         {/* Nút Book now */}
         <div className="mt-4">
-          <button className="bg-red-500 text-white rounded-full px-6 py-3 hover:bg-red-600 transition-all shadow-md">
+          <button
+            className="bg-red-500 text-white rounded-full px-6 py-3 hover:bg-red-600 transition-all shadow-md"
+            onClick={() => {
+              navigate("/booking", {
+                state: { flight_infor, nums_busi_book, nums_eco_book },
+              });
+            }}
+          >
             Book now
           </button>
         </div>

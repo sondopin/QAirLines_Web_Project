@@ -36,7 +36,13 @@ const Search = () => {
     return {
       ...flight,
       ori_airport: departure_airport?.name as string,
+      ori_city: departure_airport?.city as string,
+      ori_code: departure_airport?.code as string,
+      des_code: arrival_airport?.code as string,
+      des_city: arrival_airport?.city as string,
       des_airport: arrival_airport?.name as string,
+      nums_busi_book: search_query?.nums_busi,
+      nums_eco_book: search_query?.nums_eco,
     };
   });
 
