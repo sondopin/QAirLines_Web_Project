@@ -53,25 +53,30 @@ export const SearchBar: React.FC = () => {
   };
 
   return (
-    <div className="container mx-auto">
+    <div className="container mx-auto px-4 sm:px-6 lg:px-8">
       <div className="flex flex-col items-center text-base tracking-wider">
+        {/* Header Section */}
         <header className="flex justify-start items-center w-full p-5 text-white rounded-t-3xl shadow-lg">
           <div className="flex items-center gap-3">
-            <div className="bg-blue-700 p-2 rounded-md">
+            <div className="bg-blue-500 p-2 rounded-md">
               <img
                 src="https://cdn.builder.io/api/v1/image/assets/TEMP/00ac9e86fa260b6d84ff4fa8b950ea35a52fa989420022f2153547a5a928f465"
                 alt="QAF Logo"
-                className="w-4 h-4"
+                className="w-6 h-6"
               />
             </div>
             <span className="font-semibold">QAF0001</span>
           </div>
         </header>
+
         {/* Form Section */}
-        <section className="w-full p-8 mt-4 bg-gray-100 rounded-3xl shadow-lg">
-          <form className="grid grid-cols-4 gap-6" onSubmit={handleSubmit}>
+        <section className="w-full p-6 sm:p-8 mt-4 bg-gray-100 rounded-3xl shadow-lg">
+          <form
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
+            onSubmit={handleSubmit}
+          >
             {/* Departure Point */}
-            <div className="col-span-1">
+            <div>
               <label className="block text-sm font-bold mb-2">
                 Departure Point
               </label>
@@ -88,7 +93,7 @@ export const SearchBar: React.FC = () => {
             </div>
 
             {/* Departure Date */}
-            <div className="col-span-1">
+            <div>
               <label className="block text-sm font-bold mb-2">
                 Departure Date
               </label>
@@ -102,7 +107,7 @@ export const SearchBar: React.FC = () => {
             </div>
 
             {/* Destination Point */}
-            <div className="col-span-1">
+            <div>
               <label className="block text-sm font-bold mb-2">
                 Destination Point
               </label>
@@ -119,7 +124,7 @@ export const SearchBar: React.FC = () => {
             </div>
 
             {/* Return Date */}
-            <div className="col-span-1">
+            <div>
               <label className="block text-sm font-bold mb-2">
                 Return Date
               </label>
@@ -133,7 +138,7 @@ export const SearchBar: React.FC = () => {
             </div>
 
             {/* Business Class Tickets */}
-            <div className="col-span-2">
+            <div className="md:col-span-2">
               <label className="block text-sm font-bold mb-2">
                 Business Class Tickets
               </label>
@@ -148,7 +153,7 @@ export const SearchBar: React.FC = () => {
             </div>
 
             {/* Economy Class Tickets */}
-            <div className="col-span-2">
+            <div className="md:col-span-2">
               <label className="block text-sm font-bold mb-2">
                 Economy Class Tickets
               </label>
@@ -163,10 +168,10 @@ export const SearchBar: React.FC = () => {
             </div>
 
             {/* Submit Button */}
-            <div className="col-span-4 flex justify-center">
+            <div className="col-span-1 md:col-span-2 lg:col-span-4 flex justify-center">
               <button
                 type="submit"
-                className="px-8 py-3 bg-blue-600 text-white rounded-md shadow-lg hover:bg-blue-700"
+                className="px-6 py-3 bg-blue-600 text-white rounded-md shadow-lg hover:bg-blue-700"
               >
                 Search
               </button>

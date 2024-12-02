@@ -69,7 +69,7 @@ const myBookingController = {
 
       const flight = await Flight.findById(booking.flight_id);
       if (flight) {
-        const newRevenue = flight.revenue - booking.total_ammount;
+        const newRevenue = flight.revenue - booking.total_amount;
         flight.updateOne({ total_revenue: newRevenue });
         await flight.save();
       }

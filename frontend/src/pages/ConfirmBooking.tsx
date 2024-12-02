@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { formatDate, formatTime } from "../utils/utils";
 
 interface ConfirmBookingProps {
   departurePlace: string;
@@ -8,7 +8,9 @@ interface ConfirmBookingProps {
   returnDate: string;
   numberOfTickets: number[];
   planeNumber: string;
-  totalPrice: number;
+  totalPrice: string;
+  onClose: () => void;
+  onConfirm: () => void;
 }
 
 /**
@@ -34,9 +36,16 @@ const ConfirmBooking: React.FC<ConfirmBookingProps> = ({
   numberOfTickets,
   planeNumber,
   totalPrice,
+  onClose,
+  onConfirm,
 }) => {
+  const departure_date = formatDate(departureDate);
+  const depature_time = formatTime(departureDate);
+  const arrival_date = formatDate(returnDate);
+  const arrival_time = formatTime(returnDate);
+
   return (
-    <div className="flex flex-col gap-[17px] bg-[#D8EBFE] rounded-[14px] shadow-lg w-[730px] self-center px-[42px] py-[27px]">
+    <div className="flex flex-col gap-[17px] bg-[#D8EBFE] rounded-[14px] shadow-lg w-[730px] self-center px-[42px] py-[27px] scale-[0.85]">
       <h1 className="font-bold text-[#223A60] text-[40px] self-center">
         Your Ticket
       </h1>
@@ -46,7 +55,9 @@ const ConfirmBooking: React.FC<ConfirmBookingProps> = ({
       </div>
       <div className="flex flex-row gap-[10px] w-full text-[20px] text-[#223A60] justify-start">
         <div className="font-bold">Departure Date:</div>
-        <div className="opacity-[60%]">{departureDate}</div>
+        <div className="opacity-[60%]">
+          {depature_time + " " + departure_date}
+        </div>
       </div>
       <div className="flex flex-row gap-[10px] w-full text-[20px] text-[#223A60] justify-start">
         <div className="font-bold">Destination:</div>
@@ -54,7 +65,7 @@ const ConfirmBooking: React.FC<ConfirmBookingProps> = ({
       </div>
       <div className="flex flex-row gap-[10px] w-full text-[20px] text-[#223A60] justify-start">
         <div className="font-bold">Return Date:</div>
-        <div className="opacity-[60%]">{returnDate}</div>
+        <div className="opacity-[60%]">{arrival_time + " " + arrival_date}</div>
       </div>
       <div className="flex flex-row gap-[10px] w-full text-[20px] text-[#223A60] justify-start">
         <div className="font-bold">Number of Tickets:</div>
@@ -69,19 +80,21 @@ const ConfirmBooking: React.FC<ConfirmBookingProps> = ({
       </div>
       <div className="flex flex-row gap-[10px] w-full text-[20px] justify-start font-bold">
         <div className="text-[#223A60]">Total Price:</div>
-        <div className="text-[#FF0000]">{totalPrice} VND</div>
+        <div className="text-[#FF0000]">{totalPrice}</div>
       </div>
       <div className="flex flex-row gap-[150px] w-full justify-center">
-        <Link to="/buy-tickets">
-          <button className="shadow-lg bg-[#FFFFFF] text-[20px] font-bold rounded-[8px] text-[#223A60] px-[60px] py-[5px] transform transition-transform duration-200 hover:scale-[1.05]">
-            Back
-          </button>
-        </Link>
-        <Link to="/my-booking">
-          <button className="shadow-lg bg-[#223A60] text-[20px] font-bold rounded-[8px] text-[#FFFFFF] px-[60px] py-[5px] transform transition-transform duration-200 hover:scale-[1.05]">
-            Book
-          </button>
-        </Link>
+        <button
+          onClick={() => onClose()}
+          className="shadow-lg bg-[#FFFFFF] text-[20px] font-bold rounded-[8px] text-[#223A60] px-[60px] py-[5px] transform transition-transform duration-200 hover:scale-[1.05]"
+        >
+          Back
+        </button>
+        <button
+          onClick={() => onConfirm()}
+          className="shadow-lg bg-[#223A60] text-[20px] font-bold rounded-[8px] text-[#FFFFFF] px-[60px] py-[5px] transform transition-transform duration-200 hover:scale-[1.05]"
+        >
+          Book
+        </button>
       </div>
     </div>
   );
