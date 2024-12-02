@@ -26,3 +26,14 @@ export interface Airport {
 }
 
 export type Airports = Airport[];
+
+export interface Ticket {
+  dob: Date | null;
+  name: string;
+  nationality: string;
+  email: string;
+  phone: string;
+  passport: string;
+}
+
+export type Tickets = Ticket[];

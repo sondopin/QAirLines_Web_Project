@@ -1,87 +1,141 @@
-import InputField from "./InputFeild";
 import React from "react";
 
 interface TicketProps {
-    index: number;
+  index: number;
+  id: number;
+  change: (e: React.ChangeEvent<HTMLInputElement>, index: number) => void;
+  errors?: { [key: string]: string };
 }
 
-const Ticket : React.FC<TicketProps> = ({ index }) => {
+const Ticket: React.FC<TicketProps> = ({ index, id, change, errors }) => {
+  return (
+    <div className="flex flex-col p-6 bg-blue-100 rounded-lg shadow-md max-w-7xl mx-auto">
+      {/* Header */}
+      <div className="flex gap-4 items-center text-white font-semibold text-lg rounded-t-lg p-4">
+        <div className="bg-slate-700 text-center px-4 py-2 rounded-md">
+          Ticket {index}
+        </div>
+      </div>
 
-return (
-<div className="flex flex-col text-base tracking-wider">
-    <div className="flex gap-5 justify-center items-center self-start font-medium text-white rounded-t-2xl bg-blue-400 bg-opacity-20 max-md:px-5">
-        <div className="overflow-hidden gap-6 self-stretch px-4 py-2.5 my-auto rounded-md bg-slate-700 min-h-[41px]">
-            Ticket {index}
+      {/* Form */}
+      <fieldset className="flex flex-col gap-6 bg-blue-100 p-6 rounded-b-lg">
+        {/* Row 1 */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {/* Date of Birth */}
+          <div>
+            <label className="block font-medium text-gray-700">
+              <span className="text-red-500">*</span> Date Of Birth
+            </label>
+            <input
+              name="dob"
+              type="date"
+              placeholder="Choose A Date"
+              onChange={(e) => change(e, id)}
+              className="w-full mt-2 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+            />
+            {errors?.dob && (
+              <p className="text-red-500 text-sm mt-1">{errors.dob}</p>
+            )}
+          </div>
+
+          {/* Name */}
+          <div>
+            <label className="block font-medium text-gray-700">
+              <span className="text-red-500">*</span> Name
+            </label>
+            <input
+              name="name"
+              type="text"
+              placeholder="Enter your name"
+              onChange={(e) => change(e, id)}
+              className="w-full mt-2 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+            />
+            {errors?.name && (
+              <p className="text-red-500 text-sm mt-1">{errors.name}</p>
+            )}
+          </div>
+
+          {/* Nationality */}
+          <div>
+            <label className="block font-medium text-gray-700">
+              <span className="text-red-500">*</span> Nationality
+            </label>
+            <input
+              name="nationality"
+              type="text"
+              placeholder="Enter your nationality"
+              onChange={(e) => change(e, id)}
+              className="w-full mt-2 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+            />
+            {errors?.nationality && (
+              <p className="text-red-500 text-sm mt-1">{errors.nationality}</p>
+            )}
+          </div>
         </div>
+
+        {/* Row 2 */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {/* Phone Number */}
+          <div>
+            <label className="block font-medium text-gray-700">
+              <span className="text-red-500">*</span> Phone Number
+            </label>
+            <input
+              name="phone"
+              type="tel"
+              placeholder="Enter your phone number"
+              onChange={(e) => change(e, id)}
+              className="w-full mt-2 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+            />
+            {errors?.phone && (
+              <p className="text-red-500 text-sm mt-1">{errors.phone}</p>
+            )}
+          </div>
+
+          {/* Email */}
+          <div>
+            <label className="block font-medium text-gray-700">Email</label>
+            <input
+              name="email"
+              type="email"
+              placeholder="Enter your email"
+              onChange={(e) => change(e, id)}
+              className="w-full mt-2 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+            />
+            {errors?.email && (
+              <p className="text-red-500 text-sm mt-1">{errors.email}</p>
+            )}
+          </div>
+
+          {/* Passport Number */}
+          <div>
+            <label className="block font-medium text-gray-700">
+              <span className="text-red-500">*</span> Passport Number
+            </label>
+            <input
+              name="passport"
+              type="text"
+              placeholder="Enter your passport number"
+              onChange={(e) => change(e, id)}
+              className="w-full mt-2 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+            />
+            {errors?.passport && (
+              <p className="text-red-500 text-sm mt-1">{errors.passport}</p>
+            )}
+          </div>
+        </div>
+
+        {/* Clear Button */}
+        <div className="text-center">
+          <button
+            type="button"
+            className="px-6 py-3 bg-slate-800 text-white font-medium rounded-lg shadow hover:bg-red-500 transition"
+          >
+            Clear
+          </button>
+        </div>
+      </fieldset>
     </div>
-    <form className="flex flex-wrap gap-16 justify-center items-end p-5 w-full rounded-none bg-blue-400 bg-opacity-20 max-md:max-w-full">
-        <div className="flex flex-col flex-wrap flex-1 shrink gap-10 justify-center items-center basis-0 min-w-[400px] max-md:max-w-full">
-            <div className="flex flex-row gap-24">
-                <div className="flex flex-col flex-1 shrink justify-center self-stretch my-auto basis-0 min-w-[332px]">
-                    <div>
-                        <label className="text-bold"><span className="text-red-500">*</span>Date Of Birth</label>
-                        <InputField
-                            name="dob"
-                            type="date"
-                            iconSrc="https://cdn.builder.io/api/v1/image/assets/TEMP/0ce385d658fbd834def423915951db0557781615d35409c8290f0db31a6cb6e9?placeholderIfAbsent=true&apiKey=cdf4ef6bf30f4b36bc29a527c8e3e010"
-                            placeholder="Choose A Date"
-                        />
-                    </div>
-                    <div className="mt-8">
-                        <label><span className="text-red-500">*</span>Name</label>
-                        <InputField
-                            name="name"
-                            type="text"
-                            placeholder="Enter your name"
-                        />
-                    </div>
-                </div>
-                <div className="flex flex-col flex-1 shrink justify-center self-stretch my-auto basis-0 min-w-[332px]">
-                    <div>
-                        <label><span className="text-red-500">*</span>Nationality</label>
-                        <InputField
-                            name="nationality"
-                            type="text"
-                            placeholder="Enter your nationality"
-                        />
-                    </div>
-                    <div className="mt-8">
-                        <label><span className="text-red-500">*</span>Phone Number</label>
-                        <InputField
-                            name="phone"
-                            type="tel"
-                            placeholder="Enter your phone number"
-                        />
-                    </div>
-                </div>
-                <div className="flex flex-col flex-1 shrink justify-center self-stretch my-auto basis-0 min-w-[332px]">
-                    <div>
-                        <label>Email</label>
-                        <InputField
-                            name="email"
-                            type="email"
-                            iconSrc="https://cdn.builder.io/api/v1/image/assets/TEMP/d6883dff53d98bb77df416271829f25cb33e122bc430c6283f9fb6f322271503?placeholderIfAbsent=true&apiKey=cdf4ef6bf30f4b36bc29a527c8e3e010"
-                            placeholder="Email"
-                        />
-                    </div>  
-                    <div className="mt-8">
-                        <label><span className="text-red-500">*</span>Passport Number</label>
-                        <InputField
-                            name="passport"
-                            type="text"
-                            placeholder="Enter your passport number"
-                        />
-                    </div>
-                </div>
-            </div>
-            <div className="flex flex-col w-1/7 shrink justify-center text-center text-white whitespace-nowrap basis-0">
-                <button className="gap-2.5 self-stretch px-8 py-3 w-full rounded-lg bg-slate-700 min-h-[48px] max-md:px-5">
-                    Clear
-                </button>
-            </div>
-        </div>
-    </form>
-</div>
-);
+  );
 };
 export default Ticket;

@@ -1,13 +1,9 @@
 import React from "react";
-import { Routes, Route } from "react-router-dom";
-import ViewFlight from "./pages/ViewFlight";
+import createRoutes from "./routes";
 
 const App: React.FC = () => {
-  return (
-    <Routes>
-      <Route path="/" element={<ViewFlight flightNumber="QA01" />} />
-    </Routes>
-  );
+  const routes = createRoutes();
+  return <div>{routes}</div>;
 };
 
 export default App;
