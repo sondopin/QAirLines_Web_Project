@@ -17,6 +17,24 @@ export default function createRoutes() {
     {
       path: "",
       element: <PrivateRoute />,
+      children: [
+        {
+          path: PATH.mybooking,
+          element: (
+            <Layout>
+              <MyBooking />
+            </Layout>
+          ),
+        },
+        {
+          path: PATH.booking,
+          element: (
+            <Layout>
+              <Booking />
+            </Layout>
+          ),
+        },
+      ],
     },
     {
       path: PATH.admin.base,
@@ -50,22 +68,6 @@ export default function createRoutes() {
       element: (
         <Layout>
           <SearchPage />
-        </Layout>
-      ),
-    },
-    {
-      path: PATH.booking,
-      element: (
-        <Layout>
-          <Booking />
-        </Layout>
-      ),
-    },
-    {
-      path: PATH.mybooking,
-      element: (
-        <Layout>
-          <MyBooking />
         </Layout>
       ),
     },

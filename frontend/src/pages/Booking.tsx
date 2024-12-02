@@ -1,12 +1,17 @@
 import Ticket from "../components/Ticket";
-import InputField from "../components/InputFeild";
 import { useQueryForm } from "../hooks/useQueryForm";
 import { Tickets } from "../types/flight.type";
 import { useState } from "react";
 import SearchedFlightInfo from "../components/SearchedFlightInfo";
+import { makeBooking } from "../apis/flight.api";
+import ConfirmBooking from "./ConfirmBooking";
+import { useNavigate } from "react-router-dom";
+import { PATH } from "../constants/path";
 
 const Booking = () => {
   const { flight_infor, nums_busi_book, nums_eco_book } = useQueryForm();
+  const navigate = useNavigate();
+  const [confirm, setConfirm] = useState(false);
   const busi_tickets = parseInt(nums_busi_book);
   const eco_tickets = parseInt(nums_eco_book);
   const [errors, setErrors] = useState<{
@@ -58,11 +63,30 @@ const Booking = () => {
     return hasError;
   };
 
+  const handleClose = () => {
+    setConfirm(false);
+  };
+
+  const hanldeConfirm = async () => {
+    const dataForm = {
+      flight_id: flight_infor._id,
+      busi_tickets,
+      eco_tickets,
+      tickets: booking,
+    };
+    try {
+      await makeBooking(dataForm);
+      navigate(PATH.mybooking);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const hasError = handleError();
     if (hasError) return;
-    console.log(booking);
+    setConfirm(true);
   };
 
   return (
@@ -117,11 +141,11 @@ const Booking = () => {
         <section className="flex overflow-hidden flex-col justify-center px-24 py-14 text-right text-black max-md:px-5">
           <div className="w-1/5 self-end mb-5">
             <label className="text-bold">Discount Code</label>
-            <InputField
+            {/* <InputField
               placeholder="Enter your discount code"
               name="discount"
               type="text"
-            />
+            /> */}
           </div>
 
           <h2 className="text-2xl tracking-[2.4px] max-md:max-w-full">
@@ -145,6 +169,31 @@ const Booking = () => {
           </button>
         </section>
       </form>
+      {confirm && (
+        <div
+          className={`fixed inset-0 z-50 flex items-center justify-center transition-transform duration-500 ease-out transform ${
+            confirm ? "translate-y-0 opacity-100" : "-translate-y-16 opacity-0"
+          }`}
+        >
+          <ConfirmBooking
+            departurePlace={flight_infor.ori_city}
+            destination={flight_infor.des_city}
+            departureDate={flight_infor.actual_departure}
+            returnDate={flight_infor.actual_arrival}
+            numberOfTickets={[busi_tickets, eco_tickets]}
+            planeNumber={flight_infor.number}
+            totalPrice={new Intl.NumberFormat("vi-VN", {
+              style: "currency",
+              currency: "VND",
+            }).format(
+              busi_tickets * flight_infor.base_price * 1.5 +
+                eco_tickets * flight_infor.base_price
+            )}
+            onClose={handleClose}
+            onConfirm={hanldeConfirm}
+          />
+        </div>
+      )}
     </div>
   );
 };
