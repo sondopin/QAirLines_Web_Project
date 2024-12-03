@@ -1,18 +1,51 @@
 import React, { useState } from "react";
-import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { updateFlight } from "../apis/admin.api";
+import { useQueryClient } from "@tanstack/react-query";
 
 interface AdjustFlightProps {
   oldDepartureDate: string;
   oldReturnDate: string;
+  flightId: string;
+  aircraftId: string;
+}
+
+interface ScheduleChange {
+  actual_departure: undefined | string;
+  actual_arrival: undefined | string;
 }
 
 const AdjustFlight: React.FC<AdjustFlightProps> = ({
   oldDepartureDate,
   oldReturnDate,
+  flightId,
+  aircraftId,
 }) => {
-  const [selectedDepartureDate, setDepartureDate] = useState<Date | null>(null);
-  const [selectedReturnDate, setReturnDate] = useState<Date | null>(null);
+  const [schedule, setSchedule] = useState<ScheduleChange>({
+    actual_departure: undefined,
+    actual_arrival: undefined,
+  });
+
+  const queryClient = useQueryClient();
+
+  const handleChange =
+    (name: keyof ScheduleChange) =>
+    (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+      setSchedule((prev) => ({ ...prev, [name]: e.target.value }));
+    };
+
+  const handleConfirm = async () => {
+    try {
+      await updateFlight(flightId, aircraftId, schedule);
+      queryClient.invalidateQueries({
+        queryKey: ["flights", aircraftId],
+        exact: true,
+      });
+      console.log("Flight updated");
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <div className="flex flex-col bg-[#FBFF00] bg-opacity-[20%] rounded-[14px] gap-[10px] mx-[75px] px-[30px] py-[20px] hover:scale-[1.03] transform transition-transform duration-200 shadow-lg">
@@ -26,11 +59,10 @@ const AdjustFlight: React.FC<AdjustFlightProps> = ({
           <div className="bg-[#D9D9D9] bg-opacit-[50%] rounded-tl-[6px] rounded-bl-[6px] px-[10px] py-[5px]">
             🗓️
           </div>
-          <DatePicker
-            selected={selectedDepartureDate}
-            onChange={(date: Date | null) => setDepartureDate(date)}
-            dateFormat="dd-MM-yyy"
-            placeholderText="Select a date"
+          <input
+            type="datetime-local"
+            value={schedule.actual_departure}
+            onChange={handleChange("actual_departure")}
             className="bg-[#D9D9D9] bg-opacit-[50%] rounded-tr-[6px] rounded-br-[6px] px-[10px] py-[5px] text-[16px]"
           />
         </div>
@@ -46,15 +78,15 @@ const AdjustFlight: React.FC<AdjustFlightProps> = ({
           <div className="bg-[#D9D9D9] bg-opacit-[50%] rounded-tl-[6px] rounded-bl-[6px] px-[10px] py-[5px]">
             🗓️
           </div>
-          <DatePicker
-            selected={selectedReturnDate}
-            onChange={(date: Date | null) => setReturnDate(date)}
-            dateFormat="dd-MM-yyy"
-            placeholderText="Select a date"
+          <input
+            type="datetime-local"
+            value={schedule.actual_arrival}
+            onChange={handleChange("actual_arrival")}
             className="bg-[#D9D9D9] bg-opacit-[50%] rounded-tr-[6px] rounded-br-[6px] px-[10px] py-[5px] text-[16px]"
           />
         </div>
       </div>
+      <button onClick={handleConfirm}>Confirm</button>
     </div>
   );
 };

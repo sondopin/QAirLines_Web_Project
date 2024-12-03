@@ -1,11 +1,12 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 interface AirplaneCardProps {
+  aircraftId: string;
   airplaneNumber: string;
   name: string;
   manufacturer: string;
-  yearOfManufacture: string;
+  yearOfManufacture: number;
   model: string;
   numberOfSeats: number;
 }
@@ -36,6 +37,7 @@ interface AirplaneCardProps {
  */
 
 const AirplaneCard: React.FC<AirplaneCardProps> = ({
+  aircraftId,
   airplaneNumber,
   name,
   manufacturer,
@@ -43,6 +45,7 @@ const AirplaneCard: React.FC<AirplaneCardProps> = ({
   model,
   numberOfSeats,
 }) => {
+  const navigate = useNavigate();
   return (
     <div className="top-0 left-0 flex flex-col bg-[#D8EBFE] rounded-[20px] shadow-lg hover:scale-[1.05] transform transition-transform duration-200 max-w-[410px]">
       <div className="flex flex-row mb-[30px]">
@@ -84,12 +87,16 @@ const AirplaneCard: React.FC<AirplaneCardProps> = ({
           <div className="text-[#0077FF]">{numberOfSeats} (two-class)</div>
         </div>
       </div>
-      <Link
-        to="/view-airplane"
-        className="underline text-[#67AAF6] text-[16px] hover:text-[#0077FF] ml-auto mr-[20px] mb-[10px]"
+      <div
+        onClick={() => {
+          navigate("/view-flight", {
+            state: aircraftId,
+          });
+        }}
+        className="cursor-pointer underline text-[#67AAF6] text-[16px] hover:text-[#0077FF] ml-auto mr-[20px] mb-[10px]"
       >
         View details
-      </Link>
+      </div>
     </div>
   );
 };

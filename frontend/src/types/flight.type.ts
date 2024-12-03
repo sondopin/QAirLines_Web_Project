@@ -38,3 +38,18 @@ export interface Ticket {
 }
 
 export type Tickets = Ticket[];
+
+export interface Aircraft {
+  _id: string;
+  name: string;
+  user_id: string;
+  code: string;
+  manufacturer: string;
+  model: string;
+  manufactured_year: number;
+  nums_seat: number;
+  total_revenue: number;
+  last_updated: Date;
+}
+
+export type Aircrafts = Aircraft[];

@@ -11,6 +11,8 @@ import SearchPage from "./pages/Search";
 import Booking from "./pages/Booking";
 import MyBooking from "./pages/MyBooking";
 import ConfirmCancelBooking from "./pages/ConfirmCancelBooking";
+import AirplaneManagement from "./pages/AirplaneManagement";
+import ViewFlight from "./pages/ViewFlight";
 
 export default function createRoutes() {
   // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -20,7 +22,7 @@ export default function createRoutes() {
       element: <PrivateRoute />,
       children: [
         {
-          path: PATH.mybooking,
+          path: PATH.user.mybooking,
           element: (
             <Layout>
               <MyBooking />
@@ -28,7 +30,7 @@ export default function createRoutes() {
           ),
         },
         {
-          path: PATH.booking,
+          path: PATH.user.booking,
           element: (
             <Layout>
               <Booking />
@@ -36,7 +38,7 @@ export default function createRoutes() {
           ),
         },
         {
-          path: PATH.cancel_booking,
+          path: PATH.user.cancel_booking,
           element: (
             <Layout>
               <ConfirmCancelBooking />
@@ -46,8 +48,26 @@ export default function createRoutes() {
       ],
     },
     {
-      path: PATH.admin.base,
+      path: "",
       element: <AdminRoute />,
+      children: [
+        {
+          path: PATH.admin.manage,
+          element: (
+            <Layout>
+              <AirplaneManagement />
+            </Layout>
+          ),
+        },
+        {
+          path: PATH.admin.view_flight,
+          element: (
+            <Layout>
+              <ViewFlight flightNumber="Hekko" />
+            </Layout>
+          ),
+        },
+      ],
     },
     {
       path: "",
