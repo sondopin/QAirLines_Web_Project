@@ -37,6 +37,10 @@ export function formatTime(dateTime: string | Date): string {
   );
 }
 
+export function formatDateTime(dateTime: string | Date): string {
+  return formatDate(dateTime) + " " + formatTime(dateTime);
+}
+
 export function formatCurrency(amount: number): string {
   return new Intl.NumberFormat("vi-VN", {
     style: "currency",

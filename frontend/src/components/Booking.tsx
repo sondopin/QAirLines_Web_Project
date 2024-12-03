@@ -1,6 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { formatDate, formatTime } from "../utils/utils";
+import { formatDate, formatDateTime, formatTime } from "../utils/utils";
+import AdjustedFlightNotification from "./AdjustedFlightNotification";
 
 interface BookingProps {
   bookingId: string;
@@ -11,10 +12,10 @@ interface BookingProps {
   destinationCityCode: string;
   departureCityName: string;
   destinationCityName: string;
-  departureDate: string;
   departureTime: string;
-  returnDate?: string;
+  departureTimeOld: string;
   returnTime?: string;
+  returnTimeOld?: string;
   businessTickets: number;
   economyTickets: number;
   totalPrice: number;
@@ -54,18 +55,18 @@ const Booking: React.FC<BookingProps> = ({
   destinationCityCode,
   departureCityName,
   destinationCityName,
-  departureDate,
   departureTime,
-  returnDate,
+  departureTimeOld,
   returnTime,
+  returnTimeOld,
   businessTickets,
   economyTickets,
   totalPrice,
   cancelAvailableUntil,
 }) => {
   const data = {
-    actual_departure: departureDate,
-    actual_arrival: returnDate,
+    actual_departure: departureTime,
+    actual_arrival: returnTime,
     ori_city: departureCityName,
     ori_code: departureCityCode,
     des_city: destinationCityName,
@@ -76,127 +77,147 @@ const Booking: React.FC<BookingProps> = ({
     nums_eco_book: economyTickets,
     total_price: totalPrice,
   };
-
-  departureDate = formatDate(departureDate);
+  if (
+    status !== "Completed" &&
+    (departureTime !== departureTimeOld || returnTime !== returnTimeOld)
+  ) {
+    status = "Delayed";
+  }
+  const departureDate = formatDate(departureTime);
   departureTime = formatTime(departureTime);
-  returnDate = returnDate ? formatDate(returnDate) : "";
+  const returnDate = returnTime ? formatDate(returnTime) : "";
   returnTime = returnTime ? formatTime(returnTime) : "";
+
   cancelAvailableUntil = formatDate(cancelAvailableUntil);
   bookingDate = formatDate(bookingDate);
 
   const navigate = useNavigate();
 
   return (
-    <div className="flex flex-col w-full shadow-lg rounded-[20px] scale-[0.8] hover:scale-[0.82] transform transition-transform duration-200">
-      {/* Booking date and Status */}
-      <div
-        className={`flex flex-col md:flex-row items-center rounded-tl-[20px] rounded-tr-[20px] gap-[20px] px-[28px] py-[28px] self-start w-auto text-[#FFFFFF] font-semibold text-[16px] ${
-          status === "Up Coming" ? "bg-[#D8EBFE]" : "bg-[#D5D5D5]"
-        }`}
-      >
-        <div className="bg-[#223A60] rounded-[6px] px-[17px] py-[5px] hover:scale-[1.05] transform transition-transform duration-200">
-          Booking {bookingDate}
-        </div>
-        <div className="text-[#283841] text-[22px] hidden md:block">|</div>
+    <div>
+      <div className="flex flex-col w-full shadow-lg rounded-[20px] scale-[0.8] hover:scale-[0.82] transform transition-transform duration-200">
+        {/* Booking date and Status */}
         <div
-          className={`rounded-[6px] px-[17px] py-[5px] hover:scale-[1.05] transform transition-transform duration-200 ${
-            status === "Up Coming"
-              ? "bg-[#223A60]"
-              : status === "Completed"
-              ? "bg-[#00A78E]"
-              : "bg-[#FF0000]"
+          className={`flex flex-col md:flex-row items-center rounded-tl-[20px] rounded-tr-[20px] gap-[20px] px-[28px] py-[28px] self-start w-auto text-[#FFFFFF] font-semibold text-[16px] ${
+            status === "Up Coming" ? "bg-[#D8EBFE]" : "bg-[#D5D5D5]"
           }`}
         >
-          {status}
+          <div className="bg-[#223A60] rounded-[6px] px-[17px] py-[5px] hover:scale-[1.05] transform transition-transform duration-200">
+            Booking {bookingDate}
+          </div>
+          <div className="text-[#283841] text-[22px] hidden md:block">|</div>
+          <div
+            className={`rounded-[6px] px-[17px] py-[5px] hover:scale-[1.05] transform transition-transform duration-200 ${
+              status === "Up Coming"
+                ? "bg-[#223A60]"
+                : status === "Completed"
+                ? "bg-[#00A78E]"
+                : "bg-[#FF0000]"
+            }`}
+          >
+            {status}
+          </div>
         </div>
-      </div>
-      <div
-        className={`flex flex-col w-full gap-[10px] px-[20px] md:px-[44px] py-[20px] rounded-bl-[20px] rounded-br-[20px] rounded-tr-[20px] ${
-          status === "Up Coming" ? "bg-[#D8EBFE]" : "bg-[#D5D5D5]"
-        }`}
-      >
-        {/* Flight info container */}
-        <div className="flex flex-col md:flex-row w-full gap-[20px] md:gap-[52px] px-[20px] md:px-[61px] py-[11px]">
-          {/* Place */}
-          <div className="flex flex-row gap-auto items-center w-full justify-center">
-            <div className="flex flex-col w-full items-center">
-              <div className="font-bold text-[32px]">{departureCityCode}</div>
-              <div className="font-semibold text-[20px]">
-                {departureCityName}
+        <div
+          className={`flex flex-col w-full gap-[10px] px-[20px] md:px-[44px] py-[20px] rounded-bl-[20px] rounded-br-[20px] rounded-tr-[20px] ${
+            status === "Up Coming" ? "bg-[#D8EBFE]" : "bg-[#D5D5D5]"
+          }`}
+        >
+          {/* Flight info container */}
+          <div className="flex flex-col md:flex-row w-full gap-[20px] md:gap-[52px] px-[20px] md:px-[61px] py-[11px]">
+            {/* Place */}
+            <div className="flex flex-row gap-auto items-center w-full justify-center">
+              <div className="flex flex-col w-full items-center">
+                <div className="font-bold text-[32px]">{departureCityCode}</div>
+                <div className="font-semibold text-[20px]">
+                  {departureCityName}
+                </div>
+              </div>
+              <img
+                src="./arrow_switch_horizontal.png"
+                alt=""
+                className="w-[40px] h-[24px]"
+              />
+              <div className="flex flex-col w-full items-center">
+                <div className="font-bold text-[32px]">
+                  {destinationCityCode}
+                </div>
+                <div className="font-semibold text-[20px]">
+                  {destinationCityName}
+                </div>
               </div>
             </div>
             <img
-              src="./arrow_switch_horizontal.png"
-              alt=""
-              className="w-[40px] h-[24px]"
+              src="./verticle_line.png"
+              alt="Line"
+              className="hidden md:block scale-[0.8]"
             />
-            <div className="flex flex-col w-full items-center">
-              <div className="font-bold text-[32px]">{destinationCityCode}</div>
-              <div className="font-semibold text-[20px]">
-                {destinationCityName}
+            {/* Schedule */}
+            <div className="flex flex-col md:flex-row gap-[18px] w-full text-[20px] font-semibold justify-center items-center">
+              <div className="flex flex-col gap-[10px] w-full items-center">
+                <div>Departure Date</div>
+                <div>{departureDate}</div>
+                <div>{departureTime}</div>
+              </div>
+              <div className="flex flex-col gap-[10px] w-full items-center">
+                <div>Return Date</div>
+                <div>{returnDate}</div>
+                <div>{returnTime}</div>
               </div>
             </div>
-          </div>
-          <img
-            src="./verticle_line.png"
-            alt="Line"
-            className="hidden md:block scale-[0.8]"
-          />
-          {/* Schedule */}
-          <div className="flex flex-col md:flex-row gap-[18px] w-full text-[20px] font-semibold justify-center items-center">
-            <div className="flex flex-col gap-[10px] w-full items-center">
-              <div>Departure Date</div>
-              <div>{departureDate}</div>
-              <div>{departureTime}</div>
-            </div>
-            <div className="flex flex-col gap-[10px] w-full items-center">
-              <div>Return Date</div>
-              <div>{returnDate}</div>
-              <div>{returnTime}</div>
+            <img
+              src="./verticle_line.png"
+              alt="Line"
+              className="hidden md:block scale-[0.8]"
+            />
+            {/* Tickets */}
+            <div className="flex flex-col w-full gap-[10px] justify-center items-center font-semibold text-[20px]">
+              <div>Business Tickets: {businessTickets}</div>
+              <div>Economy Tickets: {economyTickets}</div>
             </div>
           </div>
-          <img
-            src="./verticle_line.png"
-            alt="Line"
-            className="hidden md:block scale-[0.8]"
-          />
-          {/* Tickets */}
-          <div className="flex flex-col w-full gap-[10px] justify-center items-center font-semibold text-[20px]">
-            <div>Business Tickets: {businessTickets}</div>
-            <div>Economy Tickets: {economyTickets}</div>
-          </div>
-        </div>
-        {/* Total Price and Cancellation */}
-        <div className="flex flex-col md:flex-row justify-between items-center w-full px-[20px] md:px-[61px] py-[11px]">
-          <div className="flex flex-row gap-[10px] w-full md:w-auto items-center md:items-start">
-            <div className="font-semibold text-[20px] self-center">
-              Total Price:
+          {/* Total Price and Cancellation */}
+          <div className="flex flex-col md:flex-row justify-between items-center w-full px-[20px] md:px-[61px] py-[11px]">
+            <div className="flex flex-row gap-[10px] w-full md:w-auto items-center md:items-start">
+              <div className="font-semibold text-[20px] self-center">
+                Total Price:
+              </div>
+              <div className="text-[32px] font-bold text-[#FF0000]">
+                {totalPrice} VND
+              </div>
             </div>
-            <div className="text-[32px] font-bold text-[#FF0000]">
-              {totalPrice} VND
-            </div>
-          </div>
-          <div
-            className={`flex flex-col w-full md:w-auto items-center md:items-start text-[16px] gap-[10px] ${
-              status === "Up Coming" ? "visible" : "hidden"
-            }`}
-          >
-            You can only cancel this booking before {cancelAvailableUntil}
-            <button
-              onClick={() =>
-                navigate(`/cancel-booking`, {
-                  state: data,
-                })
-              }
-              className="self-end bg-red-500 text-white px-[20px] py-[10px] rounded-[6px] mt-[10px] md:mt-0 hover:scale-[1.05] transform transition-transform duration-200 shadow-lg"
+            <div
+              className={`flex flex-col w-full md:w-auto items-center md:items-start text-[16px] gap-[10px] ${
+                status === "Up Coming" || status === "Delayed"
+                  ? "visible"
+                  : "visible"
+              }`}
             >
-              Cancel
-            </button>
+              You can only cancel this booking before {cancelAvailableUntil}
+              <button
+                onClick={() =>
+                  navigate(`/cancel-booking`, {
+                    state: data,
+                  })
+                }
+                className="self-end bg-red-500 text-white px-[20px] py-[10px] rounded-[6px] mt-[10px] md:mt-0 hover:scale-[1.05] transform transition-transform duration-200 shadow-lg"
+              >
+                Cancel
+              </button>
+            </div>
           </div>
         </div>
       </div>
+      {status === "Delayed" && (
+        <AdjustedFlightNotification
+          oldDepartureDate={formatDateTime(departureTimeOld)}
+          oldReturnDate={formatDateTime(returnTimeOld || "")}
+          newDepartureDate={departureTime + " " + departureDate}
+          newReturnDate={returnTime + " " + returnDate}
+          reason={"Bad weather"}
+        />
+      )}
     </div>
   );
 };
-
 export default Booking;

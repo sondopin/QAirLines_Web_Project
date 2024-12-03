@@ -77,7 +77,7 @@ const FlightCard: React.FC<FlightCardProps> = ({
           }`}
         >
           {/* Place */}
-          <div className="flex flex-col md:flex-row gap-auto items-center w-full justify-center items-center max-w-[500px]">
+          <div className="flex flex-col md:flex-row gap-auto w-full justify-center items-center max-w-[500px]">
             <div className="flex flex-col w-full items-center">
               <div className="font-bold text-[32px]">{departureCityCode}</div>
               <div className="font-semibold text-[20px]">
