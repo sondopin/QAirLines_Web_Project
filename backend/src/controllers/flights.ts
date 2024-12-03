@@ -11,10 +11,17 @@ import { log } from "console";
 const flightController = {
   searchFlights: async (req: Request, res: Response) => {
     try {
-      const { ori_airport, des_airport, departure_time, nums_eco, nums_busi } =
-        req.body;
+      const {
+        ori_airport,
+        des_airport,
+        departure_time,
+        return_time,
+        nums_eco,
+        nums_busi,
+      } = req.body;
 
       const departureTime = new Date(departure_time);
+      const returnTime = return_time !== "" ? new Date(return_time) : "";
 
       const flights = await Flight.find({
         ori_airport,
@@ -29,7 +36,16 @@ const flightController = {
       }
 
       const flights_result = flights.filter((flight) => {
-        return flight.actual_departure.getDate() == departureTime.getDate();
+        if (returnTime !== "") {
+          return (
+            flight.actual_departure.getDate() == departureTime.getDate() &&
+            flight.actual_arrival.getDate() == returnTime.getDate()
+          );
+        }
+        return (
+          flight.actual_departure.getDate() == departureTime.getDate() &&
+          flight.actual_arrival == undefined
+        );
       });
 
       res.status(200).json(flights_result);
@@ -40,8 +56,14 @@ const flightController = {
 
   makeBooking: async (req: Request, res: Response) => {
     try {
-      const { flight_id, tickets, busi_tickets, eco_tickets, discount_code } =
-        req.body;
+      const {
+        flight_id,
+        tickets,
+        busi_tickets,
+        eco_tickets,
+        discount_code,
+        type,
+      } = req.body;
       const user_id = req.user_id;
 
       const flight = await Flight.findById(flight_id);
@@ -105,6 +127,7 @@ const flightController = {
         status: "Confirmed",
         cancellation_deadline,
         total_amount,
+        type,
       });
 
       for (const seat of businessSeats) {
