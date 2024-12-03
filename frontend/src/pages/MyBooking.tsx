@@ -34,6 +34,8 @@ const MyBooking: React.FC<MyBookingProps> = () => {
       const booking = bookings.data[i].booking;
       const flight = bookings.data[i].flight;
 
+      console.log(new Date().toDateString());
+
       booking_list.push({
         bookingId: booking._id,
         flightId: flight._id,
@@ -41,10 +43,7 @@ const MyBooking: React.FC<MyBookingProps> = () => {
         status:
           booking.status === "Cancelled"
             ? "Cancelled"
-            : booking.status === "Delayed"
-            ? "Delayed"
-            : flight.actual_departure < new Date().toDateString() &&
-              flight.actual_arrival < new Date().toDateString()
+            : flight.actual_departure > new Date().toISOString()
             ? "Up Coming"
             : "Completed",
         departureCityCode: airports[flight.ori_airport].code,
@@ -62,9 +61,6 @@ const MyBooking: React.FC<MyBookingProps> = () => {
       });
     }
   }
-
-  console.log(booking_list);
-
   return (
     <div className="bg-[#F6FBFF]">
       <div className="flex flex-col gap-[30px] w-full px-[20px] py-[30px]">

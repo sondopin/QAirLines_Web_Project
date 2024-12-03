@@ -13,8 +13,8 @@ interface BookingProps {
   destinationCityName: string;
   departureDate: string;
   departureTime: string;
-  returnDate: string;
-  returnTime: string;
+  returnDate?: string;
+  returnTime?: string;
   businessTickets: number;
   economyTickets: number;
   totalPrice: number;
@@ -79,8 +79,8 @@ const Booking: React.FC<BookingProps> = ({
 
   departureDate = formatDate(departureDate);
   departureTime = formatTime(departureTime);
-  returnDate = formatDate(returnDate);
-  returnTime = formatTime(returnTime);
+  returnDate = returnDate ? formatDate(returnDate) : "";
+  returnTime = returnTime ? formatTime(returnTime) : "";
   cancelAvailableUntil = formatDate(cancelAvailableUntil);
   bookingDate = formatDate(bookingDate);
 
