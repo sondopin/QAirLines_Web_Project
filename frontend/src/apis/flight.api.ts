@@ -9,5 +9,5 @@ export const getFlights = async (
   data: AxiosRequestConfig<unknown> | undefined
 ) => http.post<Flights>("/flights/search", data);
 
-export const makeBooking = async (data) =>
+export const makeBooking = async (data: object) =>
   http.post("/flights/make-booking", data);

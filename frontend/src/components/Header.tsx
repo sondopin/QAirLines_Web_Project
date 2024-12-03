@@ -76,11 +76,11 @@ const Header = () => {
               {!isAdmin ? (
                 <NavLink
                   className={
-                    location.pathname === PATH.mybooking
+                    location.pathname === PATH.user.mybooking
                       ? "flex items-center text-black px-2 font-semibold border-b-2 border-blue-500"
                       : "flex items-center text-black px-2 font-semibold border-b-2 border-transparent"
                   }
-                  to={PATH.mybooking}
+                  to={PATH.user.mybooking}
                 >
                   My Bookings
                 </NavLink>
@@ -88,11 +88,11 @@ const Header = () => {
               {isAdmin ? (
                 <NavLink
                   className={
-                    location.pathname === "/my-aircrafts"
+                    location.pathname === PATH.admin.manage
                       ? "flex items-center text-black px-2 font-semibold border-b-2 border-orange-500"
                       : "flex items-center text-black px-2 font-semibold border-b-2 border-transparent"
                   }
-                  to="/my-aircrafts"
+                  to={PATH.admin.manage}
                 >
                   My Aircrafts
                 </NavLink>

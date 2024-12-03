@@ -54,7 +54,7 @@ const LoginPage: React.FC = () => {
   });
 
   return (
-    <main className="bg-white flex min-w-[320px] items-start overflow-hidden justify-start flex-wrap mx-24 md:p-[100px_20px]">
+    <main className="bg-white flex min-w-[320px] items-start overflow-hidden justify-start flex-wrap mx-24 md:p-[100px_20px] scale-[0.85]">
       <div className="rounded-[14px] shadow-lg flex min-w-[240px] w-full justify-center flex-wrap flex-1 basis-0 items-stretch md:max-w-full">
         <section className="rounded-[14px_0_0_14px] bg-[rgba(97,168,250,0.2)] flex min-w-[400px] min-h-[814px] flex-col overflow-hidden tracking-[0.96px] justify-between flex-1 basis-0 text-[16px] md:max-w-full md:p-[0_20px]">
           <img
@@ -64,7 +64,9 @@ const LoginPage: React.FC = () => {
             className="aspect-[3.1] object-contain object-center w-[300px] max-w-[300px] mt-10"
           />
           <div className="text-[#223a60] font-bold leading-[40px] mt-[40px] md:max-w-full md:mt-[40px]">
-            <h1 className="text-[48px] text-[#223a60]">Login to your Account</h1>
+            <h1 className="text-[48px] text-[#223a60]">
+              Login to your Account
+            </h1>
             <p className="font-normal text-[20px] text-[#223a60]">
               Welcome back! We're always ready for your flight
             </p>
@@ -98,13 +100,18 @@ const LoginPage: React.FC = () => {
               />
               <span>Remember me</span>
             </div>
-            <button className="w-1/3 mx-auto rounded-[14px] bg-[#223a60] shadow-lg mt-[30px] min-h-[44px] gap-[10px] text-white font-medium text-center leading-[40px] px-5 mt-[30px] lg:whitespace-nowrap lg:mt-[50px]">
+            <button className="w-1/3 mx-auto rounded-[14px] bg-[#223a60] shadow-lg mt-[30px] min-h-[44px] gap-[10px] text-white font-medium text-center leading-[40px] px-5 lg:whitespace-nowrap lg:mt-[50px]">
               Login
             </button>
           </form>
           <div className="flex flex-col w-full mb-10 items-center gap-2.5 overflow-hidden text-center flex-wrap px-2.5 sm:mt-[30px] sm:px-5">
-            <p className="text-[#223a60] font-normal leading-[40px] self-stretch flex-1 basis-[40px] my-auto whitespace-nowrap">Don't have an account?</p>
-            <Link to="/register" className="text-[#0066ff] font-medium self-stretch flex-1 my-auto px-5 whitespace-nowrap">
+            <p className="text-[#223a60] font-normal leading-[40px] self-stretch flex-1 basis-[40px] my-auto whitespace-nowrap">
+              Don't have an account?
+            </p>
+            <Link
+              to="/register"
+              className="text-[#0066ff] font-medium self-stretch flex-1 my-auto px-5 whitespace-nowrap"
+            >
               Create an account
             </Link>
           </div>
@@ -116,10 +123,16 @@ const LoginPage: React.FC = () => {
             alt="Background"
           />
           <div className="text-black font-bold font-serif px-[17px] pl-[73px] z-[1] mt-20">
-            <h2 className="text-[90px] tracking-[2.88px] self-end md:max-w-full md:text-[40px] pl-[80px]">Elevate Your Journey</h2>
-            <p className="text-[100px] tracking-[3.6px] self-start mt-[105px] md:mt-[40px] md:text-[40px]">Discover the</p>
+            <h2 className="text-[90px] tracking-[2.88px] self-end md:max-w-full md:text-[40px] pl-[80px]">
+              Elevate Your Journey
+            </h2>
+            <p className="text-[100px] tracking-[3.6px] self-start mt-[105px] md:mt-[40px] md:text-[40px]">
+              Discover the
+            </p>
           </div>
-          <p className="text-white font-serif text-[128px] tracking-[7.68px] self-start mt-[38px] ml-[11px] z-[1]">World</p>
+          <p className="text-white font-serif text-[128px] tracking-[7.68px] self-start mt-[38px] ml-[11px] z-[1]">
+            World
+          </p>
         </section>
       </div>
     </main>
