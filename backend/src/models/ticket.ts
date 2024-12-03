@@ -11,6 +11,7 @@ const ticketSchema = new mongoose.Schema<TicketType>({
   email: { type: String },
   phone: { type: String },
   passport: { type: String },
+  price: { type: Number },
 });
 
 const Ticket = mongoose.model<TicketType>("Ticket", ticketSchema);

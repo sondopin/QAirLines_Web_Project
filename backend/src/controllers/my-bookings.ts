@@ -14,13 +14,20 @@ const myBookingController = {
   getMyBookings: async (req: Request, res: Response) => {
     try {
       const { user_id } = req;
+      const result = [];
 
       const bookings = await Booking.find({ user_id });
       if (!bookings) {
         res.status(404).json({ message: "No bookings found for this user" });
         return;
       }
-      res.status(200).json(bookings);
+
+      for (let i = 0; i < bookings.length; i++) {
+        const flight = await Flight.findById(bookings[i].flight_id);
+        result.push({ booking: bookings[i], flight });
+      }
+
+      res.status(200).json(result);
     } catch (error) {
       res.status(500).json({ message: "Error retrieving bookings" });
     }
@@ -77,6 +84,20 @@ const myBookingController = {
       res.status(200).json({ message: "Booking successfully cancelled" });
     } catch (error) {
       res.status(500).json({ message: "Error cancelling booking" });
+    }
+  },
+
+  getTickets: async (req: Request, res: Response) => {
+    try {
+      const { booking_id } = req.body;
+      const tickets = await Ticket.find({ booking_id });
+      if (!tickets) {
+        res.status(404).json({ message: "No tickets found for this booking" });
+        return;
+      }
+      res.status(200).json(tickets);
+    } catch (error) {
+      res.status(500).json({ message: "Error retrieving tickets" });
     }
   },
 };

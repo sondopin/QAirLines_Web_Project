@@ -79,6 +79,7 @@ export type TicketType = {
   email: string;
   phone: string;
   passport: string;
+  price: number;
 };
 
 export type BlogType = {

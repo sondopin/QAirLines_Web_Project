@@ -14,4 +14,6 @@ router.delete(
   myBookingController.cancelBooking
 );
 
+router.post("/get-tickets", verifyToken, myBookingController.getTickets);
+
 export default router;
