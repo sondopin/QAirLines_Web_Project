@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { getAirports } from "../apis/flight.api";
 import { useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
-import { useGetAirports } from "../hooks/useGetAirports";
 
 interface searchFormType {
   ori_airport: string;

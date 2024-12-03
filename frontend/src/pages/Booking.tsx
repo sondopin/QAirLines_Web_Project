@@ -7,6 +7,7 @@ import { makeBooking } from "../apis/flight.api";
 import ConfirmBooking from "./ConfirmBooking";
 import { useNavigate } from "react-router-dom";
 import { PATH } from "../constants/path";
+import { formatCurrency } from "../utils/utils";
 
 const Booking = () => {
   const { flight_infor, nums_busi_book, nums_eco_book } = useQueryForm();
@@ -19,13 +20,17 @@ const Booking = () => {
   }>({});
 
   const [booking, setBooking] = useState<Tickets>(
-    Array.from({ length: busi_tickets + eco_tickets }, () => ({
+    Array.from({ length: busi_tickets + eco_tickets }, (_, index) => ({
       dob: null,
       name: "",
       nationality: "",
       email: "",
       phone: "",
       passport: "",
+      price:
+        index < busi_tickets
+          ? flight_infor.base_price * 1.5
+          : flight_infor.base_price,
     }))
   );
 
@@ -113,6 +118,7 @@ const Booking = () => {
             {Array.from({ length: busi_tickets }, (_, index) => (
               <div key={index} className="my-5">
                 <Ticket
+                  data={booking[index]}
                   index={index + 1}
                   id={index}
                   change={handleChange}
@@ -128,6 +134,7 @@ const Booking = () => {
             {Array.from({ length: eco_tickets }, (_, index) => (
               <div key={index} className="my-5">
                 <Ticket
+                  data={booking[index + busi_tickets]}
                   index={index + 1}
                   id={index + busi_tickets}
                   change={handleChange}
@@ -152,10 +159,7 @@ const Booking = () => {
             Total price:
           </h2>
           <p className="mt-8 text-5xl font-bold tracking-[2.88px] max-md:max-w-full max-md:text-4xl">
-            {new Intl.NumberFormat("vi-VN", {
-              style: "currency",
-              currency: "VND",
-            }).format(
+            {formatCurrency(
               busi_tickets * flight_infor.base_price * 1.5 +
                 eco_tickets * flight_infor.base_price
             )}
@@ -182,10 +186,7 @@ const Booking = () => {
             returnDate={flight_infor.actual_arrival}
             numberOfTickets={[busi_tickets, eco_tickets]}
             planeNumber={flight_infor.number}
-            totalPrice={new Intl.NumberFormat("vi-VN", {
-              style: "currency",
-              currency: "VND",
-            }).format(
+            totalPrice={formatCurrency(
               busi_tickets * flight_infor.base_price * 1.5 +
                 eco_tickets * flight_infor.base_price
             )}

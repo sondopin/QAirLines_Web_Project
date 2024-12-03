@@ -2,7 +2,7 @@ import React from "react";
 import { formatDate, formatTime } from "../utils/utils";
 
 interface SearchedFlightInfoProps {
-  _id: string;
+  _id?: string;
   actual_departure: Date;
   actual_arrival: Date;
   ori_airport: string;
@@ -12,9 +12,9 @@ interface SearchedFlightInfoProps {
   des_code: string;
   des_city: string;
   number: string;
-  base_price: number;
-  nums_busi_seat_avail: number;
-  nums_eco_seat_avail: number;
+  base_price?: number;
+  nums_busi_seat_avail?: number;
+  nums_eco_seat_avail?: number;
   nums_busi_book: number;
   nums_eco_book: number;
 }

@@ -8,4 +8,5 @@ export const PATH = {
   search: "/search",
   booking: "/booking",
   mybooking: "/mybooking",
+  cancel_booking: "/cancel-booking",
 } as const;

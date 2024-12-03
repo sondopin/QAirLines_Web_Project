@@ -1,7 +1,10 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { formatDate, formatTime } from "../utils/utils";
 
 interface BookingProps {
+  bookingId: string;
+  flightId: string;
   bookingDate: string;
   status: string;
   departureCityCode: string;
@@ -43,6 +46,8 @@ interface BookingProps {
  */
 
 const Booking: React.FC<BookingProps> = ({
+  bookingId,
+  flightId,
   bookingDate,
   status,
   departureCityCode,
@@ -58,6 +63,29 @@ const Booking: React.FC<BookingProps> = ({
   totalPrice,
   cancelAvailableUntil,
 }) => {
+  const data = {
+    actual_departure: departureDate,
+    actual_arrival: returnDate,
+    ori_city: departureCityName,
+    ori_code: departureCityCode,
+    des_city: destinationCityName,
+    des_code: destinationCityCode,
+    booking_id: bookingId,
+    flight_id: flightId,
+    nums_busi_book: businessTickets,
+    nums_eco_book: economyTickets,
+    total_price: totalPrice,
+  };
+
+  departureDate = formatDate(departureDate);
+  departureTime = formatTime(departureTime);
+  returnDate = formatDate(returnDate);
+  returnTime = formatTime(returnTime);
+  cancelAvailableUntil = formatDate(cancelAvailableUntil);
+  bookingDate = formatDate(bookingDate);
+
+  const navigate = useNavigate();
+
   return (
     <div className="flex flex-col w-full shadow-lg rounded-[20px] scale-[0.8] hover:scale-[0.82] transform transition-transform duration-200">
       {/* Booking date and Status */}
@@ -154,11 +182,16 @@ const Booking: React.FC<BookingProps> = ({
             }`}
           >
             You can only cancel this booking before {cancelAvailableUntil}
-            <Link to="/confirm-cancel-booking">
-              <button className="self-end bg-red-500 text-white px-[20px] py-[10px] rounded-[6px] mt-[10px] md:mt-0 hover:scale-[1.05] transform transition-transform duration-200 shadow-lg">
-                Cancel
-              </button>
-            </Link>
+            <button
+              onClick={() =>
+                navigate(`/cancel-booking`, {
+                  state: data,
+                })
+              }
+              className="self-end bg-red-500 text-white px-[20px] py-[10px] rounded-[6px] mt-[10px] md:mt-0 hover:scale-[1.05] transform transition-transform duration-200 shadow-lg"
+            >
+              Cancel
+            </button>
           </div>
         </div>
       </div>

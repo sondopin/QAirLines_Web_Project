@@ -3,6 +3,7 @@ import { Fragment, useContext } from "react";
 import { AppContext } from "../context/app.context";
 import { Dropdown } from "antd";
 import { logout } from "../apis/auth.api";
+import { PATH } from "../constants/path";
 
 const Header = () => {
   const location = useLocation();
@@ -75,11 +76,11 @@ const Header = () => {
               {!isAdmin ? (
                 <NavLink
                   className={
-                    location.pathname === "/my-bookings"
+                    location.pathname === PATH.mybooking
                       ? "flex items-center text-black px-2 font-semibold border-b-2 border-blue-500"
                       : "flex items-center text-black px-2 font-semibold border-b-2 border-transparent"
                   }
-                  to="/my-bookings"
+                  to={PATH.mybooking}
                 >
                   My Bookings
                 </NavLink>

@@ -10,6 +10,7 @@ import RejectedRoute from "./guards/RejectedRoute";
 import SearchPage from "./pages/Search";
 import Booking from "./pages/Booking";
 import MyBooking from "./pages/MyBooking";
+import ConfirmCancelBooking from "./pages/ConfirmCancelBooking";
 
 export default function createRoutes() {
   // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -31,6 +32,14 @@ export default function createRoutes() {
           element: (
             <Layout>
               <Booking />
+            </Layout>
+          ),
+        },
+        {
+          path: PATH.cancel_booking,
+          element: (
+            <Layout>
+              <ConfirmCancelBooking />
             </Layout>
           ),
         },
