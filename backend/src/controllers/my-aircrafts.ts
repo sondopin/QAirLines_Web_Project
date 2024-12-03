@@ -167,10 +167,14 @@ const myAircraftController = {
         return;
       }
 
+      const max_deadline = new Date(
+        flight.actual_departure.getTime() - 1 * 24 * 60 * 60 * 1000
+      );
+
       const bookings = await Booking.find({ flight_id: flight._id });
       await Booking.updateMany(
         { flight_id: flight._id },
-        { status: "Delayed" }
+        { status: "Delayed", cancellation_deadline: max_deadline }
       );
 
       const userIds = bookings.map((booking) => booking.user_id);

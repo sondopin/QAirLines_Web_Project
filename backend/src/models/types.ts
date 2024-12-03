@@ -47,6 +47,7 @@ export type AirportType = {
 
 export type AircraftType = {
   _id: string;
+  name: string;
   user_id: string;
   code: string;
   manufacturer: string;
