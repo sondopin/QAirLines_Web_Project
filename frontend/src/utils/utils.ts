@@ -36,3 +36,10 @@ export function formatTime(dateTime: string | Date): string {
     dateTime.getMinutes().toString().padStart(2, "0")
   );
 }
+
+export function formatCurrency(amount: number): string {
+  return new Intl.NumberFormat("vi-VN", {
+    style: "currency",
+    currency: "VND",
+  }).format(amount);
+}

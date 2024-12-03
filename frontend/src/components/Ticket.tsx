@@ -1,13 +1,20 @@
 import React from "react";
+import type { Ticket } from "../types/flight.type";
 
 interface TicketProps {
+  data: Ticket;
   index: number;
-  id: number;
-  change: (e: React.ChangeEvent<HTMLInputElement>, index: number) => void;
+  id?: number;
+  change?: (e: React.ChangeEvent<HTMLInputElement>, index: number) => void;
   errors?: { [key: string]: string };
 }
 
-const Ticket: React.FC<TicketProps> = ({ index, id, change, errors }) => {
+const Ticket: React.FC<TicketProps> = ({ data, index, id, change, errors }) => {
+  let isView = false;
+  if (!change) {
+    isView = true;
+  }
+
   return (
     <div className="flex flex-col p-6 bg-blue-100 rounded-lg shadow-md max-w-7xl mx-auto">
       {/* Header */}
@@ -27,10 +34,14 @@ const Ticket: React.FC<TicketProps> = ({ index, id, change, errors }) => {
               <span className="text-red-500">*</span> Date Of Birth
             </label>
             <input
+              value={
+                data.dob ? new Date(data.dob).toISOString().split("T")[0] : ""
+              }
               name="dob"
+              disabled={isView}
               type="date"
               placeholder="Choose A Date"
-              onChange={(e) => change(e, id)}
+              onChange={(e) => change && change(e, id ?? 0)}
               className="w-full mt-2 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
             />
             {errors?.dob && (
@@ -45,9 +56,11 @@ const Ticket: React.FC<TicketProps> = ({ index, id, change, errors }) => {
             </label>
             <input
               name="name"
+              value={data.name}
               type="text"
+              disabled={isView}
               placeholder="Enter your name"
-              onChange={(e) => change(e, id)}
+              onChange={(e) => change && change(e, id ?? 0)}
               className="w-full mt-2 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
             />
             {errors?.name && (
@@ -63,8 +76,10 @@ const Ticket: React.FC<TicketProps> = ({ index, id, change, errors }) => {
             <input
               name="nationality"
               type="text"
+              value={data.nationality}
+              disabled={isView}
               placeholder="Enter your nationality"
-              onChange={(e) => change(e, id)}
+              onChange={(e) => change && change(e, id ?? 0)}
               className="w-full mt-2 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
             />
             {errors?.nationality && (
@@ -83,8 +98,10 @@ const Ticket: React.FC<TicketProps> = ({ index, id, change, errors }) => {
             <input
               name="phone"
               type="tel"
+              value={data.phone}
+              disabled={isView}
               placeholder="Enter your phone number"
-              onChange={(e) => change(e, id)}
+              onChange={(e) => change && change(e, id ?? 0)}
               className="w-full mt-2 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
             />
             {errors?.phone && (
@@ -98,8 +115,10 @@ const Ticket: React.FC<TicketProps> = ({ index, id, change, errors }) => {
             <input
               name="email"
               type="email"
+              value={data.email}
               placeholder="Enter your email"
-              onChange={(e) => change(e, id)}
+              disabled={isView}
+              onChange={(e) => change && change(e, id ?? 0)}
               className="w-full mt-2 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
             />
             {errors?.email && (
@@ -115,8 +134,10 @@ const Ticket: React.FC<TicketProps> = ({ index, id, change, errors }) => {
             <input
               name="passport"
               type="text"
+              value={data.passport}
+              disabled={isView}
               placeholder="Enter your passport number"
-              onChange={(e) => change(e, id)}
+              onChange={(e) => change && change(e, id ?? 0)}
               className="w-full mt-2 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
             />
             {errors?.passport && (
@@ -126,13 +147,20 @@ const Ticket: React.FC<TicketProps> = ({ index, id, change, errors }) => {
         </div>
 
         {/* Clear Button */}
-        <div className="text-center">
-          <button
-            type="button"
-            className="px-6 py-3 bg-slate-800 text-white font-medium rounded-lg shadow hover:bg-red-500 transition"
-          >
-            Clear
-          </button>
+        {change && (
+          <div className="text-center">
+            <button
+              type="button"
+              className="px-6 py-3 bg-slate-800 text-white font-medium rounded-lg shadow hover:bg-red-500 transition"
+            >
+              Clear
+            </button>
+          </div>
+        )}
+        {/* Price */}
+        <div className="flex justify-between items-center">
+          <div className="text-lg font-semibold">Price:</div>
+          <div className="text-lg font-semibold">{data.price} VND</div>
         </div>
       </fieldset>
     </div>

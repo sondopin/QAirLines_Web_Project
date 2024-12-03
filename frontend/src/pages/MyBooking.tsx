@@ -1,8 +1,8 @@
 import React from "react";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
 import Booking from "../components/Booking";
-import AdjustedFlightNotification from "../components/AdjustedFlightNotification";
+import { useQuery } from "@tanstack/react-query";
+import { getMyBookings } from "../apis/user.api";
+import { useGetAirports } from "../hooks/useGetAirports";
 
 interface MyBookingProps {
   something?: string;
@@ -21,88 +21,57 @@ interface MyBookingProps {
  * @returns {JSX.Element} The rendered MyBooking component.
  */
 
-const MyBooking: React.FC<MyBookingProps> = ({ something }) => {
-  console.log(something);
+const MyBooking: React.FC<MyBookingProps> = () => {
+  const airports = useGetAirports();
+  const booking_list = [];
+  const { data: bookings } = useQuery({
+    queryKey: ["booking"],
+    queryFn: () => getMyBookings(),
+  });
+
+  if (bookings) {
+    for (let i = 0; i < bookings.data.length; i++) {
+      const booking = bookings.data[i].booking;
+      const flight = bookings.data[i].flight;
+
+      booking_list.push({
+        bookingId: booking._id,
+        flightId: flight._id,
+        bookingDate: booking.booking_date,
+        status:
+          booking.status === "Cancelled"
+            ? "Cancelled"
+            : booking.status === "Delayed"
+            ? "Delayed"
+            : flight.actual_departure < new Date().toDateString() &&
+              flight.actual_arrival < new Date().toDateString()
+            ? "Up Coming"
+            : "Completed",
+        departureCityCode: airports[flight.ori_airport].code,
+        destinationCityCode: airports[flight.des_airport].code,
+        departureCityName: airports[flight.ori_airport].city,
+        destinationCityName: airports[flight.des_airport].city,
+        departureDate: flight.actual_departure,
+        departureTime: flight.actual_departure,
+        returnDate: flight.actual_arrival,
+        returnTime: flight.actual_arrival,
+        businessTickets: booking.busi_tickets,
+        economyTickets: booking.eco_tickets,
+        totalPrice: booking.total_amount,
+        cancelAvailableUntil: booking.cancellation_deadline,
+      });
+    }
+  }
+
+  console.log(booking_list);
 
   return (
     <div className="bg-[#F6FBFF]">
-      <Header />
       <div className="flex flex-col gap-[30px] w-full px-[20px] py-[30px]">
-        <Booking
-          bookingDate="19/11/2024"
-          status="Up Coming"
-          departureCityCode="HAN"
-          departureCityName="Ha Noi"
-          destinationCityCode="SGN"
-          destinationCityName="Ho Chi Minh City"
-          departureDate="Tue, 22/11/2024"
-          departureTime="10:30 AM"
-          returnDate="Sat, 25/12/2024"
-          returnTime="08:15 PM"
-          businessTickets={2}
-          economyTickets={3}
-          totalPrice={361500000}
-          cancelAvailableUntil="Monday, 21/11/2024"
-        />
-        <div className="px-[150px]">
-          <AdjustedFlightNotification
-            oldDepartureDate="Tue, 22/11/2024, 10:30 AM"
-            newDepartureDate="Wed, 23/11/2024, 09:00 AM"
-            oldReturnDate="Sat, 25/12/2024, 08:15 PM"
-            newReturnDate="Sun, 26/12/2024, 04:30 PM"
-            reason="Bad weather conditions"
-          />
-        </div>
-        <Booking
-          bookingDate="19/11/2024"
-          status="Up Coming"
-          departureCityCode="HAN"
-          departureCityName="Ha Noi"
-          destinationCityCode="SGN"
-          destinationCityName="Ho Chi Minh City"
-          departureDate="Tue, 22/11/2024"
-          departureTime="10:30 AM"
-          returnDate="Sat, 25/12/2024"
-          returnTime="08:15 PM"
-          businessTickets={2}
-          economyTickets={3}
-          totalPrice={361500000}
-          cancelAvailableUntil="Monday, 21/11/2024"
-        />
-        <Booking
-          bookingDate="19/11/2024"
-          status="Cancelled"
-          departureCityCode="HAN"
-          departureCityName="Ha Noi"
-          destinationCityCode="SGN"
-          destinationCityName="Ho Chi Minh City"
-          departureDate="Tue, 22/11/2024"
-          departureTime="10:30 AM"
-          returnDate="Sat, 25/12/2024"
-          returnTime="08:15 PM"
-          businessTickets={2}
-          economyTickets={3}
-          totalPrice={361500000}
-          cancelAvailableUntil="Monday, 21/11/2024"
-        />
-        <Booking
-          bookingDate="19/11/2024"
-          status="Completed"
-          departureCityCode="HAN"
-          departureCityName="Ha Noi"
-          destinationCityCode="SGN"
-          destinationCityName="Ho Chi Minh City"
-          departureDate="Tue, 22/11/2024"
-          departureTime="10:30 AM"
-          returnDate="Sat, 25/12/2024"
-          returnTime="08:15 PM"
-          businessTickets={2}
-          economyTickets={3}
-          totalPrice={361500000}
-          cancelAvailableUntil="Monday, 21/11/2024"
-        />
+        {booking_list.map((booking, index) => (
+          <Booking key={index} {...booking} />
+        ))}
       </div>
-      <Footer />
     </div>
   );
 };

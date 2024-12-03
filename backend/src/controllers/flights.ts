@@ -117,6 +117,7 @@ const flightController = {
           booking_id: booking._id,
           seat_id: seat._id,
           ...passenger,
+          price,
         });
         await ticket.save();
 
@@ -134,6 +135,7 @@ const flightController = {
           booking_id: booking._id,
           seat_id: seat._id,
           ...passenger,
+          price,
         });
         await ticket.save();
 

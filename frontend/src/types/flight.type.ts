@@ -34,6 +34,7 @@ export interface Ticket {
   email: string;
   phone: string;
   passport: string;
+  price: number;
 }
 
 export type Tickets = Ticket[];
