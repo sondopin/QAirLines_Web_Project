@@ -48,8 +48,8 @@ const FlightCard: React.FC<FlightCardProps> = ({
 }) => {
   const departure_date = formatDate(departureDate);
   const depature_time = formatTime(departureDate);
-  const return_date = formatDate(returnDate);
-  const return_time = formatTime(returnDate);
+  const return_date = returnDate ? formatDate(returnDate) : undefined;
+  const return_time = returnDate ? formatTime(returnDate) : undefined;
 
   const [isAdjust, setIsAdjust] = useState(false);
 
@@ -102,9 +102,11 @@ const FlightCard: React.FC<FlightCardProps> = ({
             className="hidden md:block scale-[0.8]"
           />
           {/* Schedule */}
-          <div className="flex flex-col gap-[5px] px-[10px] py-[10px] w-full max-w-[350px]">
+          <div className="flex flex-col justify-center gap-[5px] px-[10px] py-[10px] w-full max-w-[350px]">
             <div>Departure Date: {depature_time + " " + departure_date}</div>
-            <div>Return Date: {return_time + " " + return_date}</div>
+            {return_date && (
+              <div>Return Date: {return_time + " " + return_date}</div>
+            )}
           </div>
           <img
             src="./verticle_line.png"
@@ -137,7 +139,9 @@ const FlightCard: React.FC<FlightCardProps> = ({
           aircraftId={aircraftId}
           flightId={flightId}
           oldDepartureDate={depature_time + " " + departure_date}
-          oldReturnDate={return_time + " " + return_date}
+          oldReturnDate={
+            return_date ? return_time + " " + return_date : undefined
+          }
         />
       )}
     </div>

@@ -2,11 +2,11 @@ import Hero from "../components/Hero";
 import SearchResultCard from "../components/SearchResultCard";
 import { useQuery } from "@tanstack/react-query";
 import { getFlights } from "../apis/flight.api";
-import { formatDate } from "../utils/utils";
 import { useQueryForm } from "../hooks/useQueryForm";
 import { Flight } from "../types/flight.type";
 import { useState } from "react";
 import { useGetAirports } from "../hooks/useGetAirports";
+import SearchedFlightInfo from "../components/SearchedFlightInfo";
 
 type SortType = {
   base_price?: "asc" | "desc";
@@ -21,11 +21,7 @@ const Search = () => {
 
   const departure_airport = airports[search_query?.ori_airport];
 
-  const departure_time = formatDate(search_query?.departure_time);
-
   const arrival_airport = airports[search_query?.des_airport];
-
-  const arrival_time = formatDate(search_query?.arrival_time);
 
   const { data: flights_query } = useQuery({
     queryKey: ["flights", search_query],
@@ -45,7 +41,6 @@ const Search = () => {
       nums_eco_book: search_query?.nums_eco,
     };
   });
-
   for (const key in sort) {
     const sortOrder = sort[key as keyof SortType];
     flights_list?.sort((a: Flight, b: Flight) => {
@@ -74,63 +69,19 @@ const Search = () => {
   return (
     <div>
       <Hero>
-        <section className="flex items-center justify-evenly p-6 w-full bg-white bg-opacity-90 rounded-3xl shadow-md font-sans">
-          {/* Airport Information */}
-          <div className="flex items-center space-x-4">
-            {/* Departure Airport */}
-            <div className="text-center">
-              <h2 className="text-2xl font-bold">{departure_airport?.name}</h2>
-              <p className="text-gray-600">{departure_airport?.city}</p>
-            </div>
-
-            {/* Divider */}
-            <div className="h-8 w-[1px] bg-gray-300"></div>
-
-            {/* Icon */}
-            <div>
-              <span className="text-2xl">⇆</span>
-            </div>
-
-            {/* Divider */}
-            <div className="h-8 w-[1px] bg-gray-300"></div>
-
-            {/* Arrival Airport */}
-            <div className="text-center">
-              <h2 className="text-2xl font-bold">{arrival_airport?.name}</h2>
-              <p className="text-gray-600">{arrival_airport?.city}</p>
-            </div>
-          </div>
-
-          {/* Divider */}
-          <div className="h-16 w-[1px] bg-gray-300"></div>
-
-          {/* Dates Information */}
-          <div className="text-center">
-            <div>
-              <h3 className="text-lg font-semibold">Departure Date</h3>
-              <p className="text-gray-600">{departure_time}</p>
-            </div>
-            <div className="mt-4">
-              <h3 className="text-lg font-semibold">Return Date</h3>
-              <p className="text-gray-600">{arrival_time}</p>
-            </div>
-          </div>
-
-          {/* Divider */}
-          <div className="h-16 w-[1px] bg-gray-300"></div>
-
-          {/* Ticket Information */}
-          <div className="text-center space-y-4">
-            <div className="flex justify-between space-x-4">
-              <span className="text-lg font-semibold">Business Tickets</span>
-              <span className="text-lg">{search_query?.nums_busi}</span>
-            </div>
-            <div className="flex justify-between space-x-4">
-              <span className="text-lg font-semibold">Economy Tickets</span>
-              <span className="text-lg">{search_query?.nums_eco}</span>
-            </div>
-          </div>
-        </section>
+        <SearchedFlightInfo
+          actual_departure={search_query?.departure_time}
+          actual_arrival={search_query?.return_time}
+          ori_airport={departure_airport?.name}
+          ori_code={departure_airport?.code}
+          ori_city={departure_airport?.city}
+          des_airport={arrival_airport?.name}
+          des_code={arrival_airport?.code}
+          des_city={arrival_airport?.city}
+          number={""}
+          nums_busi_book={search_query?.nums_busi}
+          nums_eco_book={search_query?.nums_eco}
+        />
       </Hero>
       {/* End hero */}
       {/* End general information */}

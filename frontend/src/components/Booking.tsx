@@ -79,14 +79,15 @@ const Booking: React.FC<BookingProps> = ({
   };
   if (
     status !== "Completed" &&
+    status !== "Cancelled" &&
     (departureTime !== departureTimeOld || returnTime !== returnTimeOld)
   ) {
     status = "Delayed";
   }
   const departureDate = formatDate(departureTime);
   departureTime = formatTime(departureTime);
-  const returnDate = returnTime ? formatDate(returnTime) : "";
-  returnTime = returnTime ? formatTime(returnTime) : "";
+  const returnDate = returnTime ? formatDate(returnTime) : undefined;
+  returnTime = returnTime ? formatTime(returnTime) : undefined;
 
   cancelAvailableUntil = formatDate(cancelAvailableUntil);
   bookingDate = formatDate(bookingDate);
@@ -159,11 +160,13 @@ const Booking: React.FC<BookingProps> = ({
                 <div>{departureDate}</div>
                 <div>{departureTime}</div>
               </div>
-              <div className="flex flex-col gap-[10px] w-full items-center">
-                <div>Return Date</div>
-                <div>{returnDate}</div>
-                <div>{returnTime}</div>
-              </div>
+              {returnDate && returnTime && (
+                <div className="flex flex-col gap-[10px] w-full items-center">
+                  <div>Return Date</div>
+                  <div>{returnDate}</div>
+                  <div>{returnTime}</div>
+                </div>
+              )}
             </div>
             <img
               src="./verticle_line.png"
@@ -190,7 +193,7 @@ const Booking: React.FC<BookingProps> = ({
               className={`flex flex-col w-full md:w-auto items-center md:items-start text-[16px] gap-[10px] ${
                 status === "Up Coming" || status === "Delayed"
                   ? "visible"
-                  : "visible"
+                  : "hidden"
               }`}
             >
               You can only cancel this booking before {cancelAvailableUntil}
@@ -211,7 +214,9 @@ const Booking: React.FC<BookingProps> = ({
       {status === "Delayed" && (
         <AdjustedFlightNotification
           oldDepartureDate={formatDateTime(departureTimeOld)}
-          oldReturnDate={formatDateTime(returnTimeOld || "")}
+          oldReturnDate={
+            returnTimeOld ? formatDateTime(returnTimeOld) : undefined
+          }
           newDepartureDate={departureTime + " " + departureDate}
           newReturnDate={returnTime + " " + returnDate}
           reason={"Bad weather"}

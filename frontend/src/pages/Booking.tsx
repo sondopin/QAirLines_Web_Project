@@ -15,6 +15,9 @@ const Booking = () => {
   const [confirm, setConfirm] = useState(false);
   const busi_tickets = parseInt(nums_busi_book);
   const eco_tickets = parseInt(nums_eco_book);
+  const type =
+    flight_infor.actual_arrival == undefined ? "Oneway" : "Roundtrip";
+
   const [errors, setErrors] = useState<{
     [key: number]: { [key: string]: string };
   }>({});
@@ -78,6 +81,7 @@ const Booking = () => {
       busi_tickets,
       eco_tickets,
       tickets: booking,
+      type,
     };
     try {
       await makeBooking(dataForm);
