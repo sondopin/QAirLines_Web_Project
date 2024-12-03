@@ -81,7 +81,7 @@ const Booking = () => {
     };
     try {
       await makeBooking(dataForm);
-      navigate(PATH.mybooking);
+      navigate(PATH.user.mybooking);
     } catch (error) {
       console.log(error);
     }

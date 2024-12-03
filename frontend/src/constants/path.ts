@@ -2,11 +2,14 @@ export const PATH = {
   home: "/",
   login: "/login",
   register: "/register",
-  admin: {
-    base: "/admin",
-  },
   search: "/search",
-  booking: "/booking",
-  mybooking: "/mybooking",
-  cancel_booking: "/cancel-booking",
+  admin: {
+    manage: "/manage",
+    view_flight: "/view-flight",
+  },
+  user: {
+    booking: "/booking",
+    mybooking: "/mybooking",
+    cancel_booking: "/cancel-booking",
+  },
 } as const;

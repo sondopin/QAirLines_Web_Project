@@ -118,7 +118,7 @@ const Booking: React.FC<BookingProps> = ({
         {/* Flight info container */}
         <div className="flex flex-col md:flex-row w-full gap-[20px] md:gap-[52px] px-[20px] md:px-[61px] py-[11px]">
           {/* Place */}
-          <div className="flex flex-row gap-auto items-center w-full justify-center items-center">
+          <div className="flex flex-row gap-auto items-center w-full justify-center">
             <div className="flex flex-col w-full items-center">
               <div className="font-bold text-[32px]">{departureCityCode}</div>
               <div className="font-semibold text-[20px]">

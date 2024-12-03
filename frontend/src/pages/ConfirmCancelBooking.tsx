@@ -32,7 +32,7 @@ const ConfirmCancelBooking: React.FC = () => {
   const handleConfirm = async () => {
     try {
       await cancelBooking(data.booking_id);
-      navigate(PATH.mybooking);
+      navigate(PATH.user.mybooking);
     } catch (error) {
       console.error(error);
     }
