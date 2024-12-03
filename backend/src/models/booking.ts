@@ -15,6 +15,7 @@ const bookingSchema = new mongoose.Schema<BookingType>({
   },
   total_amount: { type: Number, required: true },
   cancellation_deadline: { type: Date, required: true },
+  type: { type: String },
 });
 
 const Booking = mongoose.model<BookingType>("Booking", bookingSchema);

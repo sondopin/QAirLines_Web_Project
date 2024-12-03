@@ -3,8 +3,8 @@ import React from "react";
 interface AdjustedFlightNotificationProps {
   oldDepartureDate: string;
   newDepartureDate: string;
-  oldReturnDate: string;
-  newReturnDate: string;
+  oldReturnDate: string | undefined;
+  newReturnDate: string | undefined;
   reason: string;
 }
 
@@ -29,16 +29,19 @@ const AdjustedFlightNotification: React.FC<AdjustedFlightNotificationProps> = ({
           {newDepartureDate}
         </div>
       </div>
-      <div className="flex flex-col md:flex-row gap-[22px] items-center">
-        <div>Adjusted Return Date:</div>
-        <div className="font-semibold text-[#0066FF] italic">
-          {oldReturnDate}
+      {oldReturnDate && (
+        <div className="flex flex-col md:flex-row gap-[22px] items-center">
+          <div>Adjusted Return Date:</div>
+          <div className="font-semibold text-[#0066FF] italic">
+            {oldReturnDate}
+          </div>
+          <div className="scale-x-[2] text-[20px]">→</div>
+          <div className="font-semibold text-[#0066FF] italic">
+            {newReturnDate}
+          </div>
         </div>
-        <div className="scale-x-[2] text-[20px]">→</div>
-        <div className="font-semibold text-[#0066FF] italic">
-          {newReturnDate}
-        </div>
-      </div>
+      )}
+
       <div className="italic">
         If the adjusted schedule is not suitable for your demand, you can cancel
         it. Otherwise, you do not need to do anything.

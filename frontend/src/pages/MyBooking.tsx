@@ -34,8 +34,6 @@ const MyBooking: React.FC<MyBookingProps> = () => {
       const booking = bookings.data[i].booking;
       const flight = bookings.data[i].flight;
 
-      console.log(new Date().toDateString());
-
       booking_list.push({
         bookingId: booking._id,
         flightId: flight._id,
@@ -50,10 +48,10 @@ const MyBooking: React.FC<MyBookingProps> = () => {
         destinationCityCode: airports[flight.des_airport].code,
         departureCityName: airports[flight.ori_airport].city,
         destinationCityName: airports[flight.des_airport].city,
-        departureDate: flight.actual_departure,
         departureTime: flight.actual_departure,
-        returnDate: flight.actual_arrival,
+        departureTimeOld: flight.scheduled_departure,
         returnTime: flight.actual_arrival,
+        returnTimeOld: flight.scheduled_arrival,
         businessTickets: booking.busi_tickets,
         economyTickets: booking.eco_tickets,
         totalPrice: booking.total_amount,

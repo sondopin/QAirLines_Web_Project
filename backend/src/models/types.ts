@@ -68,6 +68,7 @@ export type BookingType = {
   status: string;
   total_amount: number;
   cancellation_deadline: Date;
+  type: String;
 };
 
 export type TicketType = {

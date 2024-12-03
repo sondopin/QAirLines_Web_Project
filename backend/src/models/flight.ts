@@ -11,7 +11,7 @@ const flightSchema = new mongoose.Schema<FlightType>({
   ori_airport: { type: String, required: true },
   des_airport: { type: String, required: true },
   scheduled_departure: { type: Date, required: true },
-  scheduled_arrival: { type: Date, required: true },
+  scheduled_arrival: { type: Date },
   actual_departure: { type: Date },
   actual_arrival: { type: Date },
   nums_busi_seat_avail: { type: Number, required: true },

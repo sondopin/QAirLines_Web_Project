@@ -41,8 +41,8 @@ const ConfirmBooking: React.FC<ConfirmBookingProps> = ({
 }) => {
   const departure_date = formatDate(departureDate);
   const depature_time = formatTime(departureDate);
-  const arrival_date = formatDate(returnDate);
-  const arrival_time = formatTime(returnDate);
+  const return_date = returnDate ? formatDate(returnDate) : undefined;
+  const return_time = returnDate ? formatTime(returnDate) : undefined;
 
   return (
     <div className="flex flex-col gap-[17px] bg-[#D8EBFE] rounded-[14px] shadow-lg w-[730px] self-center px-[42px] py-[27px] scale-[0.85]">
@@ -63,10 +63,13 @@ const ConfirmBooking: React.FC<ConfirmBookingProps> = ({
         <div className="font-bold">Destination:</div>
         <div className="opacity-[60%]">{destination}</div>
       </div>
-      <div className="flex flex-row gap-[10px] w-full text-[20px] text-[#223A60] justify-start">
-        <div className="font-bold">Return Date:</div>
-        <div className="opacity-[60%]">{arrival_time + " " + arrival_date}</div>
-      </div>
+      {return_date && (
+        <div className="flex flex-row gap-[10px] w-full text-[20px] text-[#223A60] justify-start">
+          <div className="font-bold">Return Date:</div>
+          <div className="opacity-[60%]">{return_time + " " + return_date}</div>
+        </div>
+      )}
+
       <div className="flex flex-row gap-[10px] w-full text-[20px] text-[#223A60] justify-start">
         <div className="font-bold">Number of Tickets:</div>
         <div className="opacity-[60%]">

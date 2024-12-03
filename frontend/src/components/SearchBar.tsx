@@ -7,7 +7,7 @@ interface searchFormType {
   ori_airport: string;
   des_airport: string;
   departure_time: string;
-  arrival_time: string;
+  return_time: string;
   nums_busi: number;
   nums_eco: number;
 }
@@ -15,7 +15,7 @@ interface searchFormType {
 const intialSearchForm: searchFormType = {
   ori_airport: "",
   des_airport: "",
-  arrival_time: "",
+  return_time: "",
   departure_time: "",
   nums_busi: 0,
   nums_eco: 0,
@@ -25,7 +25,7 @@ export const SearchBar: React.FC = () => {
   const navigate = useNavigate();
   const [searchForm, setSearchForm] =
     useState<searchFormType>(intialSearchForm);
-
+  const [isRoundTrip, setIsRoundTrip] = useState(false);
   const { data: airport_list } = useQuery({
     queryKey: ["airport"],
     queryFn: () => getAirports(),
@@ -70,6 +70,26 @@ export const SearchBar: React.FC = () => {
 
         {/* Form Section */}
         <section className="w-full p-6 sm:p-8 mt-4 bg-gray-100 rounded-3xl shadow-lg">
+          <div className="mb-8 flex w-[300px] justify-between">
+            <div>
+              <input
+                type="radio"
+                name="way"
+                checked={!isRoundTrip}
+                onChange={() => setIsRoundTrip(!isRoundTrip)}
+              />{" "}
+              One-Way
+            </div>
+            <div>
+              <input
+                type="radio"
+                name="way"
+                checked={isRoundTrip}
+                onChange={() => setIsRoundTrip(!isRoundTrip)}
+              />{" "}
+              Round-Trip
+            </div>
+          </div>
           <form
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
             onSubmit={handleSubmit}
@@ -123,18 +143,20 @@ export const SearchBar: React.FC = () => {
             </div>
 
             {/* Return Date */}
-            <div>
-              <label className="block text-sm font-bold mb-2">
-                Return Date
-              </label>
-              <input
-                type="date"
-                value={searchForm.arrival_time}
-                onChange={handleChange("arrival_time")}
-                className="w-full p-3 border rounded-md focus:ring-2 focus:ring-blue-500"
-                required
-              />
-            </div>
+            {isRoundTrip && (
+              <div>
+                <label className="block text-sm font-bold mb-2">
+                  Return Date
+                </label>
+                <input
+                  type="date"
+                  value={searchForm.return_time}
+                  onChange={handleChange("return_time")}
+                  className="w-full p-3 border rounded-md focus:ring-2 focus:ring-blue-500"
+                  required
+                />
+              </div>
+            )}
 
             {/* Business Class Tickets */}
             <div className="md:col-span-2">

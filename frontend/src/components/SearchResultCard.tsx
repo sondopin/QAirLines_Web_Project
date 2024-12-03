@@ -79,7 +79,7 @@ const SearchResultCard = ({
         {/* Arrival Info */}
         <div className="flex flex-col flex-1">
           <div className="text-lg font-medium">
-            {formatTime(actual_arrival)}
+            {actual_arrival ? formatTime(actual_arrival) : ""}
           </div>
           <div className="mt-2 text-sm text-gray-600">{des_airport}</div>
         </div>

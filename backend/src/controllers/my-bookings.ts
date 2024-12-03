@@ -9,7 +9,6 @@ import { SeatType } from "../models/types";
 import User from "../models/user";
 import Booking from "../models/booking";
 import Ticket from "../models/ticket";
-
 const myBookingController = {
   getMyBookings: async (req: Request, res: Response) => {
     try {
@@ -77,8 +76,16 @@ const myBookingController = {
       const flight = await Flight.findById(booking.flight_id);
       if (flight) {
         const newRevenue = flight.revenue - booking.total_amount;
-        flight.updateOne({ total_revenue: newRevenue });
-        await flight.save();
+        await Flight.updateOne(
+          { _id: booking.flight_id },
+          {
+            total_revenue: newRevenue,
+            nums_busi_seat_avail:
+              flight.nums_busi_seat_avail + booking.busi_tickets,
+            nums_eco_seat_avail:
+              flight.nums_eco_seat_avail + booking.eco_tickets,
+          }
+        );
       }
 
       res.status(200).json({ message: "Booking successfully cancelled" });
