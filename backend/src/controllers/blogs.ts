@@ -9,13 +9,25 @@ const BlogController = {
   },
 
   getLatestBlogs: async (req: Request, res: Response) => {
-    const blogs = await Blog.find().sort({ createdAt: -1 }).limit(4);
+    const blogs = await Blog.find().sort({ createdAt: -1 });
     res.json(blogs);
   },
 
   getBlogById: async (req: Request, res: Response) => {
     const blog = await Blog.findById(req.params.id);
     res.json(blog);
+  },
+
+  uploadBlog: async (req: Request, res: Response) => {
+    const { title, subtitle, content } = req.body;
+    const new_blog = new Blog({
+      title,
+      subtitle,
+      content,
+      cover_url: req.file ? req.file.filename : undefined,
+    });
+    await new_blog.save();
+    res.status(200).json("Created new blog successfully");
   },
 };
 
