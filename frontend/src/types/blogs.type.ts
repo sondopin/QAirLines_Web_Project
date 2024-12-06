@@ -1,14 +1,14 @@
 export interface Blog {
+  _id: string;
   title: string;
-  description: string;
-  image_url: string;
+  subtitle: string;
+  cover_url: string;
   content: string;
-  header: string;
-  footer: string;
 }
 
 export interface BlogCard {
+  _id: string;
   title: string;
-  description: string;
-  image_url: string;
+  subtitle: string;
+  cover_url: string;
 }

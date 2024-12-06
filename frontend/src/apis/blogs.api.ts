@@ -12,3 +12,11 @@ export const getAllBlogs = async () => {
 export const getBlogById = async (id: string) => {
   return http.get<Blog>(`/blogs/get/${id}`);
 };
+
+export const uploadBlog = async (data: FormData) => {
+  return http.post<string>("/blogs/upload", data, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+};

@@ -86,16 +86,28 @@ const Header = () => {
                 </NavLink>
               ) : null}
               {isAdmin ? (
-                <NavLink
-                  className={
-                    location.pathname === PATH.admin.manage
-                      ? "flex items-center text-black px-2 font-semibold border-b-2 border-orange-500"
-                      : "flex items-center text-black px-2 font-semibold border-b-2 border-transparent"
-                  }
-                  to={PATH.admin.manage}
-                >
-                  My Aircrafts
-                </NavLink>
+                <>
+                  <NavLink
+                    className={
+                      location.pathname === PATH.admin.manage
+                        ? "flex items-center text-black px-2 font-semibold border-b-2 border-orange-500"
+                        : "flex items-center text-black px-2 font-semibold border-b-2 border-transparent"
+                    }
+                    to={PATH.admin.manage}
+                  >
+                    My Aircrafts
+                  </NavLink>
+                  <NavLink
+                    className={
+                      location.pathname === PATH.admin.view_news
+                        ? "flex items-center text-black px-2 font-semibold border-b-2 border-orange-500"
+                        : "flex items-center text-black px-2 font-semibold border-b-2 border-transparent"
+                    }
+                    to={PATH.admin.view_news}
+                  >
+                    News
+                  </NavLink>
+                </>
               ) : null}
             </>
           )}

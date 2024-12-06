@@ -87,9 +87,7 @@ export type TicketType = {
 export type BlogType = {
   _id: string;
   content: string;
-  header: string;
-  footer: string;
   title: string;
-  description: string;
-  image_url: string;
+  cover_url: string;
+  subtitle: string;
 };

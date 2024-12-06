@@ -1,27 +1,29 @@
-import express, { Request, Response } from 'express';   
-import cors from 'cors';
+import express from "express";
+import cors from "cors";
 import "dotenv/config";
-import mongoose from 'mongoose';
-import User from './models/user';
-import Plane from './models/aircraft';
-import flightSchema from './models/flight';
-import Ticket from './models/ticket';
-import userRoutes from './routes/users';
-import authRoutes from './routes/auth';
-import cookie from 'cookie-parser';
-import myAircraftRoutes from './routes/my-aircrafts';
-import router from './routes/index';
+import mongoose from "mongoose";
+import cookie from "cookie-parser";
+import router from "./routes/index";
+import path from "path";
+import bodyParser from "body-parser";
 
-mongoose.connect(process.env.MONGODB_CONNECTION_STRING as string)
+mongoose.connect(process.env.MONGODB_CONNECTION_STRING as string);
 const app = express();
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+
 app.use(cors());
 app.use(cookie());
 
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+app.use(bodyParser.json({ limit: "50mb" })); // Tăng giới hạn JSON
+app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
+
+// Static middleware để phục vụ các file trong thư mục `public`
+app.use("/public", express.static(path.join(__dirname, "public")));
+
 router(app);
 
-app.listen(7000, () => {    
+app.listen(7000, () => {
   console.log(`Server is running on port 7000`);
 });
-

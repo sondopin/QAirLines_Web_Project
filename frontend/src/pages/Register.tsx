@@ -53,16 +53,22 @@ const RegisterPage: React.FC = () => {
     <main className="bg-white flex min-w-[320px] items-start overflow-hidden justify-start flex-wrap mx-24 md:p-[100px_20px]">
       <div className="rounded-[14px] shadow-lg flex min-w-[240px] w-full justify-center flex-wrap flex-1 basis-0 items-stretch md:max-w-full">
         <section className="rounded-[14px_0_0_14px] flex min-w-[320px] flex-col overflow-hidden flex-1 basis-[60px] p-[217px_0_132px] relative md:max-w-full md:p-[100px_0]">
-        <img
+          <img
             className="w-full h-full absolute top-0 left-0 z-[1]"
             src="./background.png"
             alt="Background"
           />
           <div className="text-black font-bold font-serif px-[17px] pl-[73px] z-[1] mt-20">
-            <h2 className="text-[90px] tracking-[2.88px] self-end md:max-w-full md:text-[40px] pl-[80px]">Elevate Your Journey</h2>
-            <p className="text-[100px] tracking-[3.6px] self-start mt-[105px] md:mt-[40px] md:text-[40px]">Discover the</p>
+            <h2 className="text-[90px] tracking-[2.88px] self-end md:max-w-full md:text-[40px] pl-[80px]">
+              Elevate Your Journey
+            </h2>
+            <p className="text-[100px] tracking-[3.6px] self-start mt-[105px] md:mt-[40px] md:text-[40px]">
+              Discover the
+            </p>
           </div>
-          <p className="text-white font-serif text-[128px] tracking-[7.68px] self-start mt-[38px] ml-[11px] z-[1]">World</p>
+          <p className="text-white font-serif text-[128px] tracking-[7.68px] self-start mt-[38px] ml-[11px] z-[1]">
+            World
+          </p>
         </section>
         <section className="rounded-[0_14px_14px_0] bg-[rgba(97,168,250,0.2)] flex min-w-[400px] min-h-[814px] flex-col overflow-hidden tracking-[0.96px] justify-between flex-1 basis-0 text-[16px] md:max-w-full md:p-[0_20px]">
           <img
@@ -111,13 +117,17 @@ const RegisterPage: React.FC = () => {
             />
             <button
               type="submit"
-              className="w-1/3 mx-auto mb-3 rounded-[14px] bg-[#223a60] shadow-lg mt-[50px] min-h-[44px] gap-[10px] text-white font-medium text-center leading-[40px] px-5 mt-[40px] lg:whitespace-nowrap lg:mt-[50px]"
+              className="w-1/3 mx-auto mb-3 rounded-[14px] bg-[#223a60] shadow-lg min-h-[44px] gap-[10px] text-white font-medium text-center leading-[40px] px-5 mt-[40px] lg:whitespace-nowrap lg:mt-[50px]"
             >
               Register
             </button>
             <Link to="/login" className="text-center">
-              <p className="text-[#223a60] font-normal leading-[40px] self-stretch flex-1 basis-[40px] my-auto text-ellipsis">Already have an account?</p>
-              <p className="self-stretch text-[#0066ff] font-medium flex-1 my-auto px-[20px] text-ellipsis">Login</p>
+              <p className="text-[#223a60] font-normal leading-[40px] self-stretch flex-1 basis-[40px] my-auto text-ellipsis">
+                Already have an account?
+              </p>
+              <p className="self-stretch text-[#0066ff] font-medium flex-1 my-auto px-[20px] text-ellipsis">
+                Login
+              </p>
             </Link>
           </form>
         </section>

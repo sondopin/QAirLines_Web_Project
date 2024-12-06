@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 
 interface RichTextEditorProps {
   initalValue?: string;
+  change: (content: string) => void;
 }
 
 /**
@@ -25,22 +26,20 @@ interface RichTextEditorProps {
  * blockquote, code block, lists, size, header, indent, direction, link, image, video, and cleaning the editor.
  */
 
-const RichTextEditor: React.FC<RichTextEditorProps> = ({ initalValue }) => {
-  const [value, setValue] = useState(initalValue || "");
-
+const RichTextEditor: React.FC<RichTextEditorProps> = ({
+  initalValue,
+  change,
+}) => {
   interface HandleChangeProps {
     (content: string): void;
   }
 
   const handleChange: HandleChangeProps = (content) => {
-    setValue(content);
-    // T log tam ra console, m luu vao db nhe
-    console.log(content);
+    change(content);
   };
-
   return (
     <ReactQuill
-      value={value}
+      value={initalValue}
       onChange={handleChange}
       placeholder="Write something amazing..."
       modules={{
