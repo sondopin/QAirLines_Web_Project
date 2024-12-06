@@ -3,9 +3,12 @@ export const PATH = {
   login: "/login",
   register: "/register",
   search: "/search",
+  blog_details: "/blog-details/:id",
   admin: {
     manage: "/manage",
     view_flight: "/view-flight",
+    upload_news: "/manage-news",
+    view_news: "/view-news",
   },
   user: {
     booking: "/booking",

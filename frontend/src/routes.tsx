@@ -13,6 +13,9 @@ import MyBooking from "./pages/MyBooking";
 import ConfirmCancelBooking from "./pages/ConfirmCancelBooking";
 import AirplaneManagement from "./pages/AirplaneManagement";
 import ViewFlight from "./pages/ViewFlight";
+import EditNews from "./pages/EditNews";
+import NewsDetails from "./pages/NewsDetails";
+import NewsList from "./pages/NewsList";
 
 export default function createRoutes() {
   // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -67,6 +70,22 @@ export default function createRoutes() {
             </Layout>
           ),
         },
+        {
+          path: PATH.admin.upload_news,
+          element: (
+            <Layout>
+              <EditNews />
+            </Layout>
+          ),
+        },
+        {
+          path: PATH.admin.view_news,
+          element: (
+            <Layout>
+              <NewsList />
+            </Layout>
+          ),
+        },
       ],
     },
     {
@@ -97,6 +116,14 @@ export default function createRoutes() {
       element: (
         <Layout>
           <SearchPage />
+        </Layout>
+      ),
+    },
+    {
+      path: PATH.blog_details,
+      element: (
+        <Layout>
+          <NewsDetails />
         </Layout>
       ),
     },
