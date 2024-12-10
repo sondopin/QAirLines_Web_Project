@@ -53,23 +53,21 @@ export const SearchBar: React.FC = () => {
 
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-      <div className="flex flex-col items-center text-base tracking-wider">
+      <div className="flex flex-col items-center text-base tracking-wider" style={{position: "relative"}}>
         {/* Header Section */}
-        <header className="flex justify-start items-center w-full p-5 text-white rounded-t-3xl shadow-lg">
-          <div className="flex items-center gap-3">
-            <div className="bg-blue-500 p-2 rounded-md">
-              <img
-                src="https://cdn.builder.io/api/v1/image/assets/TEMP/00ac9e86fa260b6d84ff4fa8b950ea35a52fa989420022f2153547a5a928f465"
-                alt="QAF Logo"
-                className="w-6 h-6"
-              />
-            </div>
+        <header className="flex gap-5 justify-center items-center self-start p-7 font-medium text-white whitespace-nowrap rounded-t-3xl bg-slate-200 max-md:px-5">
+          <div className="flex overflow-hidden gap-6 justify-center items-center self-stretch px-4 py-1.5 my-auto rounded-md bg-slate-700 min-h-[41px]">
+            <img
+              src="https://cdn.builder.io/api/v1/image/assets/TEMP/00ac9e86fa260b6d84ff4fa8b950ea35a52fa989420022f2153547a5a928f465"
+              alt="QAF Logo"
+              className="w-6 h-6"
+            />
             <span className="font-semibold">QAF0001</span>
           </div>
         </header>
 
         {/* Form Section */}
-        <section className="w-full p-6 sm:p-8 mt-4 bg-gray-100 rounded-3xl shadow-lg">
+        <section className="w-full p-6 sm:p-8 bg-slate-200 rounded-3xl rounded-tl-none shadow-lg text-slate-800">
           <div className="mb-8 flex w-[300px] justify-between">
             <div>
               <input
@@ -91,108 +89,115 @@ export const SearchBar: React.FC = () => {
             </div>
           </div>
           <form
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
+            className="flex flex-col gap-6"
             onSubmit={handleSubmit}
           >
-            {/* Departure Point */}
-            <div>
-              <label className="block text-sm font-bold mb-2">
-                Departure Point
-              </label>
-              <select
-                onChange={handleChange("ori_airport")}
-                className="w-full p-3 border rounded-md focus:ring-2 focus:ring-blue-500"
-              >
-                {airport_list?.data.map((airport) => (
-                  <option key={airport._id} value={airport._id}>
-                    {airport.name}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            {/* Departure Date */}
-            <div>
-              <label className="block text-sm font-bold mb-2">
-                Departure Date
-              </label>
-              <input
-                type="date"
-                value={searchForm.departure_time}
-                onChange={handleChange("departure_time")}
-                className="w-full p-3 border rounded-md focus:ring-2 focus:ring-blue-500"
-                required
-              />
-            </div>
-
-            {/* Destination Point */}
-            <div>
-              <label className="block text-sm font-bold mb-2">
-                Destination Point
-              </label>
-              <select
-                onChange={handleChange("des_airport")}
-                className="w-full p-3 border rounded-md focus:ring-2 focus:ring-blue-500"
-              >
-                {airport_list?.data.map((airport) => (
-                  <option key={airport._id} value={airport._id}>
-                    {airport.name}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            {/* Return Date */}
-            {isRoundTrip && (
-              <div>
+            <div className={`grid ${isRoundTrip ? "grid-cols-4" : "grid-cols-3"} gap-6 items-center`}>
+              {/* Departure Point */}
+              <div className="grid-cols-1">
                 <label className="block text-sm font-bold mb-2">
-                  Return Date
+                  Departure Point
+                </label>
+                <select
+                  onChange={handleChange("ori_airport")}
+                  className="w-full p-3 border rounded-md focus:ring-2 focus:ring-blue-500"
+                >
+                  {airport_list?.data.map((airport) => (
+                    <option key={airport._id} value={airport._id}>
+                      {airport.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Departure Date */}
+              <div className="grid-cols-1">
+                <label className="block text-sm font-bold mb-2">
+                  Departure Date
                 </label>
                 <input
                   type="date"
-                  value={searchForm.return_time}
-                  onChange={handleChange("return_time")}
+                  value={searchForm.departure_time}
+                  onChange={handleChange("departure_time")}
                   className="w-full p-3 border rounded-md focus:ring-2 focus:ring-blue-500"
                   required
                 />
               </div>
-            )}
 
-            {/* Business Class Tickets */}
-            <div className="md:col-span-2">
-              <label className="block text-sm font-bold mb-2">
-                Business Class Tickets
-              </label>
-              <input
-                type="number"
-                value={searchForm.nums_busi}
-                onChange={handleChange("nums_busi")}
-                min={0}
-                placeholder="Choose Number Of Tickets"
-                className="w-full p-3 border rounded-md focus:ring-2 focus:ring-blue-500"
-              />
+              {/* Destination Point */}
+              <div className="grid-cols-1">
+                <label className="block text-sm font-bold mb-2">
+                  Destination Point
+                </label>
+                <select
+                  onChange={handleChange("des_airport")}
+                  className="w-full p-3 border rounded-md focus:ring-2 focus:ring-blue-500"
+                >
+                  {airport_list?.data.map((airport) => (
+                    <option key={airport._id} value={airport._id}>
+                      {airport.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Return Date */}
+              {isRoundTrip && (
+                <div className="grid-cols-1">
+                  <label className="block text-sm font-bold mb-2">
+                    Return Date
+                  </label>
+                  <input
+                    type="date"
+                    value={searchForm.return_time}
+                    onChange={handleChange("return_time")}
+                    className="w-full p-3 border rounded-md focus:ring-2 focus:ring-blue-500"
+                    required
+                  />
+                </div>
+              )}
             </div>
+            
 
-            {/* Economy Class Tickets */}
-            <div className="md:col-span-2">
-              <label className="block text-sm font-bold mb-2">
-                Economy Class Tickets
-              </label>
-              <input
-                type="number"
-                value={searchForm.nums_eco}
-                onChange={handleChange("nums_eco")}
-                min={0}
-                placeholder="Choose Number Of Tickets"
-                className="w-full p-3 border rounded-md focus:ring-2 focus:ring-blue-500"
-              />
+            <div className="grid grid-cols-4 gap-6">
+              <div></div>
+              {/* Business Class Tickets */}
+              <div className="col-span-1">
+                <label className="block text-sm font-bold mb-2">
+                  Business Class Tickets
+                </label>
+                <input
+                  type="number"
+                  value={searchForm.nums_busi}
+                  onChange={handleChange("nums_busi")}
+                  min={0}
+                  placeholder="Choose Number Of Tickets"
+                  className="w-full p-3 border rounded-md focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+
+              {/* Economy Class Tickets */}
+              <div className="col-span-1">
+                <label className="block text-sm font-bold mb-2">
+                  Economy Class Tickets
+                </label>
+                <input
+                  type="number"
+                  value={searchForm.nums_eco}
+                  onChange={handleChange("nums_eco")}
+                  min={0}
+                  placeholder="Choose Number Of Tickets"
+                  className="w-full p-3 border rounded-md focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+              <div></div>
             </div>
 
             {/* Submit Button */}
             <div className="col-span-1 md:col-span-2 lg:col-span-4 flex justify-center">
               <button
                 type="submit"
-                className="px-6 py-3 bg-blue-600 text-white rounded-md shadow-lg hover:bg-blue-700"
+                className="px-6 py-3 bg-slate-700 text-white rounded-md shadow-lg hover:bg-blue-700"
               >
                 Search
               </button>
