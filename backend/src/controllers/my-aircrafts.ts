@@ -42,7 +42,7 @@ const myAircraftController = {
         _id: aircraft_id,
         user_id: req.user_id,
       });
-      res.json(aircraft);
+      res.send(aircraft);
     } catch (error) {
       res.status(500).json({ message: "Error fetching aircrafts" });
     }
@@ -108,25 +108,26 @@ const myAircraftController = {
         return;
       }
 
-      const nums_busi_seat_avail = Math.floor(aircraft.nums_seat * 0.25);
-      const nums_eco_seat_avail = aircraft.nums_seat - nums_busi_seat_avail;
-
       const newFlight = new Flight({
         ...req.body,
         aircraft_id,
-        nums_busi_seat_avail,
-        nums_eco_seat_avail,
       });
+
       newFlight.actual_departure = newFlight.scheduled_departure;
       newFlight.actual_arrival = newFlight.scheduled_arrival;
       await newFlight.save();
 
       const seats = [];
-      for (let i = 0; i < aircraft.nums_seat; i++) {
+      for (
+        let i = 0;
+        i < newFlight.nums_busi_seat_avail + newFlight.nums_eco_seat_avail;
+        i++
+      ) {
         seats.push({
           flight_id: newFlight._id,
           seat_number: `S${i + 1}`,
-          seat_class: i < nums_busi_seat_avail ? "Business" : "Economy",
+          seat_class:
+            i < newFlight.nums_busi_seat_avail ? "Business" : "Economy",
           is_available: true,
         });
       }
