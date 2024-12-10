@@ -15,7 +15,7 @@ const LatestNews = () => {
     dots: true,
     infinite: true,
     speed: 500,
-    slidesToShow: 3,
+    slidesToShow: 5,
     slidesToScroll: 1,
     autoplay: true,
     autoplaySpeed: 3000,
@@ -59,7 +59,7 @@ const LatestNews = () => {
   const handlePrev = () => sliderRef.current?.slickPrev(); // Xử lý khi nhấn nút Previous
 
   return (
-    <div className="bg-white justify-center w-2/3">
+    <div className="bg-white justify-center w-full">
       <div className="md:max-w-[1480px] md:px-0">
         <div className="py-4">
           <h1 className="text-3xl font-bold justify-center">
