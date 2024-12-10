@@ -3,6 +3,7 @@ import Booking from "../components/Booking";
 import { useQuery } from "@tanstack/react-query";
 import { getMyBookings } from "../apis/user.api";
 import { useGetAirports } from "../hooks/useGetAirports";
+import Loading from "../components/Loading";
 
 interface MyBookingProps {
   something?: string;
@@ -24,7 +25,7 @@ interface MyBookingProps {
 const MyBooking: React.FC<MyBookingProps> = () => {
   const airports = useGetAirports();
   const booking_list = [];
-  const { data: bookings } = useQuery({
+  const { data: bookings, isLoading } = useQuery({
     queryKey: ["booking"],
     queryFn: () => getMyBookings(),
   });
@@ -60,13 +61,16 @@ const MyBooking: React.FC<MyBookingProps> = () => {
     }
   }
   return (
-    <div className="bg-[#F6FBFF]">
-      <div className="flex flex-col gap-[30px] w-full px-[20px] py-[30px]">
-        {booking_list.map((booking, index) => (
-          <Booking key={index} {...booking} />
-        ))}
+    <>
+      {isLoading ? <Loading /> : null}
+      <div className="bg-[#F6FBFF]">
+        <div className="flex flex-col gap-[30px] w-full px-[20px] py-[30px]">
+          {booking_list.map((booking, index) => (
+            <Booking key={index} {...booking} />
+          ))}
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
