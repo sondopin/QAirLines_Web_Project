@@ -9,6 +9,7 @@ export const PATH = {
     view_flight: "/view-flight",
     upload_news: "/manage-news",
     view_news: "/view-news",
+    add_flight: "/add-flight",
   },
   user: {
     booking: "/booking",

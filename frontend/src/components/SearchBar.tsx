@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { getAirports } from "../apis/flight.api";
 import { useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
+import { Airport } from "../types/flight.type";
 
 interface searchFormType {
   ori_airport: string;
@@ -26,6 +27,11 @@ export const SearchBar: React.FC = () => {
   const [searchForm, setSearchForm] =
     useState<searchFormType>(intialSearchForm);
   const [isRoundTrip, setIsRoundTrip] = useState(false);
+  const [filteredAirports, setFilteredAirports] = useState<Airport[]>([]);
+  const [showSuggestions, setShowSuggestions] = useState({
+    ori_airport: false,
+    des_airport: false,
+  });
   const { data: airport_list } = useQuery({
     queryKey: ["airport"],
     queryFn: () => getAirports(),
@@ -39,11 +45,35 @@ export const SearchBar: React.FC = () => {
     }));
   }, [airport_list]);
 
+  const airports: { [key: string]: Airport } = {};
+  if (airport_list) {
+    for (const airport of airport_list.data) {
+      airports[airport._id] = airport;
+    }
+  }
+
   const handleChange =
     (name: keyof searchFormType) =>
     (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
       setSearchForm((prev) => ({ ...prev, [name]: e.target.value }));
+      if (e.target.value.trim() !== "") {
+        const filtered = airport_list?.data.filter((airport: Airport) =>
+          airport.city.toLowerCase().includes(e.target.value.toLowerCase())
+        );
+        setFilteredAirports(filtered || []);
+        setShowSuggestions((prev) => ({ ...prev, [name]: true }));
+      } else {
+        setShowSuggestions((prev) => ({ ...prev, [name]: false }));
+      }
     };
+
+  const handleSelectSuggestion = (
+    name: keyof searchFormType,
+    airport: string
+  ) => {
+    setSearchForm((prev) => ({ ...prev, [name]: airport }));
+    setShowSuggestions((prev) => ({ ...prev, [name]: false }));
+  };
 
   const handleSubmit = () => {
     navigate("/search", {
