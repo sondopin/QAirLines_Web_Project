@@ -15,13 +15,11 @@ const flightController = {
         ori_airport,
         des_airport,
         departure_time,
-        return_time,
         nums_eco,
         nums_busi,
       } = req.body;
 
       const departureTime = new Date(departure_time);
-      const returnTime = return_time !== "" ? new Date(return_time) : "";
 
       const flights = await Flight.find({
         ori_airport,
@@ -36,16 +34,7 @@ const flightController = {
       }
 
       const flights_result = flights.filter((flight) => {
-        if (returnTime !== "") {
-          return (
-            flight.actual_departure.getDate() == departureTime.getDate() &&
-            flight.actual_arrival.getDate() == returnTime.getDate()
-          );
-        }
-        return (
-          flight.actual_departure.getDate() == departureTime.getDate() &&
-          flight.actual_arrival == undefined
-        );
+        return (flight.actual_departure.getDate() == departureTime.getDate())
       });
 
       res.status(200).json(flights_result);

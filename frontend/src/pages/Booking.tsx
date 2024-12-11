@@ -10,13 +10,11 @@ import { PATH } from "../constants/path";
 import { formatCurrency } from "../utils/utils";
 
 const Booking = () => {
-  const { flight_infor, nums_busi_book, nums_eco_book } = useQueryForm();
+  const { flight_depart_info, flight_return_info, nums_busi_book, nums_eco_book } = useQueryForm();
   const navigate = useNavigate();
   const [confirm, setConfirm] = useState(false);
   const busi_tickets = parseInt(nums_busi_book);
   const eco_tickets = parseInt(nums_eco_book);
-  const type =
-    flight_infor.actual_arrival == undefined ? "Oneway" : "Roundtrip";
 
   const [errors, setErrors] = useState<{
     [key: number]: { [key: string]: string };
@@ -32,8 +30,8 @@ const Booking = () => {
       passport: "",
       price:
         index < busi_tickets
-          ? flight_infor.base_price * 1.5
-          : flight_infor.base_price,
+          ? flight_depart_info.base_price * 1.5
+          : flight_depart_info.base_price,
     }))
   );
 
@@ -76,15 +74,21 @@ const Booking = () => {
   };
 
   const hanldeConfirm = async () => {
-    const dataForm = {
-      flight_id: flight_infor._id,
+    const departDataForm = {
+      flight_id: flight_depart_info?._id,
       busi_tickets,
       eco_tickets,
-      tickets: booking,
-      type,
+      tickets: booking
+    };
+    const returnDataForm = {
+      flight_id: flight_return_info?._id,
+      busi_tickets,
+      eco_tickets,
+      tickets: booking
     };
     try {
-      await makeBooking(dataForm);
+      await makeBooking(departDataForm);
+      await makeBooking(returnDataForm);
       navigate(PATH.user.mybooking);
     } catch (error) {
       console.log(error);
@@ -100,11 +104,19 @@ const Booking = () => {
 
   return (
     <div>
+      <h1>Departure Flight</h1>
       <SearchedFlightInfo
-        {...flight_infor}
+        {...flight_depart_info}
         nums_eco_book={eco_tickets}
         nums_busi_book={busi_tickets}
       />
+      {flight_return_info?<h1>Return Flight</h1> : null}
+      {flight_return_info?  
+      <SearchedFlightInfo
+        {...flight_return_info}
+        nums_eco_book={eco_tickets}
+        nums_busi_book={busi_tickets}
+      /> : null}
       <div className="italic mx-10 my-10">
         <p className="text-sm">
           Please fill in these feilds neccessary information for us. We commits
@@ -164,8 +176,7 @@ const Booking = () => {
           </h2>
           <p className="mt-8 text-5xl font-bold tracking-[2.88px] max-md:max-w-full max-md:text-4xl">
             {formatCurrency(
-              busi_tickets * flight_infor.base_price * 1.5 +
-                eco_tickets * flight_infor.base_price
+             (flight_depart_info.base_price + flight_return_info.base_price) * (busi_tickets * 1.5 + eco_tickets)
             )}
           </p>
           <p className="mt-8 text-xl tracking-widest max-md:max-w-full">
@@ -183,7 +194,7 @@ const Booking = () => {
             confirm ? "translate-y-0 opacity-100" : "-translate-y-16 opacity-0"
           }`}
         >
-          <ConfirmBooking
+          {/* <ConfirmBooking
             departurePlace={flight_infor.ori_city}
             destination={flight_infor.des_city}
             departureDate={flight_infor.actual_departure}
@@ -196,7 +207,7 @@ const Booking = () => {
             )}
             onClose={handleClose}
             onConfirm={hanldeConfirm}
-          />
+          /> */} 
         </div>
       )}
     </div>

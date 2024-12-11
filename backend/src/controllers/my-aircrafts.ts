@@ -23,7 +23,7 @@ const myAircraftController = {
       res.status(201).send(aircraft);
     } catch (e) {
       console.log(e);
-      res.status(500).json({ message: "Something went wrong" });
+      res.status(500).json({ message: (e as Error).message });
     }
   },
   getAircrafts: async (req: Request, res: Response) => {
@@ -139,7 +139,7 @@ const myAircraftController = {
         flight: newFlight,
       });
     } catch (error) {
-      res.status(500).json({ message: "Something went wrong" });
+      res.status(500).json({ message: (error as Error).message });
     }
   },
   getFlights: async (req: Request, res: Response) => {

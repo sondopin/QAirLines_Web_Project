@@ -4,7 +4,6 @@ import { useLocation } from "react-router-dom";
 interface SearchedFlightInfoProps {
   _id?: string;
   actual_departure: Date | string;
-  actual_arrival: Date | string;
   ori_airport: string;
   ori_code: string;
   ori_city: string;
@@ -21,7 +20,6 @@ interface SearchedFlightInfoProps {
 
 const SearchedFlightInfo: React.FC<SearchedFlightInfoProps> = ({
   actual_departure,
-  actual_arrival,
   ori_code,
   des_code,
   ori_city,
@@ -32,19 +30,10 @@ const SearchedFlightInfo: React.FC<SearchedFlightInfoProps> = ({
   const departure_date = formatDate(actual_departure);
   const depature_time = formatTime(actual_departure);
 
-  const arrival_date =
-    actual_arrival !== "" && actual_arrival != undefined
-      ? formatDate(actual_arrival)
-      : "";
-  const arrival_time =
-    actual_arrival !== "" && actual_arrival != undefined
-      ? formatTime(actual_arrival)
-      : "";
-
   const location = useLocation();
 
   return (
-    <section className="flex flex-col md:flex-row items-center justify-center md:justify-evenly p-6 w-full bg-gray-200 bg-opacity-90 rounded-3xl shadow-md font-sans gap-6">
+    <section className="flex flex-col mb-5 md:flex-row items-center justify-center md:justify-evenly p-6 w-full bg-gray-200 bg-opacity-90 rounded-3xl shadow-md font-sans gap-6">
       {/* Airport Information */}
       <div className="flex items-center space-x-4">
         {/* Departure Airport */}
@@ -84,16 +73,6 @@ const SearchedFlightInfo: React.FC<SearchedFlightInfoProps> = ({
               : departure_date}
           </p>
         </div>
-        {arrival_date !== "" && (
-          <div className="mt-4">
-            <h3 className="text-lg font-semibold">Return Date</h3>
-            <p className="text-gray-600">
-              {location.pathname !== "/search"
-                ? arrival_time + " " + arrival_date
-                : arrival_date}
-            </p>
-          </div>
-        )}
       </div>
 
       {/* Divider */}

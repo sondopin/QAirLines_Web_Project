@@ -77,27 +77,29 @@ export const SearchBar: React.FC = () => {
 
   const handleSubmit = () => {
     navigate("/search", {
-      state: searchForm,
+      state: {search_query: searchForm, isReturn: 0},
     });
   };
 
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-      <div className="flex flex-col items-center text-base tracking-wider" style={{position: "relative"}}>
+      <div className="flex flex-col items-center text-base tracking-wider">
         {/* Header Section */}
-        <header className="flex gap-5 justify-center items-center self-start p-7 font-medium text-white whitespace-nowrap rounded-t-3xl bg-slate-200 max-md:px-5">
-          <div className="flex overflow-hidden gap-6 justify-center items-center self-stretch px-4 py-1.5 my-auto rounded-md bg-slate-700 min-h-[41px]">
-            <img
-              src="https://cdn.builder.io/api/v1/image/assets/TEMP/00ac9e86fa260b6d84ff4fa8b950ea35a52fa989420022f2153547a5a928f465"
-              alt="QAF Logo"
-              className="w-6 h-6"
-            />
+        <header className="flex justify-start items-center w-full p-5 text-white rounded-t-3xl shadow-lg">
+          <div className="flex items-center gap-3">
+            <div className="bg-blue-500 p-2 rounded-md">
+              <img
+                src="https://cdn.builder.io/api/v1/image/assets/TEMP/00ac9e86fa260b6d84ff4fa8b950ea35a52fa989420022f2153547a5a928f465"
+                alt="QAF Logo"
+                className="w-6 h-6"
+              />
+            </div>
             <span className="font-semibold">QAF0001</span>
           </div>
         </header>
 
         {/* Form Section */}
-        <section className="w-full p-6 sm:p-8 bg-slate-200 rounded-3xl rounded-tl-none shadow-lg text-slate-800">
+        <section className="w-full p-6 sm:p-8 mt-4 bg-gray-100 rounded-3xl shadow-lg">
           <div className="mb-8 flex w-[300px] justify-between">
             <div>
               <input
@@ -119,115 +121,132 @@ export const SearchBar: React.FC = () => {
             </div>
           </div>
           <form
-            className="flex flex-col gap-6"
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
             onSubmit={handleSubmit}
           >
-            <div className={`grid ${isRoundTrip ? "grid-cols-4" : "grid-cols-3"} gap-6 items-center`}>
-              {/* Departure Point */}
-              <div className="grid-cols-1">
-                <label className="block text-sm font-bold mb-2">
-                  Departure Point
-                </label>
-                <select
-                  onChange={handleChange("ori_airport")}
-                  className="w-full p-3 border rounded-md focus:ring-2 focus:ring-blue-500"
-                >
-                  {airport_list?.data.map((airport) => (
-                    <option key={airport._id} value={airport._id}>
-                      {airport.name}
-                    </option>
+            {/* Departure Point */}
+            <div className="relative">
+              <label className="block text-sm font-bold mb-2">
+                Departure Point
+              </label>
+              <input
+                type="text"
+                value={airports[searchForm.ori_airport]?.name}
+                onChange={handleChange("ori_airport")}
+                placeholder="Enter departure point..."
+                className="w-full p-3 border rounded-md focus:ring-2 focus:ring-blue-500"
+              />
+              {showSuggestions.ori_airport && (
+                <ul className="absolute z-10 bg-white border rounded-md shadow-lg w-full max-h-40 overflow-y-auto">
+                  {filteredAirports.map((airport) => (
+                    <li
+                      key={airport._id}
+                      className="p-2 hover:bg-blue-500 hover:text-white cursor-pointer"
+                      onClick={() =>
+                        handleSelectSuggestion("ori_airport", airport._id)
+                      }
+                    >
+                      {airport.name + " - " + airport.city}
+                    </li>
                   ))}
-                </select>
-              </div>
+                </ul>
+              )}
+            </div>
 
-              {/* Departure Date */}
-              <div className="grid-cols-1">
+            {/* Departure Date */}
+            <div>
+              <label className="block text-sm font-bold mb-2">
+                Departure Date
+              </label>
+              <input
+                type="date"
+                value={searchForm.departure_time}
+                onChange={handleChange("departure_time")}
+                className="w-full p-3 border rounded-md focus:ring-2 focus:ring-blue-500"
+                required
+              />
+            </div>
+
+            {/* Destination Point */}
+            <div className="relative">
+              <label className="block text-sm font-bold mb-2">
+                Destination Point
+              </label>
+              <input
+                type="text"
+                value={airports[searchForm.des_airport]?.name}
+                onChange={handleChange("des_airport")}
+                placeholder="Enter destination point..."
+                className="w-full p-3 border rounded-md focus:ring-2 focus:ring-blue-500"
+              />
+              {showSuggestions.des_airport && (
+                <ul className="absolute z-10 bg-white border rounded-md shadow-lg w-full max-h-40 overflow-y-auto">
+                  {filteredAirports.map((airport) => (
+                    <li
+                      key={airport._id}
+                      className="p-2 hover:bg-blue-500 hover:text-white cursor-pointer"
+                      onClick={() =>
+                        handleSelectSuggestion("des_airport", airport._id)
+                      }
+                    >
+                      {airport.name + " - " + airport.city}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+
+            {/* Return Date */}
+            {isRoundTrip && (
+              <div>
                 <label className="block text-sm font-bold mb-2">
-                  Departure Date
+                  Return Date
                 </label>
                 <input
                   type="date"
-                  value={searchForm.departure_time}
-                  onChange={handleChange("departure_time")}
+                  value={searchForm.return_time}
+                  onChange={handleChange("return_time")}
                   className="w-full p-3 border rounded-md focus:ring-2 focus:ring-blue-500"
                   required
                 />
               </div>
+            )}
 
-              {/* Destination Point */}
-              <div className="grid-cols-1">
-                <label className="block text-sm font-bold mb-2">
-                  Destination Point
-                </label>
-                <select
-                  onChange={handleChange("des_airport")}
-                  className="w-full p-3 border rounded-md focus:ring-2 focus:ring-blue-500"
-                >
-                  {airport_list?.data.map((airport) => (
-                    <option key={airport._id} value={airport._id}>
-                      {airport.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              {/* Return Date */}
-              {isRoundTrip && (
-                <div className="grid-cols-1">
-                  <label className="block text-sm font-bold mb-2">
-                    Return Date
-                  </label>
-                  <input
-                    type="date"
-                    value={searchForm.return_time}
-                    onChange={handleChange("return_time")}
-                    className="w-full p-3 border rounded-md focus:ring-2 focus:ring-blue-500"
-                    required
-                  />
-                </div>
-              )}
+            {/* Business Class Tickets */}
+            <div className="md:col-span-2">
+              <label className="block text-sm font-bold mb-2">
+                Business Class Tickets
+              </label>
+              <input
+                type="number"
+                value={searchForm.nums_busi}
+                onChange={handleChange("nums_busi")}
+                min={0}
+                placeholder="Choose Number Of Tickets"
+                className="w-full p-3 border rounded-md focus:ring-2 focus:ring-blue-500"
+              />
             </div>
-            
 
-            <div className="grid grid-cols-4 gap-6">
-              <div></div>
-              {/* Business Class Tickets */}
-              <div className="col-span-1">
-                <label className="block text-sm font-bold mb-2">
-                  Business Class Tickets
-                </label>
-                <input
-                  type="number"
-                  value={searchForm.nums_busi}
-                  onChange={handleChange("nums_busi")}
-                  min={0}
-                  placeholder="Choose Number Of Tickets"
-                  className="w-full p-3 border rounded-md focus:ring-2 focus:ring-blue-500"
-                />
-              </div>
-
-              {/* Economy Class Tickets */}
-              <div className="col-span-1">
-                <label className="block text-sm font-bold mb-2">
-                  Economy Class Tickets
-                </label>
-                <input
-                  type="number"
-                  value={searchForm.nums_eco}
-                  onChange={handleChange("nums_eco")}
-                  min={0}
-                  placeholder="Choose Number Of Tickets"
-                  className="w-full p-3 border rounded-md focus:ring-2 focus:ring-blue-500"
-                />
-              </div>
-              <div></div>
+            {/* Economy Class Tickets */}
+            <div className="md:col-span-2">
+              <label className="block text-sm font-bold mb-2">
+                Economy Class Tickets
+              </label>
+              <input
+                type="number"
+                value={searchForm.nums_eco}
+                onChange={handleChange("nums_eco")}
+                min={0}
+                placeholder="Choose Number Of Tickets"
+                className="w-full p-3 border rounded-md focus:ring-2 focus:ring-blue-500"
+              />
             </div>
 
             {/* Submit Button */}
             <div className="col-span-1 md:col-span-2 lg:col-span-4 flex justify-center">
               <button
                 type="submit"
-                className="px-6 py-3 bg-slate-700 text-white rounded-md shadow-lg hover:bg-blue-700"
+                className="px-6 py-3 bg-blue-600 text-white rounded-md shadow-lg hover:bg-blue-700"
               >
                 Search
               </button>
