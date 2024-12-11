@@ -16,6 +16,7 @@ import ViewFlight from "./pages/ViewFlight";
 import EditNews from "./pages/EditNews";
 import NewsDetails from "./pages/NewsDetails";
 import NewsList from "./pages/NewsList";
+import AddFlight from "./pages/AddFlight";
 
 export default function createRoutes() {
   // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -83,6 +84,14 @@ export default function createRoutes() {
           element: (
             <Layout>
               <NewsList />
+            </Layout>
+          ),
+        },
+        {
+          path: PATH.admin.add_flight,
+          element: (
+            <Layout>
+              <AddFlight />
             </Layout>
           ),
         },

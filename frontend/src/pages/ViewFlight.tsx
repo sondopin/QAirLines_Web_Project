@@ -5,6 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getAllFlights } from "../apis/admin.api";
 import { Flight } from "../types/flight.type";
 import { useGetAirports } from "../hooks/useGetAirports";
+import { useNavigate } from "react-router-dom";
 
 interface ViewFlightProps {
   flightNumber: string;
@@ -18,6 +19,7 @@ const ViewFlight: React.FC<ViewFlightProps> = () => {
     queryKey: ["flights", aircraft_id],
     queryFn: () => getAllFlights({ aircraft_id }),
   });
+  const navigate = useNavigate();
 
   return (
     <div className="flex flex-col bg-[#F6FBFF]">
@@ -26,6 +28,15 @@ const ViewFlight: React.FC<ViewFlightProps> = () => {
         <h1 className="text-[56px] font-bold">List Flights Using</h1>
         <h1 className="text-[56px] text-[#00A3FF] font-bold"></h1>
       </div>
+      <button
+        onClick={() => {
+          navigate("/add-flight", {
+            state: { aircraft_id: aircraft_id },
+          });
+        }}
+      >
+        Add Flight
+      </button>
       <hr className="ml-[50px] border-[3px] border-[#283841] opacity-[50%] w-[200px]" />
       <div className="flex flex-col gap-[50px] mt-[100px] mb-[100px]">
         {flights?.data.map((flight: Flight, index: number) => {

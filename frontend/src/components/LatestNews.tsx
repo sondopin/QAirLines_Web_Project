@@ -64,6 +64,7 @@ const LatestNews = () => {
         <div className="py-4 text-center">
           <h1 className="text-[60px] font-bold">
             <span className="text-[#283841]">Latest News</span>
+
           </h1>
         </div>
 
