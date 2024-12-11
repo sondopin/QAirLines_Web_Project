@@ -19,7 +19,7 @@ interface MyBookingProps {
  * @example
  * <MyBooking something={value} />
  *
- * @returns {JSX.Element} The rendered MyBooking component.
+ * @arrivals {JSX.Element} The rendered MyBooking component.
  */
 
 const MyBooking: React.FC<MyBookingProps> = () => {
@@ -51,8 +51,8 @@ const MyBooking: React.FC<MyBookingProps> = () => {
         destinationCityName: airports[flight.des_airport].city,
         departureTime: flight.actual_departure,
         departureTimeOld: flight.scheduled_departure,
-        returnTime: flight.actual_arrival,
-        returnTimeOld: flight.scheduled_arrival,
+        arrivalTime: flight.actual_arrival,
+        arrivalTimeOld: flight.scheduled_arrival,
         businessTickets: booking.busi_tickets,
         economyTickets: booking.eco_tickets,
         totalPrice: booking.total_amount,

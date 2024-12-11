@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { formatTime } from "../utils/utils";
+import { formatTime, getTimeDifference } from "../utils/utils";
 interface SearchResultCardProps {
   _id: string;
   actual_departure: Date;
@@ -16,42 +16,21 @@ interface SearchResultCardProps {
   nums_eco_seat_avail: number;
   nums_busi_book: number;
   nums_eco_book: number;
+  onClick?: () => void;
 }
 
 const SearchResultCard = ({
-  _id,
   actual_departure,
   actual_arrival,
   ori_airport,
   des_airport,
-  ori_code,
-  des_code,
-  ori_city,
-  des_city,
   number,
   base_price,
   nums_busi_seat_avail,
   nums_eco_seat_avail,
-  nums_busi_book,
-  nums_eco_book,
+  onClick
 }: SearchResultCardProps) => {
-  const flight_infor = {
-    _id,
-    actual_departure,
-    actual_arrival,
-    ori_airport,
-    des_airport,
-    number,
-    base_price,
-    nums_busi_seat_avail,
-    nums_eco_seat_avail,
-    ori_code,
-    des_code,
-    ori_city,
-    des_city,
-  };
 
-  const navigate = useNavigate();
 
   return (
     <div className="flex flex-wrap gap-6 items-center bg-blue-400 bg-opacity-20 rounded-xl shadow-md p-4 max-w-full transition-transform duration-300 hover:scale-105">
@@ -111,7 +90,7 @@ const SearchResultCard = ({
             alt="Clock Icon"
             className="w-6"
           />
-          <span className="text-sm">Flight time: 2 hours 10 minutes</span>
+          <span className="text-sm">Flight time: {getTimeDifference(actual_departure, actual_arrival)}</span>
         </div>
 
         {/* Seat Availability */}
@@ -136,11 +115,7 @@ const SearchResultCard = ({
         <div className="mt-4">
           <button
             className="bg-red-500 text-white rounded-full px-6 py-3 hover:bg-red-600 transition-all shadow-md"
-            onClick={() => {
-              navigate("/booking", {
-                state: { flight_infor, nums_busi_book, nums_eco_book },
-              });
-            }}
+            onClick= {onClick}
           >
             Book now
           </button>

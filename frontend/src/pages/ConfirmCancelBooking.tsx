@@ -43,7 +43,6 @@ const ConfirmCancelBooking: React.FC = () => {
       <div className="sticky top-0">
         <SearchedFlightInfo
           actual_departure={data.actual_departure}
-          actual_arrival={data.actual_arrival}
           ori_airport={data.ori_airport}
           ori_code={data.ori_code}
           ori_city={data.ori_city}

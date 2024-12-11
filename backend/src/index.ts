@@ -8,6 +8,9 @@ import path from "path";
 import bodyParser from "body-parser";
 
 mongoose.connect(process.env.MONGODB_CONNECTION_STRING as string);
+if(mongoose.connection) {
+  console.log("Connected to MongoDB");
+}
 const app = express();
 
 app.use(cors());

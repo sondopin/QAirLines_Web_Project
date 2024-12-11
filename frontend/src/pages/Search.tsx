@@ -6,6 +6,7 @@ import { useQueryForm } from "../hooks/useQueryForm";
 import { Flight } from "../types/flight.type";
 import { useState } from "react";
 import { useGetAirports } from "../hooks/useGetAirports";
+import { useNavigate } from "react-router-dom";
 import SearchedFlightInfo from "../components/SearchedFlightInfo";
 import SearchBarSimple from "../components/SearchBarSimple";
 
@@ -15,8 +16,24 @@ type SortType = {
 };
 
 const Search = () => {
-  const search_query = useQueryForm();
+  const {search_query, isReturn, flight_depart_info} = useQueryForm() || {};
+  const navigate = useNavigate();
+  console.log("Before:",search_query);
+  console.log(isReturn);
+
   const [sort, setSort] = useState<SortType>({});
+  // Change the search query if it is a return flight
+  let new_search_query = search_query;
+  if(!isReturn) {
+    new_search_query = { ...search_query };
+    new_search_query.ori_airport = search_query.des_airport;
+    new_search_query.des_airport = search_query.ori_airport;
+    new_search_query.departure_time = search_query.return_time;
+    new_search_query.return_time = "";
+    console.log("Done");
+    console.log("After:",search_query);
+  }
+  
 
   const airports = useGetAirports();
 
@@ -77,7 +94,6 @@ const Search = () => {
       <div className="bg-[#000000] bg-opacity-[40%] absolute top-0 left-0 h-screen w-full -z-10"></div>
       <SearchedFlightInfo
         actual_departure={search_query?.departure_time}
-        actual_arrival={search_query?.return_time}
         ori_airport={departure_airport?.name}
         ori_code={departure_airport?.code}
         ori_city={departure_airport?.city}
@@ -109,24 +125,8 @@ const Search = () => {
         </svg>
       </div>
 
-      {/* <Hero>
-        <SearchedFlightInfo
-          actual_departure={search_query?.departure_time}
-          actual_arrival={search_query?.return_time}
-          ori_airport={departure_airport?.name}
-          ori_code={departure_airport?.code}
-          ori_city={departure_airport?.city}
-          des_airport={arrival_airport?.name}
-          des_code={arrival_airport?.code}
-          des_city={arrival_airport?.city}
-          number={""}
-          nums_busi_book={search_query?.nums_busi}
-          nums_eco_book={search_query?.nums_eco}
-        />
-      </Hero> */}
-      {/* End hero */}
-
       {/* End general information */}
+      <h1 className="text-3xl">{isReturn ? "Return Flight" : "Departure Flight"}</h1>
       <section
         role="alert"
         aria-label="Important notice about pricing"
@@ -215,11 +215,43 @@ const Search = () => {
                 key={index}
                 className={index > 0 ? "mt-24 max-md:mt-10" : ""}
               >
-                <SearchResultCard {...flight} />
+                <SearchResultCard 
+                  {...flight}  
+                  onClick={() => {
+                    if (isReturn) {
+                      navigate("/booking", { 
+                          state: { 
+                            flight_return_info: flight, 
+                            flight_depart_info: flight_depart_info, 
+                            nums_busi_book: search_query.nums_busi, 
+                            nums_eco_book: search_query.nums_eco
+                          } 
+                      });
+                    } else {
+                      if (search_query.return_time !== "") {
+                        navigate("/search", { 
+                            state: { 
+                              flight_depart_info: flight,  
+                              search_query: new_search_query, 
+                              isReturn: 1
+                            } 
+                        });
+                      } else {
+                        navigate("/booking", { 
+                            state: {
+                              flight_depart_info: flight,
+                              nums_busi_book: search_query.nums_busi,
+                              nums_eco_book: search_query.nums_eco
+                            } 
+                        });
+                      }
+                    }
+                  }} 
+                />
               </div>
             ))
           ) : (
-            <>Ko co</>
+            <>No flights found for your selection. Back to choose another day.</>
           )}
         </section>
       </div>
