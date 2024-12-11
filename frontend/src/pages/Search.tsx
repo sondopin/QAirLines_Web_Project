@@ -239,7 +239,9 @@ const Search = () => {
                       } else {
                         navigate("/booking", { 
                             state: {
-                               flight_depart_info: flight
+                              flight_depart_info: flight,
+                              nums_busi_book: search_query.nums_busi,
+                              nums_eco_book: search_query.nums_eco
                             } 
                         });
                       }

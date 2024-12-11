@@ -35,12 +35,32 @@ const Booking = () => {
     }))
   );
 
+  const [returnBooking, setReturnBooking] = useState<Tickets>(
+    Array.from({ length: busi_tickets + eco_tickets }, (_, index) => ({
+      dob: null,
+      name: "",
+      nationality: "",
+      email: "",
+      phone: "",
+      passport: "",
+      price:
+        index < busi_tickets
+          ? flight_return_info?.base_price * 1.5
+          : flight_return_info?.base_price,
+    }))
+  );
+
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement>,
     index: number
   ) => {
     const { name, value } = e.target;
     setBooking((prev) =>
+      prev.map((ticket, i) =>
+        i === index ? { ...ticket, [name]: value } : ticket
+      )
+    );
+    setReturnBooking((prev) =>
       prev.map((ticket, i) =>
         i === index ? { ...ticket, [name]: value } : ticket
       )
@@ -84,7 +104,7 @@ const Booking = () => {
       flight_id: flight_return_info?._id,
       busi_tickets,
       eco_tickets,
-      tickets: booking
+      tickets: returnBooking
     };
     try {
       await makeBooking(departDataForm);
@@ -176,7 +196,7 @@ const Booking = () => {
           </h2>
           <p className="mt-8 text-5xl font-bold tracking-[2.88px] max-md:max-w-full max-md:text-4xl">
             {formatCurrency(
-             (flight_depart_info.base_price + flight_return_info.base_price) * (busi_tickets * 1.5 + eco_tickets)
+             (flight_depart_info.base_price + (flight_return_info ? flight_return_info.base_price : 0)) * (busi_tickets * 1.5 + eco_tickets)
             )}
           </p>
           <p className="mt-8 text-xl tracking-widest max-md:max-w-full">
