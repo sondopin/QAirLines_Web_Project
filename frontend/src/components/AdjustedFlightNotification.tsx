@@ -3,16 +3,16 @@ import React from "react";
 interface AdjustedFlightNotificationProps {
   oldDepartureDate: string;
   newDepartureDate: string;
-  oldReturnDate: string | undefined;
-  newReturnDate: string | undefined;
+  oldArrivalDate: string | undefined;
+  newArrivalDate: string | undefined;
   reason: string;
 }
 
 const AdjustedFlightNotification: React.FC<AdjustedFlightNotificationProps> = ({
   oldDepartureDate,
   newDepartureDate,
-  oldReturnDate,
-  newReturnDate,
+  oldArrivalDate,
+  newArrivalDate,
   reason,
 }) => {
   return (
@@ -29,15 +29,15 @@ const AdjustedFlightNotification: React.FC<AdjustedFlightNotificationProps> = ({
           {newDepartureDate}
         </div>
       </div>
-      {oldReturnDate && (
+      {oldArrivalDate && (
         <div className="flex flex-col md:flex-row gap-[22px] items-center">
-          <div>Adjusted Return Date:</div>
+          <div>Adjusted Arrival Date:</div>
           <div className="font-semibold text-[#0066FF] italic">
-            {oldReturnDate}
+            {oldArrivalDate}
           </div>
           <div className="scale-x-[2] text-[20px]">→</div>
           <div className="font-semibold text-[#0066FF] italic">
-            {newReturnDate}
+            {newArrivalDate}
           </div>
         </div>
       )}

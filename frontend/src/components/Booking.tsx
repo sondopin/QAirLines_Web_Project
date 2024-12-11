@@ -14,8 +14,8 @@ interface BookingProps {
   destinationCityName: string;
   departureTime: string;
   departureTimeOld: string;
-  returnTime?: string;
-  returnTimeOld?: string;
+  arrivalTime?: string;
+  arrivalTimeOld?: string;
   businessTickets: number;
   economyTickets: number;
   totalPrice: number;
@@ -37,13 +37,13 @@ interface BookingProps {
  * @param {string} props.destinationCityName - The name of the destination city.
  * @param {string} props.departureDate - The date of departure (date, dd/mm/yyy).
  * @param {string} props.departureTime - The time of departure (Time format 12 hours. Ex. "08:15 AM").
- * @param {string} props.returnDate - The date of return (date, dd/mm/yyy).
- * @param {string} props.returnTime - The time of return (Time format 12 hours. Ex. "08:15 AM").
+ * @param {string} props.arrivalDate - The date of arrival (date, dd/mm/yyy).
+ * @param {string} props.arrivalTime - The time of arrival (Time format 12 hours. Ex. "08:15 AM").
  * @param {number} props.businessTickets - The number of business class tickets booked.
  * @param {number} props.economyTickets - The number of economy class tickets booked.
  * @param {number} props.totalPrice - The total price of the booking in VND.
  * @param {string} props.cancelAvailableUntil - The date until which the booking can be canceled.
- * @returns {JSX.Element} The Booking component.
+ * @arrivals {JSX.Element} The Booking component.
  */
 
 const Booking: React.FC<BookingProps> = ({
@@ -57,8 +57,8 @@ const Booking: React.FC<BookingProps> = ({
   destinationCityName,
   departureTime,
   departureTimeOld,
-  returnTime,
-  returnTimeOld,
+  arrivalTime,
+  arrivalTimeOld,
   businessTickets,
   economyTickets,
   totalPrice,
@@ -66,7 +66,7 @@ const Booking: React.FC<BookingProps> = ({
 }) => {
   const data = {
     actual_departure: departureTime,
-    actual_arrival: returnTime,
+    actual_arrival: arrivalTime,
     ori_city: departureCityName,
     ori_code: departureCityCode,
     des_city: destinationCityName,
@@ -80,14 +80,14 @@ const Booking: React.FC<BookingProps> = ({
   if (
     status !== "Completed" &&
     status !== "Cancelled" &&
-    (departureTime !== departureTimeOld || returnTime !== returnTimeOld)
+    (departureTime !== departureTimeOld || arrivalTime !== arrivalTimeOld)
   ) {
     status = "Delayed";
   }
   const departureDate = formatDate(departureTime);
   departureTime = formatTime(departureTime);
-  const returnDate = returnTime ? formatDate(returnTime) : undefined;
-  returnTime = returnTime ? formatTime(returnTime) : undefined;
+  const arrivalDate = arrivalTime ? formatDate(arrivalTime) : undefined;
+  arrivalTime = arrivalTime ? formatTime(arrivalTime) : undefined;
 
   cancelAvailableUntil = formatDate(cancelAvailableUntil);
   bookingDate = formatDate(bookingDate);
@@ -160,11 +160,11 @@ const Booking: React.FC<BookingProps> = ({
                 <div>{departureDate}</div>
                 <div>{departureTime}</div>
               </div>
-              {returnDate && returnTime && (
+              {arrivalDate && arrivalTime && (
                 <div className="flex flex-col gap-[10px] w-full items-center">
-                  <div>Return Date</div>
-                  <div>{returnDate}</div>
-                  <div>{returnTime}</div>
+                  <div>Arrival Date</div>
+                  <div>{arrivalDate}</div>
+                  <div>{arrivalTime}</div>
                 </div>
               )}
             </div>
@@ -214,11 +214,11 @@ const Booking: React.FC<BookingProps> = ({
       {status === "Delayed" && (
         <AdjustedFlightNotification
           oldDepartureDate={formatDateTime(departureTimeOld)}
-          oldReturnDate={
-            returnTimeOld ? formatDateTime(returnTimeOld) : undefined
+          oldArrivalDate={
+            arrivalTimeOld ? formatDateTime(arrivalTimeOld) : undefined
           }
           newDepartureDate={departureTime + " " + departureDate}
-          newReturnDate={returnTime + " " + returnDate}
+          newArrivalDate={arrivalTime + " " + arrivalDate}
           reason={"Bad weather"}
         />
       )}

@@ -88,7 +88,7 @@ const Booking = () => {
     };
     try {
       await makeBooking(departDataForm);
-      await makeBooking(returnDataForm);
+      if (flight_return_info) await makeBooking(returnDataForm);
       navigate(PATH.user.mybooking);
     } catch (error) {
       console.log(error);
@@ -194,20 +194,13 @@ const Booking = () => {
             confirm ? "translate-y-0 opacity-100" : "-translate-y-16 opacity-0"
           }`}
         >
-          {/* <ConfirmBooking
-            departurePlace={flight_infor.ori_city}
-            destination={flight_infor.des_city}
-            departureDate={flight_infor.actual_departure}
-            returnDate={flight_infor.actual_arrival}
-            numberOfTickets={[busi_tickets, eco_tickets]}
-            planeNumber={flight_infor.number}
-            totalPrice={formatCurrency(
-              busi_tickets * flight_infor.base_price * 1.5 +
-                eco_tickets * flight_infor.base_price
-            )}
+          <ConfirmBooking
+            flight_depart_info = {flight_depart_info}
+            flight_return_info = {flight_return_info} 
+            numberOfTickets = {[busi_tickets, eco_tickets]}
             onClose={handleClose}
             onConfirm={hanldeConfirm}
-          /> */} 
+          /> 
         </div>
       )}
     </div>
