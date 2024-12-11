@@ -7,6 +7,7 @@ import { Flight } from "../types/flight.type";
 import { useState } from "react";
 import { useGetAirports } from "../hooks/useGetAirports";
 import SearchedFlightInfo from "../components/SearchedFlightInfo";
+import SearchBarSimple from "../components/SearchBarSimple";
 
 type SortType = {
   base_price?: "asc" | "desc";
@@ -68,7 +69,47 @@ const Search = () => {
 
   return (
     <div>
-      <Hero>
+      <img
+        src="HCM_city_background.png"
+        alt=""
+        className="absolute top-0 left-0 h-screen -z-50"
+      />
+      <div className="bg-[#000000] bg-opacity-[40%] absolute top-0 left-0 h-screen w-full -z-10"></div>
+      <SearchedFlightInfo
+        actual_departure={search_query?.departure_time}
+        actual_arrival={search_query?.return_time}
+        ori_airport={departure_airport?.name}
+        ori_code={departure_airport?.code}
+        ori_city={departure_airport?.city}
+        des_airport={arrival_airport?.name}
+        des_code={arrival_airport?.code}
+        des_city={arrival_airport?.city}
+        number={""}
+        nums_busi_book={search_query?.nums_busi}
+        nums_eco_book={search_query?.nums_eco}
+      />
+
+      <SearchBarSimple />
+
+      <div className="animate-bounce mt-[30px] flex justify-center text-white text-[16px] font-bold">
+        Scroll down to view all flights
+        <svg
+          className="w-6 h-6 text-gray-800"
+          fill="none"
+          stroke="white"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
+            d="M19 9l-7 7-7-7"
+          ></path>
+        </svg>
+      </div>
+
+      {/* <Hero>
         <SearchedFlightInfo
           actual_departure={search_query?.departure_time}
           actual_arrival={search_query?.return_time}
@@ -82,13 +123,14 @@ const Search = () => {
           nums_busi_book={search_query?.nums_busi}
           nums_eco_book={search_query?.nums_eco}
         />
-      </Hero>
+      </Hero> */}
       {/* End hero */}
+
       {/* End general information */}
       <section
         role="alert"
         aria-label="Important notice about pricing"
-        className="flex-1 mt-5 shrink gap-2.5 self-stretch px-24 py-7 text-base font-bold tracking-wider leading-6 bg-blue-400 bg-opacity-20 text-slate-800 max-md:px-5 max-md:max-w-full"
+        className="flex-1 mt-[350px] shrink gap-2.5 self-stretch px-24 py-7 text-base font-bold tracking-wider leading-6 bg-blue-400 bg-opacity-20 text-slate-800 max-md:px-5 max-md:max-w-full"
       >
         Note: Prices below include taxes, fees
         <br />+{" "}
