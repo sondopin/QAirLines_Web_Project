@@ -40,13 +40,13 @@ const Header = () => {
   ];
 
   return (
-    <div className="bg-white mt-3">
-      <div className="max-w-[1232px] mx-auto flex justify-between">
-        <span className="text-3xl text-white font-bold tracking-tight md:mx-auto">
+    <div className="flex flex-row bg-black h-[60px] items-center justify-center px-[10px] py-[10px] bg-opacity-[30%]">
+      <div className="w-full mx-auto flex justify-between">
+        <span className="text-3xl text-white font-bold tracking-tight md:mx-auto self-start">
           <NavLink to="/">
             <img
-              src="./QAirline_Logo.png"
-              className="self-center aspect-[3.03] w-[111px] h-[36px]"
+              src="./QAirline_Logo_White.png"
+              className="self-center w-[200px] h-full"
             />
           </NavLink>
         </span>
@@ -54,8 +54,8 @@ const Header = () => {
           <NavLink
             className={
               location.pathname === "/"
-                ? "flex items-center text-black px-2 font-semibold border-b-2 border-blue-500"
-                : "flex items-center text-black px-2 font-semibold border-b-2 border-transparent"
+                ? "flex items-center text-white px-2 font-semibold border-b-2 border-white-500"
+                : "flex items-center text-white px-2 font-semibold border-b-2 border-transparent"
             }
             to="/"
           >
@@ -64,8 +64,8 @@ const Header = () => {
           <NavLink
             className={
               location.pathname === "/search"
-                ? "flex items-center text-black px-2 font-semibold border-b-2 border-blue-500"
-                : "flex items-center text-black px-2 font-semibold border-b-2 border-transparent"
+                ? "flex items-center text-white px-2 font-semibold border-b-2 border-white-500"
+                : "flex items-center text-white px-2 font-semibold border-b-2 border-transparent"
             }
             to="/search"
           >
@@ -77,8 +77,8 @@ const Header = () => {
                 <NavLink
                   className={
                     location.pathname === PATH.user.mybooking
-                      ? "flex items-center text-black px-2 font-semibold border-b-2 border-blue-500"
-                      : "flex items-center text-black px-2 font-semibold border-b-2 border-transparent"
+                      ? "flex items-center text-white px-2 font-semibold border-b-2 border-white-500"
+                      : "flex items-center text-white px-2 font-semibold border-b-2 border-transparent"
                   }
                   to={PATH.user.mybooking}
                 >
@@ -90,8 +90,8 @@ const Header = () => {
                   <NavLink
                     className={
                       location.pathname === PATH.admin.manage
-                        ? "flex items-center text-black px-2 font-semibold border-b-2 border-orange-500"
-                        : "flex items-center text-black px-2 font-semibold border-b-2 border-transparent"
+                        ? "flex items-center text-white px-2 font-semibold border-b-2 border-white-500"
+                        : "flex items-center text-white px-2 font-semibold border-b-2 border-transparent"
                     }
                     to={PATH.admin.manage}
                   >
@@ -100,8 +100,8 @@ const Header = () => {
                   <NavLink
                     className={
                       location.pathname === PATH.admin.view_news
-                        ? "flex items-center text-black px-2 font-semibold border-b-2 border-orange-500"
-                        : "flex items-center text-black px-2 font-semibold border-b-2 border-transparent"
+                        ? "flex items-center text-white px-2 font-semibold border-b-2 border-white-500"
+                        : "flex items-center text-white px-2 font-semibold border-b-2 border-transparent"
                     }
                     to={PATH.admin.view_news}
                   >
@@ -112,7 +112,7 @@ const Header = () => {
             </>
           )}
         </div>
-        <div className="flex space-x-4">
+        <div className="flex space-x-4 w-[200px]">
           {isAuthenticated ? (
             <Dropdown menu={{ items: menuItems }}>
               <div className="flex items-center">
