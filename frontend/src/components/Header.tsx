@@ -117,8 +117,8 @@ const Header = () => {
             <Dropdown menu={{ items: menuItems }}>
               <div className="flex items-center">
                 <img
-                  src="./account.png"
-                  className="w-8 h-8 text-2xl cursor-pointer"
+                  src="./image.png"
+                  className="w-12 h-8 text-2xl cursor-pointer"
                 />
               </div>
             </Dropdown>

@@ -17,6 +17,8 @@ import EditNews from "./pages/EditNews";
 import NewsDetails from "./pages/NewsDetails";
 import NewsList from "./pages/NewsList";
 import AddFlight from "./pages/AddFlight";
+import BarChart from "./pages/BarChart";
+import UserProfile from "./pages/UserProfile";
 
 export default function createRoutes() {
   // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -136,6 +138,22 @@ export default function createRoutes() {
         </Layout>
       ),
     },
+    {
+      path: PATH.admin.bar_chart,
+      element: (
+        <Layout>
+          <BarChart />
+        </Layout>
+      )
+    },
+    {
+      path: PATH.user.userProfile,
+      element: (
+        <Layout>
+          <UserProfile />
+        </Layout>
+      )
+    }
   ]);
 
   return router_elements;
