@@ -1,4 +1,4 @@
-import UserProfile from "../pages/UserProfile";
+
 
 export const PATH = {
   home: "/",
@@ -12,7 +12,7 @@ export const PATH = {
     upload_news: "/manage-news",
     view_news: "/view-news",
     add_flight: "/add-flight",
-    bar_chart: "/bar-chart",
+    chart: "/chart",
   },
   user: {
     booking: "/booking",

@@ -17,5 +17,7 @@ router.put(
   "/:aircraft_id/update-flight/:flight_id",
   myAircraftController.updateFlight
 );
+router.get("/get-revenue/:year", myAircraftController.getRevenue);
+router.get("/get-popular/:year", myAircraftController.getPopular);
 
 export default router;
