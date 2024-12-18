@@ -53,10 +53,10 @@ const ViewFlight: React.FC<ViewFlightProps> = () => {
               key={index}
               flightNumber={flight.number}
               status={status}
-              departureCityCode={depature_airport.code}
-              destinationCityCode={destination_airport.code}
-              departureCityName={depature_airport.city}
-              destinationCityName={destination_airport.city}
+              departureCityCode={depature_airport?.code}
+              destinationCityCode={destination_airport?.code}
+              departureCityName={depature_airport?.city}
+              destinationCityName={destination_airport?.city}
               departureDate={flight.actual_departure}
               returnDate={flight.actual_arrival}
               passengers={
