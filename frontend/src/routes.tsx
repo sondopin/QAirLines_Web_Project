@@ -19,6 +19,7 @@ import NewsList from "./pages/NewsList";
 import AddFlight from "./pages/AddFlight";
 import BarChart from "./pages/BarChart";
 import UserProfile from "./pages/UserProfile";
+import AddAirplane from "./pages/AddAirplane";
 
 export default function createRoutes() {
   // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -97,6 +98,14 @@ export default function createRoutes() {
             </Layout>
           ),
         },
+        {
+          path: PATH.admin.add_airplane,
+          element: (
+            <Layout>
+              <AddAirplane />
+            </Layout>
+          ),
+        },
       ],
     },
     {
@@ -144,7 +153,7 @@ export default function createRoutes() {
         <Layout>
           <BarChart />
         </Layout>
-      )
+      ),
     },
     {
       path: PATH.user.userProfile,
@@ -152,8 +161,8 @@ export default function createRoutes() {
         <Layout>
           <UserProfile />
         </Layout>
-      )
-    }
+      ),
+    },
   ]);
 
   return router_elements;

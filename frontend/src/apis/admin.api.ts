@@ -18,3 +18,6 @@ export const updateFlight = async (
 
 export const addFlight = async (aircraft_id: string, data: object) =>
   http.post(`/my-aircrafts/${aircraft_id}/add-flight`, data);
+
+export const addAirplane = async (data: object) =>
+  http.post("/my-aircrafts/add", data);
