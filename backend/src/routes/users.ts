@@ -22,4 +22,6 @@ router.put("/me", verifyToken, userController.update);
 
 router.put("/change-password", verifyToken, userController.changePassword);
 
+router.put("/update-profile", verifyToken, userController.update);
+
 export default router;

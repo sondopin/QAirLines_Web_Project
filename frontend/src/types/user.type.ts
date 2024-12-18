@@ -10,3 +10,15 @@ export interface User {
   role: Date;
   nums_booking_changed: number;
 }
+
+
+export interface UserProfileFormData {
+  fullname: string;
+  email: string;
+}
+
+export interface ChangePasswordParams {
+  currentPassword: string;
+  newPassword: string;
+  confirmNewPassword: string;
+}
