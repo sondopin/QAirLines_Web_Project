@@ -1,5 +1,3 @@
-import UserProfile from "../pages/UserProfile";
-
 export const PATH = {
   home: "/",
   login: "/login",
@@ -13,6 +11,7 @@ export const PATH = {
     view_news: "/view-news",
     add_flight: "/add-flight",
     bar_chart: "/bar-chart",
+    add_airplane: "/add-airplane",
   },
   user: {
     booking: "/booking",
