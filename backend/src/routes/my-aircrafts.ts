@@ -6,7 +6,7 @@ import myAircraftController from "../controllers/my-aircrafts";
 
 const router = express.Router();
 
-router.post("/add", myAircraftController.addAircrapt);
+router.post("/add", myAircraftController.addAircraft);
 router.get("/get-all", myAircraftController.getAircrafts);
 router.get("/get/:aircraft_id", myAircraftController.getAircraftById);
 router.put("/update/:aircraft_id", myAircraftController.updateAircraft);

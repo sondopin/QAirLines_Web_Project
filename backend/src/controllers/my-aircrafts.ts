@@ -10,7 +10,7 @@ import User from "../models/user";
 import Booking from "../models/booking";
 
 const myAircraftController = {
-  addAircrapt: async (req: Request, res: Response) => {
+  addAircraft: async (req: Request, res: Response) => {
     try {
       const newAircraft: AircraftType = req.body;
 
