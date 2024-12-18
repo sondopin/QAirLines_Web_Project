@@ -1,5 +1,3 @@
-
-
 export const PATH = {
   home: "/",
   login: "/login",
@@ -12,7 +10,8 @@ export const PATH = {
     upload_news: "/manage-news",
     view_news: "/view-news",
     add_flight: "/add-flight",
-    chart: "/chart",
+    bar_chart: "/bar-chart",
+    add_airplane: "/add-airplane",
   },
   user: {
     booking: "/booking",

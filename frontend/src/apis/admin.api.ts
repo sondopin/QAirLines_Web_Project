@@ -19,7 +19,5 @@ export const updateFlight = async (
 export const addFlight = async (aircraft_id: string, data: object) =>
   http.post(`/my-aircrafts/${aircraft_id}/add-flight`, data);
 
-export const getRevenue = async ({ year }: { year: number }) => 
-  http.get(`/my-aircrafts/get-revenue/${year}`);
-
-export const getPopular = async ({ year }: { year: number }) => http.get(`/my-aircrafts/get-popular/${year}`);
+export const addAirplane = async (data: object) =>
+  http.post("/my-aircrafts/add", data);

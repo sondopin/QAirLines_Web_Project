@@ -11,7 +11,7 @@ import Booking from "../models/booking";
 import Airport from "../models/airport";
 
 const myAircraftController = {
-  addAircrapt: async (req: Request, res: Response) => {
+  addAircraft: async (req: Request, res: Response) => {
     try {
       const newAircraft: AircraftType = req.body;
 
