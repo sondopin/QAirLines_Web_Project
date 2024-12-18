@@ -19,6 +19,7 @@ import NewsList from "./pages/NewsList";
 import AddFlight from "./pages/AddFlight";
 import UserProfile from "./pages/UserProfile";
 import AddAirplane from "./pages/AddAirplane";
+import Chart from "./pages/Chart";
 
 export default function createRoutes() {
   // eslint-disable-next-line react-hooks/rules-of-hooks
