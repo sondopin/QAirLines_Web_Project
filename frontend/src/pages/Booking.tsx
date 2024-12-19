@@ -15,6 +15,7 @@ const Booking = () => {
   const [confirm, setConfirm] = useState(false);
   const busi_tickets = parseInt(nums_busi_book);
   const eco_tickets = parseInt(nums_eco_book);
+  const [discount, setDiscount] = useState<string>("");
 
   const [errors, setErrors] = useState<{
     [key: number]: { [key: string]: string };
@@ -98,13 +99,15 @@ const Booking = () => {
       flight_id: flight_depart_info?._id,
       busi_tickets,
       eco_tickets,
-      tickets: booking
+      tickets: booking,
+      discount_code: discount
     };
     const returnDataForm = {
       flight_id: flight_return_info?._id,
       busi_tickets,
       eco_tickets,
-      tickets: returnBooking
+      tickets: returnBooking,
+      discount_code: discount
     };
     try {
       await makeBooking(departDataForm);
@@ -124,13 +127,13 @@ const Booking = () => {
 
   return (
     <div>
-      <h1>Departure Flight</h1>
+      <h1 className="text-3xl font-bold text-center mt-7 mb-3">Departure Flight</h1>
       <SearchedFlightInfo
         {...flight_depart_info}
         nums_eco_book={eco_tickets}
         nums_busi_book={busi_tickets}
       />
-      {flight_return_info?<h1>Return Flight</h1> : null}
+      {flight_return_info?<h1 className="text-3xl font-bold text-center mt-7 mb-3">Return Flight</h1> : null}
       {flight_return_info?  
       <SearchedFlightInfo
         {...flight_return_info}
@@ -182,13 +185,16 @@ const Booking = () => {
         ) : null}
 
         <section className="flex overflow-hidden flex-col justify-center px-24 py-14 text-right text-black max-md:px-5">
-          <div className="w-1/5 self-end mb-5">
-            <label className="text-bold">Discount Code</label>
-            {/* <InputField
+          <div className="w-1/6 self-end mb-5 flex flex-col">
+            <label className="text-bold mb-3">Discount Code</label>
+            <input
               placeholder="Enter your discount code"
               name="discount"
               type="text"
-            /> */}
+              value={discount}
+              onChange={(e) => setDiscount(e.target.value)}
+              className="border border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 p-2.5"
+            />
           </div>
 
           <h2 className="text-2xl tracking-[2.4px] max-md:max-w-full">
