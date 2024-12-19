@@ -13,6 +13,13 @@ interface searchFormType {
   nums_eco: number;
 }
 
+interface SuggestionItemProps {
+  name: string;
+  city: string;
+  code: string;
+  onClick: () => void;
+}
+
 const intialSearchForm: searchFormType = {
   ori_airport: "",
   des_airport: "",
@@ -20,6 +27,26 @@ const intialSearchForm: searchFormType = {
   departure_time: "",
   nums_busi: 0,
   nums_eco: 0,
+};
+
+const SuggestionItem: React.FC<SuggestionItemProps> = ({
+  name,
+  city,
+  code,
+  onClick,
+}) => {
+  return (
+    <div
+      className="flex flex-col p-2 hover:bg-blue-400 hover:text-white cursor-pointer"
+      onClick={onClick}
+    >
+      <div className="flex flex-row justify-between items-center">
+        <div className="text-lg">{city}</div>
+        <div className="text-lg font-bold">{code}</div>
+      </div>
+      <div className="text-sm text-gray-500">{name}</div>
+    </div>
+  );
 };
 
 export const SearchBar: React.FC = () => {
@@ -38,13 +65,13 @@ export const SearchBar: React.FC = () => {
     queryFn: () => getAirports(),
   });
 
-  useEffect(() => {
-    setSearchForm((prev) => ({
-      ...prev,
-      ori_airport: airport_list !== undefined ? airport_list?.data[0]._id : "",
-      des_airport: airport_list != undefined ? airport_list?.data[0]._id : "",
-    }));
-  }, [airport_list]);
+  // useEffect(() => {
+  //   setSearchForm((prev) => ({
+  //     ...prev,
+  //     ori_airport: airport_list !== undefined ? airport_list?.data[0]._id : "",
+  //     des_airport: airport_list != undefined ? airport_list?.data[0]._id : "",
+  //   }));
+  // }, [airport_list]);
 
   const airports: { [key: string]: Airport } = {};
   if (airport_list) {
@@ -57,11 +84,11 @@ export const SearchBar: React.FC = () => {
     (name: keyof searchFormType) =>
     (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
       setSearchForm((prev) => ({ ...prev, [name]: e.target.value }));
-      if (e.target.value.trim() !== "") {
+      if (name === "ori_airport" || name === "des_airport") {
         const filtered = airport_list?.data.filter((airport: Airport) =>
           airport.city.toLowerCase().includes(e.target.value.toLowerCase())
         );
-        setFilteredAirports(filtered || []);
+        setFilteredAirports(filtered || airport_list?.data || []);
         setShowSuggestions((prev) => ({ ...prev, [name]: true }));
       } else {
         setShowSuggestions((prev) => ({ ...prev, [name]: false }));
@@ -78,10 +105,22 @@ export const SearchBar: React.FC = () => {
 
   const handleSubmit = () => {
     navigate("/search", {
-      state: {search_query: searchForm, isReturn: 0},
+      state: { search_query: searchForm, isReturn: 0 },
     });
   };
 
+  const handleFocus = (name: keyof searchFormType) => {
+    if (!searchForm[name]) {
+      setFilteredAirports(airport_list?.data || []);
+      setShowSuggestions((prev) => ({ ...prev, [name]: true }));
+    }
+  };
+
+  const handleBlur = (name: keyof searchFormType) => {
+    setTimeout(() => {
+      setShowSuggestions((prev) => ({ ...prev, [name]: false }));
+    }, 100);
+  };
   return (
     <div className="container mx-auto scale-[0.9] origin-top-left">
       {/* Selection */}
@@ -144,7 +183,6 @@ export const SearchBar: React.FC = () => {
           </div>
         )}
 
-
         {/* Form Section */}
         <section className="w-full p-6 sm:p-8 bg-gray-100 bg-opacity-[80%] border-b-[10px] border-[#223A60] rounded-tr-[20px] rounded-bl-[20px] rounded-br-[20px] shadow-lg">
           <form className="flex flex-col gap-[15px]" onSubmit={handleSubmit}>
@@ -162,16 +200,36 @@ export const SearchBar: React.FC = () => {
                       Departure Point
                     </label>
                   </div>
-                  <select
+                  <input
+                    type="text"
+                    value={airports[searchForm.ori_airport]?.city}
                     onChange={handleChange("ori_airport")}
+                    onFocus={() => handleFocus("ori_airport")}
+                    onBlur={() => handleBlur("ori_airport")}
+                    placeholder="Enter departure point..."
                     className="w-full p-3 border rounded-md focus:ring-2 focus:ring-blue-500"
-                  >
-                    {airport_list?.data.map((airport) => (
-                      <option key={airport._id} value={airport._id}>
-                        {airport.name}
-                      </option>
-                    ))}
-                  </select>
+                  />
+                  {showSuggestions.ori_airport && (
+                    <div
+                      className="absolute z-10 bg-white border rounded-md shadow-lg w-60 max-h-40 overflow-y-auto"
+                      style={{
+                        maxHeight:
+                          filteredAirports.length > 1 ? "250px" : "auto",
+                      }}
+                    >
+                      {filteredAirports.map((airport) => (
+                        <SuggestionItem
+                          key={airport._id}
+                          name={airport.name}
+                          city={airport.city}
+                          code={airport.code}
+                          onClick={() =>
+                            handleSelectSuggestion("ori_airport", airport._id)
+                          }
+                        />
+                      ))}
+                    </div>
+                  )}
                 </div>
 
                 {/* Departure Date */}
@@ -196,7 +254,6 @@ export const SearchBar: React.FC = () => {
                 </div>
               </div>
 
-
               <div className="flex flex-col gap-[15px] w-full">
                 {/* Destination Point */}
                 <div>
@@ -210,16 +267,36 @@ export const SearchBar: React.FC = () => {
                       Destination Point
                     </label>
                   </div>
-                  <select
+                  <input
+                    type="text"
+                    value={airports[searchForm.des_airport]?.city}
                     onChange={handleChange("des_airport")}
+                    onFocus={() => handleFocus("des_airport")}
+                    onBlur={() => handleBlur("des_airport")}
+                    placeholder="Enter destination point..."
                     className="w-full p-3 border rounded-md focus:ring-2 focus:ring-blue-500"
-                  >
-                    {airport_list?.data.map((airport) => (
-                      <option key={airport._id} value={airport._id}>
-                        {airport.name}
-                      </option>
-                    ))}
-                  </select>
+                  />
+                  {showSuggestions.des_airport && (
+                    <div
+                      className="absolute z-10 bg-white border rounded-md shadow-lg w-60 max-h-40 overflow-y-auto"
+                      style={{
+                        maxHeight:
+                          filteredAirports.length > 1 ? "250px" : "auto",
+                      }}
+                    >
+                      {filteredAirports.map((airport) => (
+                        <SuggestionItem
+                          key={airport._id}
+                          name={airport.name}
+                          city={airport.city}
+                          code={airport.code}
+                          onClick={() =>
+                            handleSelectSuggestion("des_airport", airport._id)
+                          }
+                        />
+                      ))}
+                    </div>
+                  )}
                 </div>
 
                 {/* Return Date */}
