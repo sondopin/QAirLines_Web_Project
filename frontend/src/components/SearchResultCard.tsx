@@ -104,7 +104,7 @@ const SearchResultCard = ({
 
       <div className="flex flex-1 flex-col justify-between items-center">
         {/* Phần giá */}
-        <div className="bg-yellow-50 rounded-r-xl p-4 text-center min-w-[320px]">
+        <div className="bg-yellow-50 rounded-xl p-4 text-center min-w-[320px]">
           <div className="text-sm font-medium">Price from only</div>
           <div className="mt-2 text-3xl font-bold italic text-blue-400">
             {base_price}
