@@ -6,14 +6,23 @@ interface TicketProps {
   index: number;
   id?: number;
   change?: (e: React.ChangeEvent<HTMLInputElement>, index: number) => void;
+  clear?: (id: number) => void;
   errors?: { [key: string]: string };
 }
 
-const Ticket: React.FC<TicketProps> = ({ data, index, id, change, errors }) => {
+const Ticket: React.FC<TicketProps> = ({
+  data,
+  index,
+  id,
+  change,
+  clear,
+  errors,
+}) => {
   let isView = false;
   if (!change) {
     isView = true;
   }
+  console.log(clear);
 
   return (
     <div className="flex flex-col p-6 bg-blue-100 rounded-lg shadow-md max-w-7xl mx-auto">
@@ -151,6 +160,7 @@ const Ticket: React.FC<TicketProps> = ({ data, index, id, change, errors }) => {
           <div className="text-center">
             <button
               type="button"
+              onClick={() => clear && clear(id as number)}
               className="px-6 py-3 bg-slate-800 text-white font-medium rounded-lg shadow hover:bg-red-500 transition"
             >
               Clear

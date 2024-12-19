@@ -73,11 +73,47 @@ const Booking = () => {
         i === index ? { ...ticket, [name]: value } : ticket
       )
     );
+    setErrors((prev) => {
+      const newErrors = { ...prev };
+      if (newErrors[index]) {
+        delete newErrors[index][name];
+      }
+      return newErrors;
+    });
+  };
+
+  const handleClear = (index: number) => {
+    setBooking((prev) => {
+      const newBooking = [...prev];
+      newBooking[index] = {
+        dob: null,
+        name: "",
+        nationality: "",
+        email: "",
+        phone: "",
+        passport: "",
+        price:
+          index < busi_tickets
+            ? flight_depart_info.base_price * 1.5
+            : flight_depart_info.base_price,
+      };
+      return newBooking;
+    });
+
+    setErrors((prev) => {
+      const newErrors = { ...prev };
+      if (newErrors[index]) {
+        delete newErrors[index];
+      }
+      return newErrors;
+    });
   };
 
   const handleError = () => {
     let hasError = false;
     const newErrors: { [key: number]: { [key: string]: string } } = {};
+
+    // Depart Booking
     booking.forEach((ticket, index) => {
       const ticketErrors: { [key: string]: string } = {};
       if (!ticket.dob) ticketErrors.dob = "Date of Birth is required";
@@ -93,6 +129,35 @@ const Booking = () => {
         hasError = true;
       }
     });
+
+    const fieldsToCheck = ["passport"];
+
+    for (let i = 0; i < booking.length; i++) {
+      for (let j = i + 1; j < booking.length; j++) {
+        fieldsToCheck.forEach((field) => {
+          if (
+            booking[i][field as keyof Tickets[number]] &&
+            booking[i][field as keyof Tickets[number]] ===
+              booking[j][field as keyof Tickets[number]]
+          ) {
+            if (!newErrors[i]) newErrors[i] = {};
+            if (!newErrors[j]) newErrors[j] = {};
+
+            newErrors[i][field] = `${
+              field.charAt(0).toUpperCase() + field.slice(1)
+            } matches with ticket ${
+              j + 1 > busi_tickets ? j + 1 - busi_tickets : j + 1
+            } - ${j + 1 > busi_tickets ? "Economy" : "Business"} ticket`;
+            newErrors[j][field] = `${
+              field.charAt(0).toUpperCase() + field.slice(1)
+            } matches with ticket ${
+              i + 1 > busi_tickets ? i + 1 - busi_tickets : i + 1
+            } - ${i + 1 > busi_tickets ? "Economy" : "Business"} ticket`;
+            hasError = true;
+          }
+        });
+      }
+    }
     setErrors(newErrors);
     return hasError;
   };
@@ -179,6 +244,7 @@ const Booking = () => {
                   index={index + 1}
                   id={index}
                   change={handleChange}
+                  clear={handleClear}
                   errors={errors[index]}
                 />
               </div>
@@ -195,6 +261,7 @@ const Booking = () => {
                   index={index + 1}
                   id={index + busi_tickets}
                   change={handleChange}
+                  clear={handleClear}
                   errors={errors[index + busi_tickets]}
                 />
               </div>
