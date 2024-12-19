@@ -1,8 +1,9 @@
-import React from "react";
-import { useParams } from "react-router-dom";
+import React, { useContext } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { getBlogById } from "../apis/blogs.api";
 import { SRC } from "../constants/src";
+import { AppContext } from "../context/app.context";
 
 const NewsDetails: React.FC = () => {
   const param = useParams();
@@ -11,8 +12,15 @@ const NewsDetails: React.FC = () => {
     queryFn: () => getBlogById(param.id as string),
   });
 
+  const navigate = useNavigate();
+
+  const { isAdmin } = useContext(AppContext);
+  const handleEdit = () => {
+    navigate(`/edit-news/${param.id}`);
+  };
   return (
     <div className="flex flex-col gap-12 md:gap-16 lg:gap-20">
+      {isAdmin && <button onClick={handleEdit}>Edit</button>}
       <div className="flex flex-col gap-16 md:gap-20 px-5 md:px-20 lg:px-40 py-10 md:py-16 lg:py-20 bg-[#E8F3FF] w-full">
         <div className="flex flex-col md:flex-row gap-10 md:gap-16 w-full">
           <img

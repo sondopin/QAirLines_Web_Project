@@ -20,3 +20,11 @@ export const uploadBlog = async (data: FormData) => {
     },
   });
 };
+
+export const updateBlog = async (id: string, data: FormData) => {
+  return http.put<string>(`/blogs/update/${id}`, data, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+};

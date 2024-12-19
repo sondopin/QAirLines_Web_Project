@@ -7,7 +7,8 @@ export const PATH = {
   admin: {
     manage: "/manage",
     view_flight: "/view-flight",
-    upload_news: "/manage-news",
+    upload_news: "/upload-news",
+    edit_news: "/edit-news/:id",
     view_news: "/view-news",
     add_flight: "/add-flight",
     chart: "/chart",
