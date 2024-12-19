@@ -21,9 +21,22 @@ const AirplaneManagement: React.FC = () => {
   console.log(aircraft_list);
 
   return (
-    <div className="flex flex-col bg-[#F6FBFF]">
-      <div className="relative flex justify-center">
-        <img src="./airplane_background.png" alt="Background" />
+    <div className="flex flex-col bg-[#F6FBFF] rounded-[20px] my-5">
+      <div className="fixed inset-0 -z-10 h-screen">
+        <video
+          src="./cloud_animation_2.mp4"
+          loop
+          autoPlay
+          muted
+          className="w-full h-full object-cover"
+        ></video>
+      </div>
+      <div className="relative flex justify-center ">
+        <img
+          src="./airplane_background.png"
+          className="rounded-[20px]"
+          alt="Background"
+        />
         <div
           onClick={() => {
             navigate("/add-airplane");
@@ -34,9 +47,12 @@ const AirplaneManagement: React.FC = () => {
           <div className="ml-2">Add new airplane</div>
         </div>
       </div>
-      <div className=" relative top-[-70px] flex flex-col gap-[150px] items-center mt-[20px]">
+      <div className=" relative top-[-70px] flex flex-col gap-[100px] items-center mt-[20px]">
         {aircraft_list.map((chunk, rowIndex) => (
-          <div className="flex md:flex-row flex-col gap-[150px]" key={rowIndex}>
+          <div
+            className="flex md:flex-row flex-col lg:gap-[100px] sm:gap-[50px] gap-[20px] items-center"
+            key={rowIndex}
+          >
             {chunk.map((aircraft) => (
               <AirplaneCard
                 key={aircraft._id} // Sử dụng _id làm key thay vì index

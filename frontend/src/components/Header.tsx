@@ -61,16 +61,6 @@ const Header = () => {
           >
             Home
           </NavLink>
-          <NavLink
-            className={
-              location.pathname === "/search"
-                ? "flex items-center text-white px-2 font-semibold border-b-2 border-white-500"
-                : "flex items-center text-white px-2 font-semibold border-b-2 border-transparent"
-            }
-            to="/search"
-          >
-            Flights
-          </NavLink>
           {isAuthenticated && (
             <>
               {!isAdmin ? (

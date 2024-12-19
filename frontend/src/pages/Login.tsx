@@ -10,6 +10,7 @@ import { isAxiosUnprocessableEntity } from "../utils/utils";
 import { ErrorResponse } from "../types/utils.type";
 import { useContext } from "react";
 import { AppContext } from "../context/app.context";
+import { getRoleFromLocalStorage } from "../utils/auth";
 
 type LoginForm = Omit<Schema, "confirm_password">;
 
@@ -28,13 +29,15 @@ const LoginPage: React.FC = () => {
   });
 
   const navigate = useNavigate();
-  const { setIsAuthenticated } = useContext(AppContext);
+  const { setIsAuthenticated, setIsAdmin } = useContext(AppContext);
 
   const onSubmit = handleSubmit((data) => {
     loginMutaion.mutate(data, {
       onSuccess: () => {
         console.log("Success Login");
         setIsAuthenticated(true);
+        const role = getRoleFromLocalStorage();
+        setIsAdmin(role === "Admin");
         navigate("/");
       },
       onError: (error) => {

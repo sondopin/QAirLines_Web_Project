@@ -20,7 +20,7 @@ const InputField: React.FC<InputFieldProps> = ({
   error,
 }) => {
   return (
-    <div className="rounded-[6px] bg-white shadow-lg flex w-full items-center gap-2.5 overflow-hidden text-[rgba(34,58,96,0.5)] font-medium whitespace-nowrap leading-[40px] justify-start flex-wrap p-2.5 md:max-w-full md:whitespace-normal">
+    <div className="rounded-[6px] bg-white shadow-lg flex w-full items-center gap-2.5 overflow-hidden text-black whitespace-nowrap leading-[40px] justify-start flex-wrap p-2.5 md:max-w-full md:whitespace-normal">
       {iconSrc ? (
         <img
           loading="lazy"
@@ -32,7 +32,7 @@ const InputField: React.FC<InputFieldProps> = ({
       <input
         type={type}
         placeholder={placeholder}
-        className="self-stretch bg-white flex-1 basis-0 my-auto md:max-w-full"
+        className="self-stretch bg-white flex-1 basis-0 my-auto md:max-w-full font-bold"
         aria-label={placeholder}
         {...register(name)}
       />

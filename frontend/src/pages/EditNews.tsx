@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import RichTextEditor from "../components/RichTextEditor";
-import { uploadBlog } from "../apis/blogs.api";
+import { getBlogById, updateBlog, uploadBlog } from "../apis/blogs.api";
 import Loading from "../components/Loading";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { PATH } from "../constants/path";
+import { SRC } from "../constants/src";
 
 interface EditNewsProps {
   title?: string;
@@ -37,12 +38,31 @@ const EditNews: React.FC = () => {
   const [news, setNews] = useState<EditNewsProps>({});
   const [imagePreview, setImagePreview] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const location = useLocation();
+  const isEditMode = location.pathname.includes("edit");
+  const params = useParams();
+  useEffect(() => {
+    const fetchBlog = async () => {
+      const { data } = await getBlogById(params.id as string);
+      console.log(data);
+
+      setNews(data);
+      setImagePreview(SRC.blog_cover + data.cover_url);
+    };
+
+    if (isEditMode) {
+      fetchBlog();
+    }
+  }, [isEditMode, params.id]);
+
   const navigate = useNavigate();
   const handleChange =
     (name: keyof EditNewsProps) =>
     (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       if (name === "cover") {
         const file = (e.target as HTMLInputElement).files?.[0];
+        console.log(file);
+
         if (file) {
           const imageURL = URL.createObjectURL(file);
           setNews({ ...news, cover: file });
@@ -56,6 +76,7 @@ const EditNews: React.FC = () => {
   const handleContentChange = (content: string) => {
     setNews({ ...news, content });
   };
+
   const handleClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
     setIsLoading(true);
     e.preventDefault();
@@ -64,13 +85,24 @@ const EditNews: React.FC = () => {
     formData.append("subtitle", news.subtitle as string);
     formData.append("cover", news.cover as File);
     formData.append("content", news.content as string);
-    try {
-      await uploadBlog(formData);
-      navigate(PATH.admin.view_news);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setIsLoading(false);
+    if (!isEditMode) {
+      try {
+        await uploadBlog(formData);
+        navigate(PATH.admin.view_news);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setIsLoading(false);
+      }
+    } else {
+      try {
+        await updateBlog(params.id as string, formData);
+        navigate(PATH.admin.view_news);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setIsLoading(false);
+      }
     }
   };
 

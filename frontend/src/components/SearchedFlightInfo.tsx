@@ -66,7 +66,7 @@ const SearchedFlightInfo: React.FC<SearchedFlightInfoProps> = ({
       {/* Dates Information */}
       <div className="text-center">
         <div>
-          <h3 className="text-lg font-semibold">Departure Date</h3>
+          <h3 className="text-lg font-semibold">Departure Time</h3>
           <p className="text-gray-600">
             {location.pathname !== "/search"
               ? depature_time + " " + departure_date

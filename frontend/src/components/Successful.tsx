@@ -27,7 +27,7 @@ const Successful = ({
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="flex items-center justify-center w-[35%] h-[35%] bg-white rounded-[30px] shadow-lg">
+      <div className="flex items-center justify-center w-[35%] h-[35%] [#F6FBFF] rounded-[30px] shadow-lg bg-[#F6FBFF]">
         <div className="text-center">
           <img
             src="./success.png"

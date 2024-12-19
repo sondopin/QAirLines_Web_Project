@@ -1,8 +1,5 @@
 import React from "react";
 import { formatCurrency, formatDate, formatTime } from "../utils/utils";
-import { Flight } from "../types/flight.type";
-import Airport from "../../../backend/src/models/airport.ts"; // Adjust the import path as necessary
-import { useGetAirports } from "../hooks/useGetAirports";
 
 interface ConfirmBookingProps {
   flight_depart_info: any;

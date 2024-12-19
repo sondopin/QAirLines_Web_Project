@@ -19,8 +19,7 @@ type SortType = {
 const Search = () => {
   const { search_query, isReturn, flight_depart_info } = useQueryForm() || {};
   const navigate = useNavigate();
-  console.log("Before:", search_query);
-  console.log(isReturn);
+
 
   const [sort, setSort] = useState<SortType>({});
   // Change the search query if it is a return flight
@@ -31,8 +30,6 @@ const Search = () => {
     new_search_query.des_airport = search_query.ori_airport;
     new_search_query.departure_time = search_query.return_time;
     new_search_query.return_time = "";
-    console.log("Done");
-    console.log("After:", search_query);
   }
 
   const airports = useGetAirports();
@@ -128,6 +125,7 @@ const Search = () => {
 
       {/* End general information */}
 
+      
       <section
         role="alert"
         aria-label="Important notice about pricing"
@@ -146,7 +144,7 @@ const Search = () => {
       </section>
       {/* End note */}
       <h1 className="pt-10 text-5xl font-bold text-center text-black tracking-[3.12px] max-md:max-w-full max-md:text-4xl mb-10">
-        <span className="leading-[61px]">Flights from </span>
+        <span className="leading-[61px]">{isReturn ? "Return" : "Departure"} flights from </span>
         <span className="text-sky-500 leading-[61px]">
           {departure_airport?.city}
         </span>
