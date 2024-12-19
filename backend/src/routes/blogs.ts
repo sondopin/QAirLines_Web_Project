@@ -20,5 +20,6 @@ router.get("/get-all", BlogController.getAllBlogs);
 router.get("/get-latest", BlogController.getLatestBlogs);
 router.get("/get/:id", BlogController.getBlogById);
 router.post("/upload", upload.single("cover"), BlogController.uploadBlog);
+router.put("/update/:id", upload.single("cover"), BlogController.updateBlog);
 
 export default router;
