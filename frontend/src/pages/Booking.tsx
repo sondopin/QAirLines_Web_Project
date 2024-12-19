@@ -5,17 +5,24 @@ import { useState } from "react";
 import SearchedFlightInfo from "../components/SearchedFlightInfo";
 import { makeBooking } from "../apis/flight.api";
 import ConfirmBooking from "./ConfirmBooking";
-import { useNavigate } from "react-router-dom";
 import { PATH } from "../constants/path";
 import { formatCurrency } from "../utils/utils";
+import Loading from "../components/Loading";
+import Successful from "../components/Successful";
 
 const Booking = () => {
-  const { flight_depart_info, flight_return_info, nums_busi_book, nums_eco_book } = useQueryForm();
-  const navigate = useNavigate();
+  const {
+    flight_depart_info,
+    flight_return_info,
+    nums_busi_book,
+    nums_eco_book,
+  } = useQueryForm();
   const [confirm, setConfirm] = useState(false);
   const busi_tickets = parseInt(nums_busi_book);
   const eco_tickets = parseInt(nums_eco_book);
   const [discount, setDiscount] = useState<string>("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [isSuccessful, setIsSuccessful] = useState(false);
 
   const [errors, setErrors] = useState<{
     [key: number]: { [key: string]: string };
@@ -100,20 +107,24 @@ const Booking = () => {
       busi_tickets,
       eco_tickets,
       tickets: booking,
-      discount_code: discount
+      discount_code: discount,
     };
     const returnDataForm = {
       flight_id: flight_return_info?._id,
       busi_tickets,
       eco_tickets,
       tickets: returnBooking,
-      discount_code: discount
+      discount_code: discount,
     };
+    setIsLoading(true);
     try {
       await makeBooking(departDataForm);
       if (flight_return_info) await makeBooking(returnDataForm);
-      navigate(PATH.user.mybooking);
+      setIsLoading(false);
+      setConfirm(false);
+      setIsSuccessful(true);
     } catch (error) {
+      setIsLoading(false);
       console.log(error);
     }
   };
@@ -127,19 +138,26 @@ const Booking = () => {
 
   return (
     <div>
-      <h1 className="text-3xl font-bold text-center mt-7 mb-3">Departure Flight</h1>
+      <h1 className="text-3xl font-bold text-center mt-7 mb-3">
+        Departure Flight
+      </h1>
       <SearchedFlightInfo
         {...flight_depart_info}
         nums_eco_book={eco_tickets}
         nums_busi_book={busi_tickets}
       />
-      {flight_return_info?<h1 className="text-3xl font-bold text-center mt-7 mb-3">Return Flight</h1> : null}
-      {flight_return_info?  
-      <SearchedFlightInfo
-        {...flight_return_info}
-        nums_eco_book={eco_tickets}
-        nums_busi_book={busi_tickets}
-      /> : null}
+      {flight_return_info ? (
+        <h1 className="text-3xl font-bold text-center mt-7 mb-3">
+          Return Flight
+        </h1>
+      ) : null}
+      {flight_return_info ? (
+        <SearchedFlightInfo
+          {...flight_return_info}
+          nums_eco_book={eco_tickets}
+          nums_busi_book={busi_tickets}
+        />
+      ) : null}
       <div className="italic mx-10 my-10">
         <p className="text-sm">
           Please fill in these feilds neccessary information for us. We commits
@@ -202,7 +220,9 @@ const Booking = () => {
           </h2>
           <p className="mt-8 text-5xl font-bold tracking-[2.88px] max-md:max-w-full max-md:text-4xl">
             {formatCurrency(
-             (flight_depart_info.base_price + (flight_return_info ? flight_return_info.base_price : 0)) * (busi_tickets * 1.5 + eco_tickets)
+              (flight_depart_info.base_price +
+                (flight_return_info ? flight_return_info.base_price : 0)) *
+                (busi_tickets * 1.5 + eco_tickets)
             )}
           </p>
           <p className="mt-8 text-xl tracking-widest max-md:max-w-full">
@@ -216,18 +236,21 @@ const Booking = () => {
       </form>
       {confirm && (
         <div
-          className={`fixed inset-0 z-50 flex items-center justify-center transition-transform duration-500 ease-out transform ${
-            confirm ? "translate-y-0 opacity-100" : "-translate-y-16 opacity-0"
+          className={`fixed inset-0 bg-slate-500 z-50 flex items-center justify-center transition-transform duration-500 ease-out transform bg-opacity-50
           }`}
         >
           <ConfirmBooking
-            flight_depart_info = {flight_depart_info}
-            flight_return_info = {flight_return_info} 
-            numberOfTickets = {[busi_tickets, eco_tickets]}
+            flight_depart_info={flight_depart_info}
+            flight_return_info={flight_return_info}
+            numberOfTickets={[busi_tickets, eco_tickets]}
             onClose={handleClose}
             onConfirm={hanldeConfirm}
-          /> 
+          />
         </div>
+      )}
+      {isLoading && <Loading />}
+      {isSuccessful && (
+        <Successful message="Suceessful" to_path={PATH.user.mybooking} />
       )}
     </div>
   );
