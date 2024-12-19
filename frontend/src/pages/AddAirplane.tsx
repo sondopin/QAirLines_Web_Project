@@ -142,6 +142,7 @@ const AddAirplane: React.FC = () => {
                     id="name"
                     type="text"
                     onChange={handleChange("name")}
+                    placeholder="Airplane Name. Ex: Boeing 747"
                     className="border-[1px] border-[#223A60] rounded-[6px] p-[10px]"
                   />
                   {error.name && (
@@ -160,6 +161,7 @@ const AddAirplane: React.FC = () => {
                     type="text"
                     id="code"
                     onChange={handleChange("code")}
+                    placeholder="Airplane Code. Ex: QR-001"
                     className="border-[1px] border-[#223A60] rounded-[6px] p-[10px]"
                   />
                   {error.code && (
@@ -177,6 +179,7 @@ const AddAirplane: React.FC = () => {
                   <input
                     type="text"
                     id="model"
+                    placeholder="Airplane Model. Ex: 747-400"
                     onChange={handleChange("model")}
                     className="border-[1px] border-[#223A60] rounded-[6px] p-[10px]"
                   />
@@ -198,6 +201,7 @@ const AddAirplane: React.FC = () => {
                     type="number"
                     id="nums_seat"
                     onChange={handleChange("nums_seat")}
+                    placeholder="Airplane Seats. Ex: 50"
                     className="border-[1px] border-[#223A60] rounded-[6px] p-[10px]"
                   />
                   {error.nums_seat && (
@@ -214,6 +218,7 @@ const AddAirplane: React.FC = () => {
                   <input
                     type="text"
                     id="manufacturer"
+                    placeholder="Airplane Manufacturer. Ex: Boeing"
                     onChange={handleChange("manufacturer")}
                     className="border-[1px] border-[#223A60] rounded-[6px] p-[10px]"
                   />
@@ -232,6 +237,7 @@ const AddAirplane: React.FC = () => {
                     type="number"
                     id="manufactured_year"
                     onChange={handleChange("manufactured_year")}
+                    placeholder="Airplane Manufactured year. Ex: 1998"
                     className="border-[1px] border-[#223A60] rounded-[6px] p-[10px]"
                   />
                   {error.manufactured_year && (
