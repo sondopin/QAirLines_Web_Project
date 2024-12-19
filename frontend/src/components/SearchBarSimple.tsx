@@ -47,7 +47,7 @@ export const SearchBarSimple: React.FC = () => {
 
   const handleSubmit = () => {
     navigate("/search", {
-      state: searchForm,
+      state: {search_query: searchForm, isReturn: 0},
     });
   };
 

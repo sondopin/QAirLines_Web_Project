@@ -126,7 +126,7 @@ const Search = () => {
       </div>
 
       {/* End general information */}
-      <h1 className="text-3xl">{isReturn ? "Return Flight" : "Departure Flight"}</h1>
+
       <section
         role="alert"
         aria-label="Important notice about pricing"
@@ -145,7 +145,7 @@ const Search = () => {
       </section>
       {/* End note */}
       <h1 className="pt-10 text-5xl font-bold text-center text-black tracking-[3.12px] max-md:max-w-full max-md:text-4xl mb-10">
-        <span className="leading-[61px]">Flights from </span>
+        <span className="leading-[61px]">{isReturn ? "Return" : "Departure"} flights from </span>
         <span className="text-sky-500 leading-[61px]">
           {departure_airport?.city}
         </span>
