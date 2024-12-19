@@ -48,50 +48,62 @@ const AdjustFlight: React.FC<AdjustFlightProps> = ({
   };
 
   return (
-    <div className="flex flex-col bg-[#FBFF00] bg-opacity-[20%] rounded-[14px] gap-[10px] mx-[75px] px-[30px] py-[20px] hover:scale-[1.03] transform transition-transform duration-200 shadow-lg">
-      <div className="flex flex-row gap-[10px]">
-        <div className="text-[16px] font-semibold">Departure Date:</div>
-        <div className="italic text-[16px]">{oldDepartureDate}</div>
-      </div>
-      <div className="flex flex-row gap-[20px] items-center">
-        <div className="text-[16px] font-semibold">Change to:</div>
-        <div className="flex flex-row">
-          <div className="bg-[#D9D9D9] bg-opacit-[50%] rounded-tl-[6px] rounded-bl-[6px] px-[10px] py-[5px]">
-            🗓️
-          </div>
-          <input
-            type="datetime-local"
-            value={schedule.actual_departure}
-            onChange={handleChange("actual_departure")}
-            className="bg-[#D9D9D9] bg-opacit-[50%] rounded-tr-[6px] rounded-br-[6px] px-[10px] py-[5px] text-[16px]"
-          />
+    <div className="flex md:flex-row flex-col items-center justify-between bg-[#FBFF00] bg-opacity-[20%] rounded-[14px] gap-[10px] md:mx-[75px] mx-[25px] px-[30px] py-[20px] hover:scale-[1.03] transform transition-transform duration-200 shadow-lg">
+      <div className="flex flex-col gap-[10px]">
+        <div className="flex  md:flex-row flex-col gap-[10px]">
+          <div className="text-[16px] font-semibold">Departure Date:</div>
+          <div className="italic text-[16px]">{oldDepartureDate}</div>
         </div>
-      </div>
-
-      {oldReturnDate && (
-        <>
-          <div className="flex flex-row gap-[10px]">
-            <div className="text-[16px] font-semibold">Return Date:</div>
-            <div className="italic text-[16px]">{oldReturnDate}</div>
-          </div>
-          <div className="flex flex-row gap-[20px]">
-            <div className="text-[16px] font-semibold">Change to:</div>
-            <div className="flex flex-row items-center">
-              <div className="bg-[#D9D9D9] bg-opacit-[50%] rounded-tl-[6px] rounded-bl-[6px] px-[10px] py-[5px]">
-                🗓️
-              </div>
-              <input
-                type="datetime-local"
-                value={schedule.actual_arrival}
-                onChange={handleChange("actual_arrival")}
-                className="bg-[#D9D9D9] bg-opacit-[50%] rounded-tr-[6px] rounded-br-[6px] px-[10px] py-[5px] text-[16px]"
-              />
+        <div className="flex  md:flex-row flex-col gap-[20px]">
+          <div className="text-[16px] font-semibold">Change to:</div>
+          <div className="flex flex-row">
+            <div className="bg-[#D9D9D9] bg-opacit-[50%] rounded-tl-[6px] rounded-bl-[6px] px-[10px] py-[5px]">
+              🗓️
             </div>
+            <input
+              type="datetime-local"
+              value={schedule.actual_departure}
+              onChange={handleChange("actual_departure")}
+              className="bg-[#D9D9D9] bg-opacit-[50%] rounded-tr-[6px] rounded-br-[6px] px-[10px] py-[5px] text-[16px] md:w-full w-[50%]"
+            />
           </div>
-        </>
-      )}
+        </div>
 
-      <button onClick={handleConfirm}>Confirm</button>
+        {oldReturnDate && (
+          <>
+            <div className="flex md:flex-row flex-col gap-[10px]">
+              <div className="text-[16px] font-semibold">Arrival Date:</div>
+              <div className="italic text-[16px]">{oldReturnDate}</div>
+            </div>
+            <div className="flex  md:flex-row flex-col gap-[20px]">
+              <div className="text-[16px] font-semibold">Change to:</div>
+              <div className="flex flex-row items-center">
+                <div className="bg-[#D9D9D9] bg-opacit-[50%] rounded-tl-[6px] rounded-bl-[6px] px-[10px] py-[5px]">
+                  🗓️
+                </div>
+                <input
+                  type="datetime-local"
+                  value={schedule.actual_arrival}
+                  onChange={handleChange("actual_arrival")}
+                  className="bg-[#D9D9D9] bg-opacit-[50%] rounded-tr-[6px] rounded-br-[6px] px-[10px] py-[5px] text-[16px] md:w-full w-[50%]"
+                />
+              </div>
+            </div>
+          </>
+        )}
+      </div>
+      <img src="./QAirline_Logo.png" alt="Logo" className="self-center" />
+      <div
+        onClick={handleConfirm}
+        className=" cursor-pointer flex flex-row gap-[10px] items-center bg-red-500 rounded-[20px] px-2 hover:bg-red-600"
+      >
+        <img
+          src="./confirm.png"
+          className="w-[25px] h-[25px]"
+          alt="Adjust icon"
+        />
+        <button className=" p-3 text-white">Confirm</button>
+      </div>
     </div>
   );
 };
