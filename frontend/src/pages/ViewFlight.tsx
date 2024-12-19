@@ -12,31 +12,53 @@ interface ViewFlightProps {
 }
 
 const ViewFlight: React.FC<ViewFlightProps> = () => {
-  const aircraft_id = useQueryForm();
+  const { aircraftId, airplaneNumber } = useQueryForm();
   const airports = useGetAirports();
 
   const { data: flights } = useQuery({
-    queryKey: ["flights", aircraft_id],
-    queryFn: () => getAllFlights({ aircraft_id }),
+    queryKey: ["flights", aircraftId],
+    queryFn: () => getAllFlights({ aircraft_id: aircraftId }),
   });
   const navigate = useNavigate();
 
   return (
-    <div className="flex flex-col bg-[#F6FBFF]">
-      <img src="airplane_background.png" alt="Background" />
-      <div className="flex flex-row mt-[50px] px-[50px] gap-[20px]">
-        <h1 className="text-[56px] font-bold">List Flights Using</h1>
-        <h1 className="text-[56px] text-[#00A3FF] font-bold"></h1>
+    <div className="flex flex-col bg-[#F6FBFF] m-5 rounded-[20px]">
+      <div className="fixed inset-0 -z-10 h-screen">
+        <video
+          src="./cloud_animation_2.mp4"
+          loop
+          autoPlay
+          muted
+          className="w-full h-full object-cover"
+        ></video>
       </div>
-      <button
-        onClick={() => {
-          navigate("/add-flight", {
-            state: { aircraft_id: aircraft_id },
-          });
-        }}
-      >
-        Add Flight
-      </button>
+      <img
+        src="airplane_background.png"
+        className="rounded-[20px]"
+        alt="Background"
+      />
+      <div className="flex md:flex-row flex-col mt-[50px] px-[50px] gap-[20px] items-center">
+        <div>
+          <h1 className="text-[56px] font-bold">
+            List Flights Using{" "}
+            <span className="text-[56px] text-[#00A3FF] font-bold">
+              {airplaneNumber}
+            </span>
+          </h1>
+        </div>
+        <div
+          onClick={() => {
+            navigate("/add-flight", {
+              state: { aircraft_id: aircraftId },
+            });
+          }}
+          className="flex h-[80%] flex-row gap-[20px] justify-center items-center ml-auto transform transition-transform duration-200 hover:scale-[1.05] bg-[#223A60] bg-opacity-75 text-white p-5 rounded-[20px] hover:bg-opacity-100"
+        >
+          <img src="./add.png" className="w-[25px] h-[25px]" alt="Add icon" />
+          <button>Add Flight</button>
+        </div>
+      </div>
+
       <hr className="ml-[50px] border-[3px] border-[#283841] opacity-[50%] w-[200px]" />
       <div className="flex flex-col gap-[50px] mt-[100px] mb-[100px]">
         {flights?.data.map((flight: Flight, index: number) => {

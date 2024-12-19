@@ -72,7 +72,7 @@ const FlightCard: React.FC<FlightCardProps> = ({
         </div>
         {/* Flight Info */}
         <div
-          className={`flex flex-col md:flex-row rounded-tr-[20px] rounded-bl-[20px] rounded-br-[20px] gap-[27px] px-[27px] py-[10px] ${
+          className={`flex flex-col md:flex-row rounded-tr-[20px] rounded-bl-[20px] rounded-br-[20px] gap-[27px] px-[27px] py-[20px] ${
             status === "Up Coming" ? "bg-[#DFEEFE]" : "bg-[#CCCCCC]"
           }`}
         >
@@ -103,9 +103,15 @@ const FlightCard: React.FC<FlightCardProps> = ({
           />
           {/* Schedule */}
           <div className="flex flex-col justify-center gap-[5px] px-[10px] py-[10px] w-full max-w-[350px]">
-            <div>Departure Date: {depature_time + " " + departure_date}</div>
+            <div className="md:m-2">
+              <span className="font-bold">Departure Date:</span>{" "}
+              {depature_time + " " + departure_date}
+            </div>
             {return_date && (
-              <div>Return Date: {return_time + " " + return_date}</div>
+              <div className="md:m-2">
+                <span className="font-bold">Arrival Date:</span>{" "}
+                {return_time + " " + return_date}
+              </div>
             )}
           </div>
           <img
@@ -128,7 +134,13 @@ const FlightCard: React.FC<FlightCardProps> = ({
           />
           <button
             onClick={() => setIsAdjust(!isAdjust)}
-            className="bg-[#223A60] rounded-[14px] text-[#FFFFFF] text-[16px] font-medium w-full md:w-[170px] h-[40px] self-center hover:scale-[1.05] transform transition-transform duration-200 hover:bg-[#5681C6]"
+            disabled={status === "Completed"}
+            className={
+              `bg-[#223A60] rounded-[14px] p-2 text-[#FFFFFF] text-[16px] font-medium w-full md:w-[170px] h-[40px] self-center  transform transition-transform duration-200` +
+              (status === "Completed"
+                ? " cursor-not-allowed "
+                : "hover:bg-[#5681C6] hover:scale-[1.05]")
+            }
           >
             Adjust
           </button>

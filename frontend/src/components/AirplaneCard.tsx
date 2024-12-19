@@ -90,7 +90,7 @@ const AirplaneCard: React.FC<AirplaneCardProps> = ({
       <div
         onClick={() => {
           navigate("/view-flight", {
-            state: aircraftId,
+            state: {aircraftId, airplaneNumber}
           });
         }}
         className="cursor-pointer underline text-[#67AAF6] text-[16px] hover:text-[#0077FF] ml-auto mr-[20px] mb-[10px]"
