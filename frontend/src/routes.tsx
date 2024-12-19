@@ -106,6 +106,14 @@ export default function createRoutes() {
             </Layout>
           ),
         },
+        {
+          path: PATH.admin.edit_news,
+          element: (
+            <Layout>
+              <EditNews />
+            </Layout>
+          ),
+        },
       ],
     },
     {
