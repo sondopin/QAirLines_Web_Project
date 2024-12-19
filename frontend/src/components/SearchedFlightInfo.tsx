@@ -33,7 +33,7 @@ const SearchedFlightInfo: React.FC<SearchedFlightInfoProps> = ({
   const location = useLocation();
 
   return (
-    <section className="flex flex-col mb-5 md:flex-row items-center justify-center md:justify-evenly p-6 w-full bg-gray-200 bg-opacity-90 rounded-3xl shadow-md font-sans gap-6">
+    <section className="flex flex-col mb-5 md:flex-row items-center justify-center md:justify-evenly p-6 w-full bg-gray-200 bg-opacity-90 shadow-md font-sans gap-6 border-b-[15px] border-[#223A60]">
       {/* Airport Information */}
       <div className="flex items-center space-x-4">
         {/* Departure Airport */}

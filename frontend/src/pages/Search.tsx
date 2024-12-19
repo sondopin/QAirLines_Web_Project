@@ -9,6 +9,7 @@ import { useGetAirports } from "../hooks/useGetAirports";
 import { useNavigate } from "react-router-dom";
 import SearchedFlightInfo from "../components/SearchedFlightInfo";
 import SearchBarSimple from "../components/SearchBarSimple";
+import { Divider } from "antd";
 
 type SortType = {
   base_price?: "asc" | "desc";
@@ -16,24 +17,23 @@ type SortType = {
 };
 
 const Search = () => {
-  const {search_query, isReturn, flight_depart_info} = useQueryForm() || {};
+  const { search_query, isReturn, flight_depart_info } = useQueryForm() || {};
   const navigate = useNavigate();
-  console.log("Before:",search_query);
+  console.log("Before:", search_query);
   console.log(isReturn);
 
   const [sort, setSort] = useState<SortType>({});
   // Change the search query if it is a return flight
   let new_search_query = search_query;
-  if(!isReturn) {
+  if (!isReturn) {
     new_search_query = { ...search_query };
     new_search_query.ori_airport = search_query.des_airport;
     new_search_query.des_airport = search_query.ori_airport;
     new_search_query.departure_time = search_query.return_time;
     new_search_query.return_time = "";
     console.log("Done");
-    console.log("After:",search_query);
+    console.log("After:", search_query);
   }
-  
 
   const airports = useGetAirports();
 
@@ -92,6 +92,7 @@ const Search = () => {
         className="absolute top-0 left-0 h-screen -z-50"
       />
       <div className="bg-[#000000] bg-opacity-[40%] absolute top-0 left-0 h-screen w-full -z-10"></div>
+
       <SearchedFlightInfo
         actual_departure={search_query?.departure_time}
         ori_airport={departure_airport?.name}
@@ -126,7 +127,7 @@ const Search = () => {
       </div>
 
       {/* End general information */}
-      <h1 className="text-3xl">{isReturn ? "Return Flight" : "Departure Flight"}</h1>
+
       <section
         role="alert"
         aria-label="Important notice about pricing"
@@ -158,11 +159,9 @@ const Search = () => {
       <div className="flex overflow-hidden flex-col text-black mt-5">
         <section className="flex flex-wrap gap-4 items-start px-16 py-4 w-full bg-gray-50 rounded-lg max-md:px-4">
           <p className="flex-1 text-sm italic text-gray-600 tracking-wide leading-6 min-w-[320px] max-md:max-w-full">
-            ❗❗❗ Flights are displayed in the default order selected by
-            QAirline.
+            ❗Flights are displayed in the default order selected by QAirline.
             <br />
-            Please select the feature (Sort) to change the display order as
-            needed.
+            Please select sort feature to change the display order as needed.
             <br />
             Price displayed is the lowest and can be varied from business class
             economy ticket classes.
@@ -208,50 +207,75 @@ const Search = () => {
             <span>Price</span>
           </button>
         </section>
-        <section className="flex overflow-hidden flex-col px-16 py-16 w-full text-2xl tracking-widest max-md:px-5 max-md:max-w-full">
+
+        {isReturn ? (
+          <div className="flex flex-row gap-[10px] items-center mx-auto mb-[50px] mt-[20px]">
+            <img
+              src="./airplane_icon_dark_blue.png"
+              alt=""
+              className="w-[60px] -scale-x-100"
+            />
+            <div className="text-[32px] font-medium">Choose return flight</div>
+          </div>
+        ) : (
+          <div className="flex flex-row gap-[30px] items-center mx-auto mb-[50px] mt-[20px]">
+            <div className="text-[32px] font-medium">
+              Choose departure flight
+            </div>
+            <img
+              src="./airplane_icon_dark_blue.png"
+              alt=""
+              className="w-[60px]"
+            />
+          </div>
+        )}
+
+        <section className="flex flex-col px-[30px] overflow-hidden flex-col w-full relative text-2xl tracking-widest max-md:px-5 max-md:max-w-full">
           {(flights_list ?? []).length > 0 ? (
             flights_list?.map((flight: Flight, index: number) => (
               <div
                 key={index}
                 className={index > 0 ? "mt-24 max-md:mt-10" : ""}
               >
-                <SearchResultCard 
-                  {...flight}  
+                <SearchResultCard
+                  {...flight}
                   onClick={() => {
                     if (isReturn) {
-                      navigate("/booking", { 
-                          state: { 
-                            flight_return_info: flight, 
-                            flight_depart_info: flight_depart_info, 
-                            nums_busi_book: search_query.nums_busi, 
-                            nums_eco_book: search_query.nums_eco
-                          } 
+                      navigate("/booking", {
+                        state: {
+                          flight_return_info: flight,
+                          flight_depart_info: flight_depart_info,
+                          nums_busi_book: search_query.nums_busi,
+                          nums_eco_book: search_query.nums_eco,
+                        },
                       });
                     } else {
                       if (search_query.return_time !== "") {
-                        navigate("/search", { 
-                            state: { 
-                              flight_depart_info: flight,  
-                              search_query: new_search_query, 
-                              isReturn: 1
-                            } 
+                        navigate("/search", {
+                          state: {
+                            flight_depart_info: flight,
+                            search_query: new_search_query,
+                            isReturn: 1,
+                          },
                         });
                       } else {
-                        navigate("/booking", { 
-                            state: {
-                              flight_depart_info: flight,
-                              nums_busi_book: search_query.nums_busi,
-                              nums_eco_book: search_query.nums_eco
-                            } 
+                        navigate("/booking", {
+                          state: {
+                            flight_depart_info: flight,
+                            nums_busi_book: search_query.nums_busi,
+                            nums_eco_book: search_query.nums_eco,
+                          },
                         });
                       }
                     }
-                  }} 
+                  }}
                 />
               </div>
             ))
           ) : (
-            <>No flights found for your selection. Back to choose another day.</>
+            <>
+              No flights found for your selection. Back to choose another day.
+            </>
           )}
         </section>
       </div>
