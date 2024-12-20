@@ -53,3 +53,33 @@ export interface Aircraft {
 }
 
 export type Aircrafts = Aircraft[];
+
+export interface PopularPlace {
+  city: string;
+  booked_seat: number;
+  cheapest_price: number;
+  country: string;
+}
+
+export type PopularPlaces = PopularPlace[];
+
+export interface BookingProps {
+  bookingId: string;
+  flightId: string;
+  bookingDate: string;
+  status: string;
+  departureCityCode: string;
+  destinationCityCode: string;
+  departureCityName: string;
+  destinationCityName: string;
+  departureTime: string;
+  departureTimeOld: string;
+  arrivalTime?: string;
+  arrivalTimeOld?: string;
+  businessTickets: number;
+  economyTickets: number;
+  totalPrice: number;
+  cancelAvailableUntil: string;
+}
+
+export type Bookings = BookingProps[];

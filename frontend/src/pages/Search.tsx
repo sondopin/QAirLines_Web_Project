@@ -1,4 +1,3 @@
-import Hero from "../components/Hero";
 import SearchResultCard from "../components/SearchResultCard";
 import { useQuery } from "@tanstack/react-query";
 import { getFlights } from "../apis/flight.api";
@@ -9,7 +8,6 @@ import { useGetAirports } from "../hooks/useGetAirports";
 import { useNavigate } from "react-router-dom";
 import SearchedFlightInfo from "../components/SearchedFlightInfo";
 import SearchBarSimple from "../components/SearchBarSimple";
-import { Divider } from "antd";
 
 type SortType = {
   base_price?: "asc" | "desc";
@@ -19,7 +17,6 @@ type SortType = {
 const Search = () => {
   const { search_query, isReturn, flight_depart_info } = useQueryForm() || {};
   const navigate = useNavigate();
-
 
   const [sort, setSort] = useState<SortType>({});
   // Change the search query if it is a return flight
@@ -125,7 +122,6 @@ const Search = () => {
 
       {/* End general information */}
 
-      
       <section
         role="alert"
         aria-label="Important notice about pricing"
@@ -144,7 +140,9 @@ const Search = () => {
       </section>
       {/* End note */}
       <h1 className="pt-10 text-5xl font-bold text-center text-black tracking-[3.12px] max-md:max-w-full max-md:text-4xl mb-10">
-        <span className="leading-[61px]">{isReturn ? "Return" : "Departure"} flights from </span>
+        <span className="leading-[61px]">
+          {isReturn ? "Return" : "Departure"} flights from{" "}
+        </span>
         <span className="text-sky-500 leading-[61px]">
           {departure_airport?.city}
         </span>

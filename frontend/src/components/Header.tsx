@@ -4,11 +4,20 @@ import { AppContext } from "../context/app.context";
 import { Dropdown } from "antd";
 import { logout } from "../apis/auth.api";
 import { PATH } from "../constants/path";
+import { useQuery } from "@tanstack/react-query";
+import { fetchCurrentUser } from "../apis/user.api";
 
 const Header = () => {
   const location = useLocation();
   const { isAuthenticated, isAdmin, setIsAuthenticated } =
     useContext(AppContext);
+
+  const { data: user } = useQuery({
+    queryKey: ["nums_book_changed", isAuthenticated],
+    queryFn: () => fetchCurrentUser(),
+    enabled: isAuthenticated,
+    staleTime: 1000 * 30,
+  });
 
   const menuItems = [
     {
@@ -72,7 +81,9 @@ const Header = () => {
                   }
                   to={PATH.user.mybooking}
                 >
-                  My Bookings
+                  My Bookings{" "}
+                  {(user?.nums_booking_changed ?? 0) > 0 &&
+                    `(${user?.nums_booking_changed} new)`}
                 </NavLink>
               ) : null}
               {isAdmin ? (

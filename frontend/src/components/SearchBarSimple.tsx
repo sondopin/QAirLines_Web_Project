@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { getAirports } from "../apis/flight.api";
 import { useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
+import { Airport } from "../types/flight.type";
 
 interface searchFormType {
   ori_airport: string;
@@ -11,6 +12,33 @@ interface searchFormType {
   nums_busi: number;
   nums_eco: number;
 }
+
+interface SuggestionItemProps {
+  name: string;
+  city: string;
+  code: string;
+  onClick: () => void;
+}
+
+const SuggestionItem: React.FC<SuggestionItemProps> = ({
+  name,
+  city,
+  code,
+  onClick,
+}) => {
+  return (
+    <div
+      className="flex flex-col p-2 hover:bg-blue-400 hover:text-white cursor-pointer"
+      onClick={onClick}
+    >
+      <div className="flex flex-row justify-between items-center">
+        <div className="text-lg">{city}</div>
+        <div className="text-lg font-bold">{code}</div>
+      </div>
+      <div className="text-sm text-gray-500">{name}</div>
+    </div>
+  );
+};
 
 const intialSearchForm: searchFormType = {
   ori_airport: "",
@@ -25,30 +53,65 @@ export const SearchBarSimple: React.FC = () => {
   const navigate = useNavigate();
   const [searchForm, setSearchForm] =
     useState<searchFormType>(intialSearchForm);
-  const [isRoundTrip, setIsRoundTrip] = useState(true);
+
+  const [isRoundTrip, setIsRoundTrip] = useState(false);
+  const [filteredAirports, setFilteredAirports] = useState<Airport[]>([]);
+  const [showSuggestions, setShowSuggestions] = useState({
+    ori_airport: false,
+    des_airport: false,
+  });
   const { data: airport_list } = useQuery({
     queryKey: ["airport"],
     queryFn: () => getAirports(),
   });
 
-  useEffect(() => {
-    setSearchForm((prev) => ({
-      ...prev,
-      ori_airport: airport_list !== undefined ? airport_list?.data[0]._id : "",
-      des_airport: airport_list != undefined ? airport_list?.data[0]._id : "",
-    }));
-  }, [airport_list]);
+  const airports: { [key: string]: Airport } = {};
+  if (airport_list) {
+    for (const airport of airport_list.data) {
+      airports[airport._id] = airport;
+    }
+  }
 
   const handleChange =
     (name: keyof searchFormType) =>
     (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
       setSearchForm((prev) => ({ ...prev, [name]: e.target.value }));
+      if (name === "ori_airport" || name === "des_airport") {
+        const filtered = airport_list?.data.filter((airport: Airport) =>
+          airport.city.toLowerCase().includes(e.target.value.toLowerCase())
+        );
+        setFilteredAirports(filtered || airport_list?.data || []);
+        setShowSuggestions((prev) => ({ ...prev, [name]: true }));
+      } else {
+        setShowSuggestions((prev) => ({ ...prev, [name]: false }));
+      }
     };
+
+  const handleSelectSuggestion = (
+    name: keyof searchFormType,
+    airport: string
+  ) => {
+    setSearchForm((prev) => ({ ...prev, [name]: airport }));
+    setShowSuggestions((prev) => ({ ...prev, [name]: false }));
+  };
 
   const handleSubmit = () => {
     navigate("/search", {
-      state: {search_query: searchForm, isReturn: 0},
+      state: { search_query: searchForm, isReturn: 0 },
     });
+  };
+
+  const handleFocus = (name: keyof searchFormType) => {
+    if (!searchForm[name]) {
+      setFilteredAirports(airport_list?.data || []);
+      setShowSuggestions((prev) => ({ ...prev, [name]: true }));
+    }
+  };
+
+  const handleBlur = (name: keyof searchFormType) => {
+    setTimeout(() => {
+      setShowSuggestions((prev) => ({ ...prev, [name]: false }));
+    }, 100);
   };
 
   return (
@@ -93,16 +156,35 @@ export const SearchBarSimple: React.FC = () => {
                     Departure Point
                   </label>
                 </div>
-                <select
+                <input
+                  type="text"
+                  value={airports[searchForm.ori_airport]?.city}
                   onChange={handleChange("ori_airport")}
-                  className="w-full p-3 border rounded-md focus:ring-2 focus:ring-blue-500 h-[50px]"
-                >
-                  {airport_list?.data.map((airport) => (
-                    <option key={airport._id} value={airport._id}>
-                      {airport.name}
-                    </option>
-                  ))}
-                </select>
+                  onFocus={() => handleFocus("ori_airport")}
+                  onBlur={() => handleBlur("ori_airport")}
+                  placeholder="Enter departure point..."
+                  className="w-full p-3 border rounded-md focus:ring-2 focus:ring-blue-500"
+                />
+                {showSuggestions.ori_airport && (
+                  <div
+                    className="absolute z-10 bg-white border rounded-md shadow-lg w-60 max-h-40 overflow-y-auto"
+                    style={{
+                      maxHeight: filteredAirports.length > 1 ? "250px" : "auto",
+                    }}
+                  >
+                    {filteredAirports.map((airport) => (
+                      <SuggestionItem
+                        key={airport._id}
+                        name={airport.name}
+                        city={airport.city}
+                        code={airport.code}
+                        onClick={() =>
+                          handleSelectSuggestion("ori_airport", airport._id)
+                        }
+                      />
+                    ))}
+                  </div>
+                )}
               </div>
 
               {/* Departure Date */}
@@ -115,6 +197,7 @@ export const SearchBarSimple: React.FC = () => {
                 <input
                   type="date"
                   value={searchForm.departure_time}
+                  min={new Date().toISOString().split("T")[0]}
                   onChange={handleChange("departure_time")}
                   className="w-full p-3 border rounded-md focus:ring-2 focus:ring-blue-500 h-[50px]"
                   required
@@ -128,16 +211,35 @@ export const SearchBarSimple: React.FC = () => {
                     Destination Point
                   </label>
                 </div>
-                <select
+                <input
+                  type="text"
+                  value={airports[searchForm.des_airport]?.city}
                   onChange={handleChange("des_airport")}
-                  className="w-full p-3 border rounded-md focus:ring-2 focus:ring-blue-500 h-[50px]"
-                >
-                  {airport_list?.data.map((airport) => (
-                    <option key={airport._id} value={airport._id}>
-                      {airport.name}
-                    </option>
-                  ))}
-                </select>
+                  onFocus={() => handleFocus("des_airport")}
+                  onBlur={() => handleBlur("des_airport")}
+                  placeholder="Enter destination point..."
+                  className="w-full p-3 border rounded-md focus:ring-2 focus:ring-blue-500"
+                />
+                {showSuggestions.des_airport && (
+                  <div
+                    className="absolute z-10 bg-white border rounded-md shadow-lg w-60 max-h-40 overflow-y-auto"
+                    style={{
+                      maxHeight: filteredAirports.length > 1 ? "250px" : "auto",
+                    }}
+                  >
+                    {filteredAirports.map((airport) => (
+                      <SuggestionItem
+                        key={airport._id}
+                        name={airport.name}
+                        city={airport.city}
+                        code={airport.code}
+                        onClick={() =>
+                          handleSelectSuggestion("des_airport", airport._id)
+                        }
+                      />
+                    ))}
+                  </div>
+                )}
               </div>
 
               {/* Return Date */}
@@ -151,6 +253,7 @@ export const SearchBarSimple: React.FC = () => {
                   <input
                     type="date"
                     value={searchForm.return_time}
+                    min={new Date().toISOString().split("T")[0]}
                     onChange={handleChange("return_time")}
                     className="w-full p-3 border rounded-md focus:ring-2 focus:ring-blue-500 h-[50px]"
                     required
