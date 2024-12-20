@@ -5,6 +5,8 @@ import { NavLink } from "react-router-dom";
 import { getLatestBlogs } from "../apis/blogs.api";
 import { useQuery } from "@tanstack/react-query";
 import Loading from "../components/Loading";
+import { BlogCard } from "../types/blogs.type";
+import { Pagination } from "../components/Pagination";
 
 /**
  * The `NewsList` component renders a list of news articles with a search input.
@@ -27,10 +29,52 @@ import Loading from "../components/Loading";
  */
 
 const NewsList: React.FC = () => {
+  const LIMIT_ITEMS = 5;
+  let total_page = 1;
+  const [page, setPage] = React.useState(1);
+  const [newsOnPage, setNewsOnPage] = React.useState<BlogCard[]>([]);
   const { data: blogs_data = { data: [] }, isLoading } = useQuery({
     queryKey: ["blogs"],
     queryFn: getLatestBlogs,
   });
+
+  React.useEffect(() => {
+    if (blogs_data) {
+      setNewsOnPage(blogs_data.data.slice(0, LIMIT_ITEMS));
+    }
+  }, [blogs_data]);
+
+  if (blogs_data) {
+    total_page = Math.ceil(blogs_data.data.length / LIMIT_ITEMS);
+  }
+
+  const handleChangePage = (page: number) => {
+    setPage(page);
+    setNewsOnPage(
+      blogs_data.data.slice((page - 1) * LIMIT_ITEMS, page * LIMIT_ITEMS)
+    );
+  };
+
+  const handleNextPage = () => {
+    if (page < total_page) {
+      setPage(page + 1);
+      setNewsOnPage(
+        blogs_data.data.slice(page * LIMIT_ITEMS, (page + 1) * LIMIT_ITEMS)
+      );
+    }
+  };
+
+  const handlePreviousPage = () => {
+    if (page > 1) {
+      setPage(page - 1);
+      setNewsOnPage(
+        blogs_data.data.slice(
+          (page - 2) * LIMIT_ITEMS,
+          (page - 1) * LIMIT_ITEMS
+        )
+      );
+    }
+  };
 
   return (
     <>
@@ -59,7 +103,7 @@ const NewsList: React.FC = () => {
           </NavLink>
         </div>
         <div className="flex flex-col gap-12 w-full">
-          {blogs_data.data.map((blog) => (
+          {newsOnPage.map((blog) => (
             <News
               _id={blog._id}
               title={blog.title}
@@ -69,6 +113,13 @@ const NewsList: React.FC = () => {
           ))}
         </div>
       </div>
+      <Pagination
+        total_page={total_page}
+        current_page={page}
+        changePage={handleChangePage}
+        nextPage={handleNextPage}
+        prevPage={handlePreviousPage}
+      />
     </>
   );
 };
