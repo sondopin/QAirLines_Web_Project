@@ -199,7 +199,7 @@ const myAircraftController = {
       const year = parseInt(req.params.year, 10);
 
       const monthlyRevenue = Array(12).fill(0);
-      
+
       await Promise.all(
         aircrafts.map(async (aircraft) => {
           const flights = await Flight.find({ aircraft_id: aircraft._id });
@@ -219,80 +219,81 @@ const myAircraftController = {
     }
   },
   getPopular: async (req: Request, res: Response) => {
-      try {
-        const year = parseInt(req.params.year);
-        if (isNaN(year)) {
-           res.status(400).json({ message: 'Invalid year provided' });
-           return;
-        }
+    try {
+      const year = parseInt(req.params.year);
+      if (isNaN(year)) {
+        res.status(400).json({ message: "Invalid year provided" });
+        return;
+      }
 
-        //Find all airports
-        const airports = await Airport.find();
-        const airportMap = new Map(
-            airports.map((airport) => [
-                airport._id.toString(),
-                airport.city,
-            ])
-        );
+      //Find all airports
+      const airports = await Airport.find();
+      const airportMap = new Map(
+        airports.map((airport) => [airport._id.toString(), airport.city])
+      );
 
-        // Fetch aircraft data
-        const aircrafts = await Aircraft.find();
-        const aircraftMap = new Map(
-            aircrafts.map((aircraft) => [
-                aircraft._id.toString(),
-                aircraft.nums_seat,
-            ])
-        );
+      // Fetch aircraft data
+      const aircrafts = await Aircraft.find();
+      const aircraftMap = new Map(
+        aircrafts.map((aircraft) => [
+          aircraft._id.toString(),
+          aircraft.nums_seat,
+        ])
+      );
 
-        //Find all flights in the given year
-        let flights = await Flight.find();
-        flights = flights.filter((flight) => flight.actual_departure.getFullYear() === year);
+      //Find all flights in the given year
+      let flights = await Flight.find();
+      flights = flights.filter(
+        (flight) => flight.actual_departure.getFullYear() === year
+      );
 
-        //
-        const result: [string, number][][] = Array(12).fill(null).map(() => []); // Initialize result for 12 months
+      //
+      const result: [string, number][][] = Array(12)
+        .fill(null)
+        .map(() => []); // Initialize result for 12 months
 
-        // Process each month
-        for (let month = 0; month < 12; month++) {
-          // Filter flights by month
-          const monthlyFlights = flights.filter((flight) => {
-              const flightDate = new Date(flight.actual_departure);
-              console.log(flightDate.getMonth());
-              return flightDate.getMonth() === month; // Match month (0-11)
-          });
+      // Process each month
+      for (let month = 0; month < 12; month++) {
+        // Filter flights by month
+        const monthlyFlights = flights.filter((flight) => {
+          const flightDate = new Date(flight.actual_departure);
+          return flightDate.getMonth() === month; // Match month (0-11)
+        });
 
-          // Map to store destination and booking count
-          const destinationMap = new Map<string, number>();
+        // Map to store destination and booking count
+        const destinationMap = new Map<string, number>();
 
-          // Process each flight in the month
-          monthlyFlights.forEach((flight) => {
-              const nums_seat = aircraftMap.get(flight.aircraft_id.toString()) || 0;
-              const bookedSeats =
-                  nums_seat - (flight.nums_busi_seat_avail + flight.nums_eco_seat_avail);
+        // Process each flight in the month
+        monthlyFlights.forEach((flight) => {
+          const nums_seat = aircraftMap.get(flight.aircraft_id.toString()) || 0;
+          const bookedSeats =
+            nums_seat -
+            (flight.nums_busi_seat_avail + flight.nums_eco_seat_avail);
 
-              // Update booking count for the destination
-              const destination = airportMap.get(flight.des_airport);
-              if (destination) {
-                const currentCount = destinationMap.get(destination) || 0;
-                destinationMap.set(destination, currentCount + bookedSeats);
-              }
-          });
+          // Update booking count for the destination
+          const destination = airportMap.get(flight.des_airport);
+          if (destination) {
+            const currentCount = destinationMap.get(destination) || 0;
+            destinationMap.set(destination, currentCount + bookedSeats);
+          }
+        });
 
-          // Sort and get top 3 destinations
-          const topDestinations = Array.from(destinationMap.entries())
-              .sort((a, b) => b[1] - a[1]) // Sort by booking count (desc)
-              .slice(0, 3); // Take top 3
+        // Sort and get top 3 destinations
+        const topDestinations = Array.from(destinationMap.entries())
+          .sort((a, b) => b[1] - a[1]) // Sort by booking count (desc)
+          .slice(0, 3); // Take top 3
 
-          // Add to result
-          result[month] = topDestinations;
-        } 
+        // Add to result
+        result[month] = topDestinations;
+      }
 
-        // Return result
-        console.log(result);  
-        res.status(200).json(result);
+      // Return result
+      console.log(result);
+      res.status(200).json(result);
     } catch (error) {
-        res.status(500).json({ message: 'Internal server error', error });
+      res.status(500).json({ message: "Internal server error", error });
     }
-  }
+  },
 };
 
 async function updateAircraftSeats(aircraftId: string, seatChange: number) {

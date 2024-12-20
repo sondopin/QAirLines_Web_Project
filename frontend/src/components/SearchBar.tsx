@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { getAirports } from "../apis/flight.api";
 import { useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
@@ -65,14 +65,6 @@ export const SearchBar: React.FC = () => {
     queryFn: () => getAirports(),
   });
 
-  // useEffect(() => {
-  //   setSearchForm((prev) => ({
-  //     ...prev,
-  //     ori_airport: airport_list !== undefined ? airport_list?.data[0]._id : "",
-  //     des_airport: airport_list != undefined ? airport_list?.data[0]._id : "",
-  //   }));
-  // }, [airport_list]);
-
   const airports: { [key: string]: Airport } = {};
   if (airport_list) {
     for (const airport of airport_list.data) {
@@ -119,7 +111,7 @@ export const SearchBar: React.FC = () => {
   const handleBlur = (name: keyof searchFormType) => {
     setTimeout(() => {
       setShowSuggestions((prev) => ({ ...prev, [name]: false }));
-    }, 100);
+    }, 200);
   };
   return (
     <div className="container mx-auto scale-[0.9] origin-top-left">
@@ -246,6 +238,7 @@ export const SearchBar: React.FC = () => {
                   </div>
                   <input
                     type="date"
+                    min={new Date().toISOString().split("T")[0]}
                     value={searchForm.departure_time}
                     onChange={handleChange("departure_time")}
                     className="w-full p-3 border rounded-md focus:ring-2 focus:ring-blue-500"
@@ -315,6 +308,7 @@ export const SearchBar: React.FC = () => {
                     <input
                       type="date"
                       value={searchForm.return_time}
+                      min={new Date().toISOString().split("T")[0]}
                       onChange={handleChange("return_time")}
                       className="w-full p-3 border rounded-md focus:ring-2 focus:ring-blue-500"
                       required

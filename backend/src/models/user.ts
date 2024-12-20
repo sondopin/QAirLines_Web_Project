@@ -13,7 +13,7 @@ const userSchema = new mongoose.Schema<UserType>({
   passport: { type: String },
   date_of_birth: { type: Date },
   role: { type: String, enum: ["Customer", "Admin"], default: "Customer" },
-  nums_booking_changed: { type: Number, default: 0, immutable: true },
+  nums_booking_changed: { type: Number, default: 0 },
 });
 
 // Hash the password before saving the user model
