@@ -31,14 +31,14 @@ const SearchResultCard = ({
   onClick,
 }: SearchResultCardProps) => {
   return (
-    <div className="flex flex-row items-center items-stretch rounded-[14px] shadow-md max-w-full transition-transform duration-300 hover:scale-105">
+    <div className="flex flex-col md:flex-row scale-[0.85] md:scale-[1.0] items-center items-stretch rounded-[14px] shadow-md max-w-full">
       <div className="flex flex-row bg-[#223A60] items-center justify-center px-[20px] border-r-[3px] border-dashed border-[#223A60] rounded-[14px]">
-        <img src="QAirline_Logo_White_Verticle.png" alt="" className="" />
+        <img src="QAirline_Logo_White_Verticle.png" alt="" className="rotate-90 md:rotate-0" />
       </div>
 
-      <div className="flex flex-row items-center gap-6 bg-[#DFEEFE] items-stretch w-full rounded-[20px] border-r-[10px] border-l-[10px] border-t-[3px] border-b-[3px] border-[#223A60] px-[20px]">
+      <div className="flex flex-col md:flex-row items-center gap-6 bg-[#DFEEFE] items-stretch w-full rounded-[14px] border-r-[10px] border-l-[10px] border-t-[3px] border-b-[3px] border-[#223A60] px-[20px]">
         {/* General Information */}
-        <div className="flex flex-row w-full items-center text-center min-w-[320px] max-md:max-w-full">
+        <div className="flex flex-col md:flex-row w-full items-center text-center min-w-[320px] max-md:max-w-full">
           {/* Departure Info */}
           <div className="flex flex-col flex-1">
             <div className="text-lg font-medium">
@@ -68,7 +68,7 @@ const SearchResultCard = ({
         </div>
 
         {/* Separator */}
-        <div className="w-[2px] h-auto bg-gray-300"></div>
+        <div className="w-[2px] h-auto bg-gray-300 hidden md:block"></div>
 
         {/* Flight Details */}
         <div className="flex w-full flex-col gap-4 p-4 justify-center">
@@ -107,7 +107,7 @@ const SearchResultCard = ({
 
         {/* Price Section */}
 
-        <div className="flex w-full flex-row gap-[50px] items-stretch items-center">
+        <div className="flex flex-col md:flex-row w-full gap-[50px] items-stretch items-center">
           {/* Phần giá */}
           <div className="bg-yellow-50 p-4 text-center min-w-[320px] transform -skew-x-12 flex flex-col justify-center">
             <div className="text-sm font-medium">Price from only</div>

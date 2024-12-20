@@ -55,11 +55,12 @@ const ConfirmBooking: React.FC<ConfirmBookingProps> = ({
   }
 
   return (
-    <div className="flex flex-col gap-[17px] bg-[#D8EBFE] rounded-[30px] border-t-[10px] border-b-[10px] border-[#223A60] shadow-lg w-max self-center px-[42px] py-[27px] scale-[0.85]">
+    <div className="flex flex-col gap-[17px] bg-[#D8EBFE] rounded-[30px] border-t-[10px] border-b-[10px] border-[#223A60] shadow-lg w-full max-w-[800px] self-center px-[42px] py-[27px] scale-[0.85] md:scale-100">
       <h1 className="font-bold text-[#223A60] text-[40px] self-center">
         Your Ticket
       </h1>
-      <div className="flex flex-row gap-[100px]">
+
+      <div className="flex flex-col md:flex-row gap-[20px] md:gap-[100px]">
         <div className="flex flex-col gap-[10px]">
           <h1 className="text-4xl">Departure Flight</h1>
           <div className="flex flex-row gap-[10px] w-full text-[20px] text-[#223A60] justify-start">
@@ -139,16 +140,16 @@ const ConfirmBooking: React.FC<ConfirmBookingProps> = ({
           )}
         </div>
       </div>
-      <div className="flex flex-row gap-[150px] w-full justify-center">
+      <div className="flex flex-row gap-[20px] md:gap-[150px] w-full justify-center">
         <button
           onClick={() => onClose()}
-          className="shadow-lg bg-[#FFFFFF] text-[20px] font-bold rounded-[8px] text-[#223A60] px-[60px] py-[5px] transform transition-transform duration-200 hover:scale-[1.05]"
+          className="shadow-lg bg-[#FFFFFF] text-[20px] font-bold rounded-[8px] text-[#223A60] px-[20px] md:px-[60px] py-[5px] transform transition-transform duration-200 hover:scale-[1.05]"
         >
           Back
         </button>
         <button
           onClick={() => onConfirm()}
-          className="shadow-lg bg-[#223A60] text-[20px] font-bold rounded-[8px] text-[#FFFFFF] px-[60px] py-[5px] transform transition-transform duration-200 hover:scale-[1.05]"
+          className="shadow-lg bg-[#223A60] text-[20px] font-bold rounded-[8px] text-[#FFFFFF] px-[20px] md:px-[60px] py-[5px] transform transition-transform duration-200 hover:scale-[1.05]"
         >
           Book
         </button>

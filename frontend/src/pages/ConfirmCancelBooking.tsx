@@ -87,8 +87,8 @@ const ConfirmCancelBooking: React.FC = () => {
         </button>
       </div>
       {isModalOpen && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white p-8 rounded-lg">
+        <div className="fixed inset-0 flex items-center justify-center bg-[#000000] bg-opacity-70 backdrop-blur-[3px]">
+          <div className="bg-white rounded-[20px]">
             <FinalConfirmCancel close={handleClose} confirm={handleConfirm} />
           </div>
         </div>

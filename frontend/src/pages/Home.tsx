@@ -39,7 +39,7 @@ const Home = () => {
       <Hero nums_booking_changed={user?.nums_booking_changed || 0}>
         <SearchBar />
       </Hero>
-      <div className="sticky top-[-20px] z-50">
+      <div className="relative top-[-20px] z-50 md:sticky">
         <SearchBarSimple />
       </div>
       <div className="flex flex-col mx-auto items-center justify-center">
@@ -48,7 +48,15 @@ const Home = () => {
       </div>
       <div id="why-choose-us"></div>
       <WhyChooseUs />
-      <div id="popular-flights" className="flex flex-row items-center p-5">
+
+      <div className="text-center text-[#223A60] text-[52px] font-bold my-[50px]">
+        Popular Locations
+      </div>
+
+      <div
+        id="popular-flights"
+        className="flex flex-col md:flex-row items-center gap-[50px] px-[50px] mb-[100px]"
+      >
         {popularPlaces.data.map((place: PopularPlace) => (
           <PopularLocationCard
             key={place.city}

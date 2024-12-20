@@ -25,7 +25,7 @@ const Ticket: React.FC<TicketProps> = ({
   console.log(clear);
 
   return (
-    <div className="flex flex-col bg-blue-100 rounded-[20px] shadow-md max-w-7xl mx-auto border-t-[10px] border-l-[10px] border-[#223A60]">
+    <div className="flex flex-col bg-blue-100 w-full rounded-[20px] shadow-md max-w-7xl mx-auto border-t-[10px] border-l-[10px] border-[#223A60]">
       {/* Header */}
       <div className="flex items-center text-white font-semibold text-lg rounded-t-lg">
         <div className="bg-[#223A60] text-center px-4 py-2 rounded-br-[20px]">
