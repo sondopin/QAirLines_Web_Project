@@ -57,7 +57,7 @@ const LoginPage: React.FC = () => {
   });
 
   return (
-    <main className="bg-white flex min-w-[320px] items-start overflow-hidden justify-start flex-wrap mx-24 md:p-[100px_20px] scale-[0.85]">
+    <main className="bg-white flex min-w-[320px] items-start overflow-hidden justify-start flex-wrap mx-24 md:p-[100px_20px] scale-[0.8]">
       <div className="rounded-[14px] shadow-lg flex min-w-[240px] w-full justify-center flex-wrap flex-1 basis-0 items-stretch md:max-w-full">
         <section className="rounded-[14px_0_0_14px] bg-[rgba(97,168,250,0.2)] flex min-w-[400px] min-h-[814px] flex-col overflow-hidden tracking-[0.96px] justify-between flex-1 basis-0 text-[16px] md:max-w-full md:p-[0_20px]">
           <img
@@ -95,14 +95,6 @@ const LoginPage: React.FC = () => {
               register={register}
               error={errors.password?.message}
             />
-            <div className="flex items-center gap-2.5 overflow-hidden text-[#223a60] font-medium leading-[40px] justify-start px-2.5 mt-[40px] sm:mt-[40px]">
-              <img
-                loading="lazy"
-                src="./tickbox_icon.png"
-                alt="Remember me icon"
-              />
-              <span>Remember me</span>
-            </div>
             <button className="w-1/3 mx-auto rounded-[14px] bg-[#223a60] shadow-lg mt-[30px] min-h-[44px] gap-[10px] text-white font-medium text-center leading-[40px] px-5 lg:whitespace-nowrap lg:mt-[50px]">
               Login
             </button>

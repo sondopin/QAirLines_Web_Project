@@ -50,73 +50,89 @@ const ConfirmBooking: React.FC<ConfirmBookingProps> = ({
   }
 
   return (
-    <div className="flex flex-col gap-[17px] bg-[#D8EBFE] rounded-[14px] shadow-lg w-[730px] self-center px-[42px] py-[27px] scale-[0.85]">
+    <div className="flex flex-col gap-[17px] bg-[#D8EBFE] rounded-[30px] border-t-[10px] border-b-[10px] border-[#223A60] shadow-lg w-max self-center px-[42px] py-[27px] scale-[0.85]">
       <h1 className="font-bold text-[#223A60] text-[40px] self-center">
         Your Ticket
       </h1>
-      <h1 className="text-4xl">Departure Flight</h1>
-      <div className="flex flex-row gap-[10px] w-full text-[20px] text-[#223A60] justify-start">
-        <div className="font-bold">Departure Place:</div>
-        <div className="opacity-[60%]">{depart_departure}</div>
-      </div>
-      <div className="flex flex-row gap-[10px] w-full text-[20px] text-[#223A60] justify-start">
-        <div className="font-bold">Departure Date:</div>
-        <div className="opacity-[60%]">
-          {depart_depature_time + " " + depart_departure_date}
-        </div>
-      </div>
-      <div className="flex flex-row gap-[10px] w-full text-[20px] text-[#223A60] justify-start">
-        <div className="font-bold">Destination:</div>
-        <div className="opacity-[60%]">{depart_destination}</div>
-      </div>
-      <div className="flex flex-row gap-[10px] w-full text-[20px] text-[#223A60] justify-start">
-        <div className="font-bold">Arrival Date:</div>
-        <div className="opacity-[60%]">{depart_arrival_time + " " + depart_arrival_date}</div>
-      </div>
-      <div className="flex flex-row gap-[10px] w-full text-[20px] text-[#223A60] justify-start">
-        <div className="font-bold">Plane Number:</div>
-        <div className="opacity-[60%]">{flight_depart_info.number}</div>
-      </div>
-
-      {flight_return_info  ? (
-        <>
-          <h1 className="text-4xl">Return Flight</h1>
+      <div className="flex flex-row gap-[100px]">
+        <div className="flex flex-col gap-[10px]">
+          <h1 className="text-4xl">Departure Flight</h1>
           <div className="flex flex-row gap-[10px] w-full text-[20px] text-[#223A60] justify-start">
             <div className="font-bold">Departure Place:</div>
-            <div className="opacity-[60%]">{return_departure}</div>
+            <div className="opacity-[60%]">{depart_departure}</div>
           </div>
           <div className="flex flex-row gap-[10px] w-full text-[20px] text-[#223A60] justify-start">
             <div className="font-bold">Departure Date:</div>
             <div className="opacity-[60%]">
-              {return_depature_time + " " + return_departure_date}
+              {depart_depature_time + " " + depart_departure_date}
             </div>
           </div>
           <div className="flex flex-row gap-[10px] w-full text-[20px] text-[#223A60] justify-start">
             <div className="font-bold">Destination:</div>
-            <div className="opacity-[60%]">{return_destination}</div>
+            <div className="opacity-[60%]">{depart_destination}</div>
           </div>
           <div className="flex flex-row gap-[10px] w-full text-[20px] text-[#223A60] justify-start">
             <div className="font-bold">Arrival Date:</div>
-            <div className="opacity-[60%]">{return_arrival_time + " " + return_arrival_date}</div>
+            <div className="opacity-[60%]">
+              {depart_arrival_time + " " + depart_arrival_date}
+            </div>
           </div>
           <div className="flex flex-row gap-[10px] w-full text-[20px] text-[#223A60] justify-start">
             <div className="font-bold">Plane Number:</div>
-            <div className="opacity-[60%]">{flight_return_info.number}</div>
+            <div className="opacity-[60%]">{flight_depart_info.number}</div>
           </div>
-        </>
-      ) : null}
+        </div>
 
+        <div className="flex flex-col gap-[10px]">
+          {flight_return_info ? (
+            <>
+              <h1 className="text-4xl">Return Flight</h1>
+              <div className="flex flex-row gap-[10px] w-full text-[20px] text-[#223A60] justify-start">
+                <div className="font-bold">Departure Place:</div>
+                <div className="opacity-[60%]">{return_departure}</div>
+              </div>
+              <div className="flex flex-row gap-[10px] w-full text-[20px] text-[#223A60] justify-start">
+                <div className="font-bold">Departure Date:</div>
+                <div className="opacity-[60%]">
+                  {return_depature_time + " " + return_departure_date}
+                </div>
+              </div>
+              <div className="flex flex-row gap-[10px] w-full text-[20px] text-[#223A60] justify-start">
+                <div className="font-bold">Destination:</div>
+                <div className="opacity-[60%]">{return_destination}</div>
+              </div>
+              <div className="flex flex-row gap-[10px] w-full text-[20px] text-[#223A60] justify-start">
+                <div className="font-bold">Arrival Date:</div>
+                <div className="opacity-[60%]">
+                  {return_arrival_time + " " + return_arrival_date}
+                </div>
+              </div>
+              <div className="flex flex-row gap-[10px] w-full text-[20px] text-[#223A60] justify-start">
+                <div className="font-bold">Plane Number:</div>
+                <div className="opacity-[60%]">{flight_return_info.number}</div>
+              </div>
+            </>
+          ) : null}
+        </div>
+      </div>
 
-      <div className="flex flex-row gap-[10px] w-full text-[20px] text-[#223A60] justify-start">
+      <div className="flex flex-row gap-[10px] w-full text-[20px] text-[#223A60] justify-start mt-[20px] justify-center">
         <div className="font-bold">Number of Tickets:</div>
         <div className="opacity-[60%]">
           {numberOfTickets[0]} Business Tickets, {numberOfTickets[1]} Economy
           Tickets
         </div>
       </div>
-      <div className="flex flex-row gap-[10px] w-full text-[20px] justify-start font-bold">
+
+      <div className="flex flex-row gap-[10px] w-full text-[20px] justify-start font-bold justify-center mb-[20px]">
         <div className="text-[#223A60]">Total Price:</div>
-        <div className="text-[#FF0000]">{formatCurrency(flight_depart_info.base_price + (flight_return_info ? flight_return_info.base_price : 0) * (numberOfTickets[0] * 1.5 + numberOfTickets[1]))}</div>
+        <div className="text-[#FF0000]">
+          {formatCurrency(
+            flight_depart_info.base_price +
+              (flight_return_info ? flight_return_info.base_price : 0) *
+                (numberOfTickets[0] * 1.5 + numberOfTickets[1])
+          )}
+        </div>
       </div>
       <div className="flex flex-row gap-[150px] w-full justify-center">
         <button

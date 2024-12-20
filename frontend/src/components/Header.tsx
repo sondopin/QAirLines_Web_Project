@@ -114,10 +114,16 @@ const Header = () => {
             </Dropdown>
           ) : (
             <Fragment>
-              <NavLink to="/login" className="flex items-center text-2xl">
+              <NavLink
+                to="/login"
+                className="text-[18px] font-bold text-white my-auto transition-transform duration-200 ease-in-out hover:scale-[1.2]"
+              >
                 Login
               </NavLink>
-              <NavLink to="/register" className="flex items-center text-2xl">
+              <NavLink
+                to="/register"
+                className="text-[18px] font-bold text-white my-auto transition-transform duration-200 ease-in-out hover:scale-[1.2]"
+              >
                 Register
               </NavLink>
             </Fragment>
