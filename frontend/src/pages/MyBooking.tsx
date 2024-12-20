@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Booking from "../components/Booking";
 import { useQuery } from "@tanstack/react-query";
-import { getMyBookings } from "../apis/user.api";
+import { clearNotificationBooking, getMyBookings } from "../apis/user.api";
 import { useGetAirports } from "../hooks/useGetAirports";
 import Loading from "../components/Loading";
 
@@ -25,6 +25,14 @@ interface MyBookingProps {
 const MyBooking: React.FC<MyBookingProps> = () => {
   const airports = useGetAirports();
   const booking_list = [];
+
+  useEffect(() => {
+    const clearNotification = async () => {
+      await clearNotificationBooking();
+    };
+    clearNotification();
+  }, []);
+
   const { data: bookings, isLoading } = useQuery({
     queryKey: ["booking"],
     queryFn: () => getMyBookings(),

@@ -7,11 +7,22 @@ import SearchBarSimple from "../components/SearchBarSimple";
 import WhyChooseUs from "../components/WhyChooseUs";
 import PopularLocationCard from "../components/PopularLocationCard";
 import { PopularPlace } from "../types/flight.type";
+import { fetchCurrentUser } from "../apis/user.api";
+import { useContext } from "react";
+import { AppContext } from "../context/app.context";
 
 const Home = () => {
   const { data: popularPlaces = { data: [] } } = useQuery({
     queryKey: ["popularPlaces"],
     queryFn: () => getPopularPlaces(),
+  });
+
+  const { isAuthenticated } = useContext(AppContext);
+  const { data: user } = useQuery({
+    queryKey: ["nums_book_changed", isAuthenticated],
+    queryFn: () => fetchCurrentUser(),
+    enabled: isAuthenticated,
+    staleTime: 1000 * 30,
   });
 
   return (
@@ -25,7 +36,7 @@ const Home = () => {
           className="w-full h-full object-cover"
         ></video>
       </div>
-      <Hero>
+      <Hero nums_booking_changed={user?.nums_booking_changed || 0}>
         <SearchBar />
       </Hero>
       <div className="sticky top-[-20px] z-50">

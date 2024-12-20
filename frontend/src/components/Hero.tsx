@@ -1,17 +1,21 @@
 import { ReactNode } from "react";
 import { Link } from "react-router-dom";
+import { PATH } from "../constants/path";
 
 interface HeroProps {
   children: ReactNode;
+  nums_booking_changed: number;
 }
 
-const Hero = ({ children }: HeroProps) => {
+const Hero = ({ children, nums_booking_changed }: HeroProps) => {
   const scrollTo = (id: string) => {
     const newsElement = document.getElementById(id);
     if (newsElement) {
       newsElement.scrollIntoView({ behavior: "smooth" });
     }
   };
+
+  console.log(nums_booking_changed);
 
   return (
     <section className="flex flex-col items-center justify-center overflow-hidden relative px-6 py-20 w-full bg-slate-10 min-h-[400px] max-md:px-5 max-md:text-center">
@@ -67,7 +71,7 @@ const Hero = ({ children }: HeroProps) => {
             </button>
 
             <Link
-              to="/mybooking"
+              to={PATH.user.mybooking}
               className="flex flex-row border-t-[5px] border-[#223A60] w-max pr-[30px] bg-[#EAF0F0] bg-opacity-[80%] rounded-full  gap-[10px] items-center justify-center transition-transform duration-200 ease-in-out hover:scale-[1.1]"
             >
               <img
@@ -76,7 +80,8 @@ const Hero = ({ children }: HeroProps) => {
                 className="w-[50px] h-[50px] rounded-full shadow-lg opacity-[70%] hover:opacity-100"
               />
               <div className="text-[#223A60] text-[16px] font-bold">
-                Check your bookings
+                Check your bookings{" "}
+                {nums_booking_changed > 0 && `(${nums_booking_changed} new)`}
               </div>
             </Link>
 
