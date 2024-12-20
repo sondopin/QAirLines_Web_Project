@@ -33,17 +33,22 @@ const ConfirmBooking: React.FC<ConfirmBookingProps> = ({
 }) => {
   const depart_departure_date = formatDate(flight_depart_info.actual_departure);
   const depart_depature_time = formatTime(flight_depart_info.actual_departure);
-  const depart_arrival_date =  formatDate(flight_depart_info.actual_arrival);
+  const depart_arrival_date = formatDate(flight_depart_info.actual_arrival);
   const depart_arrival_time = formatTime(flight_depart_info.actual_arrival);
   const depart_departure = flight_depart_info.ori_city;
   const depart_destination = flight_depart_info.des_city;
 
-  let return_departure_date, return_depature_time, return_arrival_date, return_arrival_time, return_departure, return_destination;
+  let return_departure_date,
+    return_depature_time,
+    return_arrival_date,
+    return_arrival_time,
+    return_departure,
+    return_destination;
 
   if (flight_return_info) {
     return_departure_date = formatDate(flight_return_info.actual_departure);
     return_depature_time = formatTime(flight_return_info.actual_departure);
-    return_arrival_date =  formatDate(flight_return_info.actual_arrival);
+    return_arrival_date = formatDate(flight_return_info.actual_arrival);
     return_arrival_time = formatTime(flight_return_info.actual_arrival);
     return_departure = flight_return_info.ori_city;
     return_destination = flight_return_info.des_city;
@@ -71,14 +76,16 @@ const ConfirmBooking: React.FC<ConfirmBookingProps> = ({
       </div>
       <div className="flex flex-row gap-[10px] w-full text-[20px] text-[#223A60] justify-start">
         <div className="font-bold">Arrival Date:</div>
-        <div className="opacity-[60%]">{depart_arrival_time + " " + depart_arrival_date}</div>
+        <div className="opacity-[60%]">
+          {depart_arrival_time + " " + depart_arrival_date}
+        </div>
       </div>
       <div className="flex flex-row gap-[10px] w-full text-[20px] text-[#223A60] justify-start">
         <div className="font-bold">Plane Number:</div>
         <div className="opacity-[60%]">{flight_depart_info.number}</div>
       </div>
 
-      {flight_return_info  ? (
+      {flight_return_info ? (
         <>
           <h1 className="text-4xl">Return Flight</h1>
           <div className="flex flex-row gap-[10px] w-full text-[20px] text-[#223A60] justify-start">
@@ -97,7 +104,9 @@ const ConfirmBooking: React.FC<ConfirmBookingProps> = ({
           </div>
           <div className="flex flex-row gap-[10px] w-full text-[20px] text-[#223A60] justify-start">
             <div className="font-bold">Arrival Date:</div>
-            <div className="opacity-[60%]">{return_arrival_time + " " + return_arrival_date}</div>
+            <div className="opacity-[60%]">
+              {return_arrival_time + " " + return_arrival_date}
+            </div>
           </div>
           <div className="flex flex-row gap-[10px] w-full text-[20px] text-[#223A60] justify-start">
             <div className="font-bold">Plane Number:</div>
@@ -105,7 +114,6 @@ const ConfirmBooking: React.FC<ConfirmBookingProps> = ({
           </div>
         </>
       ) : null}
-
 
       <div className="flex flex-row gap-[10px] w-full text-[20px] text-[#223A60] justify-start">
         <div className="font-bold">Number of Tickets:</div>
@@ -116,7 +124,13 @@ const ConfirmBooking: React.FC<ConfirmBookingProps> = ({
       </div>
       <div className="flex flex-row gap-[10px] w-full text-[20px] justify-start font-bold">
         <div className="text-[#223A60]">Total Price:</div>
-        <div className="text-[#FF0000]">{formatCurrency(flight_depart_info.base_price + (flight_return_info ? flight_return_info.base_price : 0) * (numberOfTickets[0] * 1.5 + numberOfTickets[1]))}</div>
+        <div className="text-[#FF0000]">
+          {formatCurrency(
+            (flight_depart_info.base_price +
+              (flight_return_info ? flight_return_info.base_price : 0)) *
+              (numberOfTickets[0] * 1.5 + numberOfTickets[1])
+          )}
+        </div>
       </div>
       <div className="flex flex-row gap-[150px] w-full justify-center">
         <button

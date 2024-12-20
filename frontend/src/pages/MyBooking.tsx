@@ -4,6 +4,8 @@ import { useQuery } from "@tanstack/react-query";
 import { clearNotificationBooking, getMyBookings } from "../apis/user.api";
 import { useGetAirports } from "../hooks/useGetAirports";
 import Loading from "../components/Loading";
+import { Bookings } from "../types/flight.type";
+import { Pagination } from "../components/Pagination";
 
 interface MyBookingProps {
   something?: string;
@@ -24,8 +26,11 @@ interface MyBookingProps {
 
 const MyBooking: React.FC<MyBookingProps> = () => {
   const airports = useGetAirports();
-  const booking_list = [];
-
+  const booking_list: Bookings = [];
+  const LIMIT_ITEMS = 5;
+  let total_page = 1;
+  const [page, setPage] = React.useState(1);
+  const [bookingOnPage, setBookingOnPage] = React.useState<Bookings>([]);
   useEffect(() => {
     const clearNotification = async () => {
       await clearNotificationBooking();
@@ -39,6 +44,7 @@ const MyBooking: React.FC<MyBookingProps> = () => {
   });
 
   if (bookings) {
+    total_page = Math.ceil(bookings.data.length / LIMIT_ITEMS);
     for (let i = 0; i < bookings.data.length; i++) {
       const booking = bookings.data[i].booking;
       const flight = bookings.data[i].flight;
@@ -68,16 +74,55 @@ const MyBooking: React.FC<MyBookingProps> = () => {
       });
     }
   }
+
+  useEffect(() => {
+    if (booking_list) {
+      setBookingOnPage(booking_list.slice(0, LIMIT_ITEMS));
+    }
+  }, [bookings]);
+
+  const handleChangePage = (page: number) => {
+    setPage(page);
+    setBookingOnPage(
+      booking_list.slice((page - 1) * LIMIT_ITEMS, page * LIMIT_ITEMS)
+    );
+  };
+
+  const handleNextPage = () => {
+    if (page < total_page) {
+      setPage(page + 1);
+      setBookingOnPage(
+        booking_list.slice(page * LIMIT_ITEMS, (page + 1) * LIMIT_ITEMS)
+      );
+    }
+  };
+
+  const handlePreviousPage = () => {
+    if (page > 1) {
+      setPage(page - 1);
+      setBookingOnPage(
+        booking_list.slice((page - 2) * LIMIT_ITEMS, (page - 1) * LIMIT_ITEMS)
+      );
+    }
+  };
+
   return (
     <>
       {isLoading ? <Loading /> : null}
       <div className="bg-[#F6FBFF]">
         <div className="flex flex-col gap-[30px] w-full px-[20px] py-[30px]">
-          {booking_list.map((booking, index) => (
+          {bookingOnPage.map((booking, index) => (
             <Booking key={index} {...booking} />
           ))}
         </div>
       </div>
+      <Pagination
+        total_page={total_page}
+        current_page={page}
+        changePage={handleChangePage}
+        nextPage={handleNextPage}
+        prevPage={handlePreviousPage}
+      />
     </>
   );
 };

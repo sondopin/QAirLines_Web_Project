@@ -2,25 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { formatDate, formatDateTime, formatTime } from "../utils/utils";
 import AdjustedFlightNotification from "./AdjustedFlightNotification";
-
-interface BookingProps {
-  bookingId: string;
-  flightId: string;
-  bookingDate: string;
-  status: string;
-  departureCityCode: string;
-  destinationCityCode: string;
-  departureCityName: string;
-  destinationCityName: string;
-  departureTime: string;
-  departureTimeOld: string;
-  arrivalTime?: string;
-  arrivalTimeOld?: string;
-  businessTickets: number;
-  economyTickets: number;
-  totalPrice: number;
-  cancelAvailableUntil: string;
-}
+import { BookingProps } from "../types/flight.type";
 
 /**
  * Booking component displays the details of a booking including the booking date, status,
