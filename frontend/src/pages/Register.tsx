@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import InputField from "../components/InputFeild";
 import { registerSchema, Schema } from "../utils/rule";
 import { useForm } from "react-hook-form";
@@ -7,7 +7,9 @@ import { useMutation } from "@tanstack/react-query";
 import { registerAccount } from "../apis/auth.api";
 import { isAxiosUnprocessableEntity } from "../utils/utils";
 import { ErrorResponse } from "../types/utils.type";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { AppContext } from "../context/app.context";
+import { getRoleFromLocalStorage } from "../utils/auth";
 
 type RegisterForm = Schema;
 
@@ -21,6 +23,9 @@ const RegisterPage: React.FC = () => {
     resolver: yupResolver(registerSchema),
   });
 
+  const navigate = useNavigate();
+  const { setIsAuthenticated, setIsAdmin } = useContext(AppContext);
+
   const registerMutation = useMutation({
     mutationFn: (body: { email: string; password: string }) =>
       registerAccount(body),
@@ -29,7 +34,11 @@ const RegisterPage: React.FC = () => {
   const onSubmit = handleSubmit((data) => {
     registerMutation.mutate(data, {
       onSuccess: () => {
-        console.log("Success Register");
+        console.log("Success Login");
+        setIsAuthenticated(true);
+        const role = getRoleFromLocalStorage();
+        setIsAdmin(role === "Admin");
+        navigate("/");
       },
       onError: (error) => {
         if (isAxiosUnprocessableEntity<ErrorResponse<RegisterForm>>(error)) {

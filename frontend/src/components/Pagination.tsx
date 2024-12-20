@@ -17,10 +17,10 @@ export const Pagination: React.FC<PaginationProps> = ({
   prevPage,
 }) => {
   return (
-    <div className="flex justify-center items-center gap-2">
+    <div className="flex justify-center items-center gap-2 my-5">
       <button
         onClick={prevPage}
-        className="bg-gray-200 text-gray-600 px-4 py-2 rounded-lg"
+        className="bg-gray-200 text-gray-800 px-4 py-2 rounded-lg hover:bg-[#D8EBFE]"
       >
         Previous
       </button>
@@ -34,10 +34,10 @@ export const Pagination: React.FC<PaginationProps> = ({
               <button
                 onClick={() => changePage(pageNumber)}
                 className={classNames(
-                  "border border-gray-300   py-2 px-3 leading-tight  hover:bg-gray-100 hover:text-gray-700 ",
+                  "py-2 px-4 leading-tight  hover:bg-[#D8EBFE] hover:text-gray-700 rounded-lg",
                   {
-                    "bg-gray-400 text-gray-700": isActive,
-                    "bg-white text-gray-500": !isActive,
+                    "bg-[#D8EBFE] text-gray-700": isActive,
+                    "bg-gray-200 text-gray-800": !isActive,
                   }
                 )}
               >
@@ -48,7 +48,7 @@ export const Pagination: React.FC<PaginationProps> = ({
         })}
       <button
         onClick={nextPage}
-        className="bg-gray-200 text-gray-600 px-4 py-2 rounded-lg"
+        className="bg-gray-200 text-gray-800 px-4 py-2 rounded-lg hover:bg-[#D8EBFE]"
       >
         Next
       </button>

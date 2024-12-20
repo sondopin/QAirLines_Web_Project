@@ -79,16 +79,7 @@ const NewsList: React.FC = () => {
   return (
     <>
       {isLoading ? <Loading /> : null}
-      <div className="flex flex-col gap-12 p-4 md:p-8 lg:p-12">
-        <div className="fixed inset-0 -z-10 h-screen">
-          <video
-            src="./cloud_animation_1.mp4"
-            loop
-            autoPlay
-            muted
-            className="w-full h-full object-cover"
-          ></video>
-        </div>
+      <div className="flex flex-col gap-12 p-4 md:p-8 lg:p-12 bg-slate-100">
         <div className="flex justify-center space-x-4">
           <input
             type="text"

@@ -1,6 +1,11 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { formatDate, formatDateTime, formatTime } from "../utils/utils";
+import {
+  formatCurrency,
+  formatDate,
+  formatDateTime,
+  formatTime,
+} from "../utils/utils";
 import AdjustedFlightNotification from "./AdjustedFlightNotification";
 import { BookingProps } from "../types/flight.type";
 
@@ -59,13 +64,6 @@ const Booking: React.FC<BookingProps> = ({
     nums_eco_book: economyTickets,
     total_price: totalPrice,
   };
-  if (
-    status !== "Completed" &&
-    status !== "Cancelled" &&
-    (departureTime !== departureTimeOld || arrivalTime !== arrivalTimeOld)
-  ) {
-    status = "Delayed";
-  }
   const departureDate = formatDate(departureTime);
   departureTime = formatTime(departureTime);
   const arrivalDate = arrivalTime ? formatDate(arrivalTime) : undefined;
@@ -75,6 +73,14 @@ const Booking: React.FC<BookingProps> = ({
   bookingDate = formatDate(bookingDate);
 
   const navigate = useNavigate();
+
+  if (status === "Confirmed") {
+    if (new Date(departureTime).getTime() < new Date().getTime()) {
+      status = "Completed";
+    } else {
+      status = "Up Coming";
+    }
+  }
 
   return (
     <div>
@@ -168,7 +174,7 @@ const Booking: React.FC<BookingProps> = ({
                 Total Price:
               </div>
               <div className="text-[32px] font-bold text-[#FF0000]">
-                {totalPrice} VND
+                {formatCurrency(totalPrice)}
               </div>
             </div>
             <div

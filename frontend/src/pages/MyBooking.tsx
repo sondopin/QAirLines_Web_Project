@@ -1,11 +1,10 @@
-import React, { useState } from "react";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Booking from "../components/Booking";
 import { useQuery } from "@tanstack/react-query";
 import { clearNotificationBooking, getMyBookings } from "../apis/user.api";
 import { useGetAirports } from "../hooks/useGetAirports";
 import Loading from "../components/Loading";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Bookings } from "../types/flight.type";
 import { Pagination } from "../components/Pagination";
 
@@ -59,12 +58,7 @@ const MyBooking: React.FC<MyBookingProps> = () => {
         bookingId: booking._id,
         flightId: flight._id,
         bookingDate: booking.booking_date,
-        status:
-          booking.status === "Cancelled"
-            ? "Cancelled"
-            : flight.actual_departure > new Date().toISOString()
-            ? "Up Coming"
-            : "Completed",
+        status: booking.status,
         departureCityCode: airports[flight.ori_airport].code,
         destinationCityCode: airports[flight.des_airport].code,
         departureCityName: airports[flight.ori_airport].city,
