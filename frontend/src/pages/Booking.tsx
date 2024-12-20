@@ -203,18 +203,28 @@ const Booking = () => {
 
   return (
     <div>
-      <h1 className="text-3xl font-bold text-center mt-7 mb-3">
-        Departure Flight
-      </h1>
+      <div className="flex flex-row gap-[30px] items-center ml-[50px] mb-[10px] mt-[20px] bg-gradient-to-r from-blue-400 to-blue-10 w-max pr-[200px] transition-transform duration-500 ease-out transform hover:translate-x-10">
+        <div className="text-[32px] font-medium">Departure flight</div>
+        <img
+          src="./airplane_icon_dark_blue.png"
+          alt=""
+          className="scale-[1.2]"
+        />
+      </div>
       <SearchedFlightInfo
         {...flight_depart_info}
         nums_eco_book={eco_tickets}
         nums_busi_book={busi_tickets}
       />
       {flight_return_info ? (
-        <h1 className="text-3xl font-bold text-center mt-7 mb-3">
-          Return Flight
-        </h1>
+        <div className="flex flex-row gap-[30px] items-center mr-[50px] justify-end mx-auto mb-[50px] mt-[20px] bg-gradient-to-l from-blue-400 to-blue-10 w-max pl-[200px] transition-transform duration-500 ease-out transform hover:-translate-x-10">
+          <img
+            src="./airplane_icon_dark_blue.png"
+            alt=""
+            className="scale-[1.2] -scale-x-100"
+          />
+          <div className="text-[32px] font-medium">Return flight</div>
+        </div>
       ) : null}
       {flight_return_info ? (
         <SearchedFlightInfo
@@ -223,20 +233,16 @@ const Booking = () => {
           nums_busi_book={busi_tickets}
         />
       ) : null}
-      <div className="italic mx-10 my-10">
+      <div className="italic mx-[100px] my-10">
         <p className="text-sm">
-          Please fill in these feilds neccessary information for us. We commits
+          Please fill in these fields neccessary information for us. We commits
           in protecting your information and only use for the flight.
-        </p>
-        <p className="text-sm">
-          Feild marked with <span className="text-red-500">*</span> are
-          compulsory.
         </p>
       </div>
       <form onSubmit={handleSubmit}>
         {busi_tickets > 0 ? (
           <div className="px-10">
-            <h2 className="text-bold text-3xl">Business Tickets</h2>
+            <h2 className="font-bold text-3xl ml-[85px]">Business Tickets</h2>
             {Array.from({ length: busi_tickets }, (_, index) => (
               <div key={index} className="my-5">
                 <Ticket
@@ -252,8 +258,8 @@ const Booking = () => {
           </div>
         ) : null}
         {eco_tickets > 0 ? (
-          <div className="px-10">
-            <h2 className="text-bold text-3xl">Economy Tickets</h2>
+          <div className="px-10 mt-[100px]">
+            <h2 className="font-bold text-3xl ml-[85px]">Economy Tickets</h2>
             {Array.from({ length: eco_tickets }, (_, index) => (
               <div key={index} className="my-5">
                 <Ticket
@@ -303,8 +309,7 @@ const Booking = () => {
       </form>
       {confirm && (
         <div
-          className={`fixed inset-0 bg-slate-500 z-50 flex items-center justify-center transition-transform duration-500 ease-out transform bg-opacity-50
-          }`}
+          className={`fixed inset-0 bg-[#000000] z-50 flex items-center justify-center transition-transform duration-500 ease-out transform bg-opacity-70 backdrop-blur-sm`}
         >
           <ConfirmBooking
             flight_depart_info={flight_depart_info}

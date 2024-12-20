@@ -25,22 +25,29 @@ const Ticket: React.FC<TicketProps> = ({
   console.log(clear);
 
   return (
-    <div className="flex flex-col p-6 bg-blue-100 rounded-lg shadow-md max-w-7xl mx-auto">
+    <div className="flex flex-col bg-blue-100 rounded-[20px] shadow-md max-w-7xl mx-auto border-t-[10px] border-l-[10px] border-[#223A60]">
       {/* Header */}
-      <div className="flex gap-4 items-center text-white font-semibold text-lg rounded-t-lg p-4">
-        <div className="bg-slate-700 text-center px-4 py-2 rounded-md">
+      <div className="flex items-center text-white font-semibold text-lg rounded-t-lg">
+        <div className="bg-[#223A60] text-center px-4 py-2 rounded-br-[20px]">
           Ticket {index}
         </div>
       </div>
 
       {/* Form */}
-      <fieldset className="flex flex-col gap-6 bg-blue-100 p-6 rounded-b-lg">
+      <fieldset className="flex flex-col gap-[10px] bg-blue-100 p-6 rounded-b-lg">
         {/* Row 1 */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {/* Date of Birth */}
           <div>
             <label className="block font-medium text-gray-700">
-              <span className="text-red-500">*</span> Date Of Birth
+              <div className="flex flex-row gap-[10px] items-center">
+                <img
+                  src="./calendar_icon_dark_blue.png"
+                  alt=""
+                  className="scale-[0.8]"
+                />
+                Date Of Birth
+              </div>
             </label>
             <input
               value={
@@ -61,7 +68,14 @@ const Ticket: React.FC<TicketProps> = ({
           {/* Name */}
           <div>
             <label className="block font-medium text-gray-700">
-              <span className="text-red-500">*</span> Name
+              <div className="flex flex-row gap-[10px] items-center">
+                <img
+                  src="./name_icon_dark_blue.png"
+                  alt=""
+                  className="scale-[0.8]"
+                />
+                Name
+              </div>
             </label>
             <input
               name="name"
@@ -80,7 +94,14 @@ const Ticket: React.FC<TicketProps> = ({
           {/* Nationality */}
           <div>
             <label className="block font-medium text-gray-700">
-              <span className="text-red-500">*</span> Nationality
+              <div className="flex flex-row gap-[10px] items-center">
+                <img
+                  src="./nationality_icon_dark_blue.png"
+                  alt=""
+                  className="scale-[0.8]"
+                />
+                Nationality
+              </div>
             </label>
             <input
               name="nationality"
@@ -102,7 +123,14 @@ const Ticket: React.FC<TicketProps> = ({
           {/* Phone Number */}
           <div>
             <label className="block font-medium text-gray-700">
-              <span className="text-red-500">*</span> Phone Number
+              <div className="flex flex-row gap-[10px] items-center">
+                <img
+                  src="./phone_icon_dark_blue.png"
+                  alt=""
+                  className="scale-[0.8]"
+                />
+                Phone number
+              </div>
             </label>
             <input
               name="phone"
@@ -120,7 +148,14 @@ const Ticket: React.FC<TicketProps> = ({
 
           {/* Email */}
           <div>
-            <label className="block font-medium text-gray-700">Email</label>
+            <div className="flex flex-row gap-[10px] items-center">
+              <img
+                src="./email_icon_dark_blue.png"
+                alt=""
+                className="scale-[0.8]"
+              />
+              Email
+            </div>
             <input
               name="email"
               type="email"
@@ -138,7 +173,14 @@ const Ticket: React.FC<TicketProps> = ({
           {/* Passport Number */}
           <div>
             <label className="block font-medium text-gray-700">
-              <span className="text-red-500">*</span> Passport Number
+              <div className="flex flex-row gap-[10px] items-center">
+                <img
+                  src="./passport_icon_dark_blue.png"
+                  alt=""
+                  className="scale-[0.8]"
+                />
+                Passport number
+              </div>
             </label>
             <input
               name="passport"
@@ -156,21 +198,27 @@ const Ticket: React.FC<TicketProps> = ({
         </div>
 
         {/* Clear Button */}
-        {change && (
-          <div className="text-center">
-            <button
-              type="button"
-              onClick={() => clear && clear(id as number)}
-              className="px-6 py-3 bg-slate-800 text-white font-medium rounded-lg shadow hover:bg-red-500 transition"
-            >
-              Clear
-            </button>
-          </div>
-        )}
+
         {/* Price */}
-        <div className="flex justify-between items-center">
-          <div className="text-lg font-semibold">Price:</div>
-          <div className="text-lg font-semibold">{data.price} VND</div>
+        <div className="flex flex-row justify-between items-center mt-[10px]">
+          {change && (
+            <div className="text-center">
+              <button
+                type="button"
+                onClick={() => clear && clear(id as number)}
+                className="px-[40px] py-[5px] bg-slate-800 text-white font-medium rounded-lg shadow hover:bg-red-500 transition"
+              >
+                Clear
+              </button>
+            </div>
+          )}
+
+          <div className="flex flex-row gap-[10px]">
+            <div className="text-lg font-semibold text-[#FF0000]">Price:</div>
+            <div className="text-lg font-semibold text-[#FF0000]">
+              {data.price} VND
+            </div>
+          </div>
         </div>
       </fieldset>
     </div>

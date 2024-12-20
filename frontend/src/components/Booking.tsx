@@ -78,7 +78,7 @@ const Booking: React.FC<BookingProps> = ({
 
   return (
     <div>
-      <div className="flex flex-col w-full shadow-lg rounded-[20px] scale-[0.8] hover:scale-[0.82] transform transition-transform duration-200">
+      <div className="flex flex-col w-full rounded-[20px] scale-[0.8] hover:scale-[0.82] transform transition-transform duration-200">
         {/* Booking date and Status */}
         <div
           className={`flex flex-col md:flex-row items-center rounded-tl-[20px] rounded-tr-[20px] gap-[20px] px-[28px] py-[28px] self-start w-auto text-[#FFFFFF] font-semibold text-[16px] ${
@@ -102,7 +102,7 @@ const Booking: React.FC<BookingProps> = ({
           </div>
         </div>
         <div
-          className={`flex flex-col w-full gap-[10px] px-[20px] md:px-[44px] py-[20px] rounded-bl-[20px] rounded-br-[20px] rounded-tr-[20px] ${
+          className={`flex flex-col border-b-[10px] border-[#223A60] w-full gap-[10px] px-[20px] md:px-[44px] py-[20px] rounded-bl-[20px] rounded-br-[20px] rounded-tr-[20px] ${
             status === "Up Coming" ? "bg-[#D8EBFE]" : "bg-[#D5D5D5]"
           }`}
         >

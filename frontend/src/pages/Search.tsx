@@ -226,7 +226,7 @@ const Search = () => {
           </div>
         )}
 
-        <section className="flex flex-col px-[30px] overflow-hidden flex-col w-full relative text-2xl tracking-widest max-md:px-5 max-md:max-w-full">
+        <section className="flex flex-col px-[30px] mb-[50px] overflow-hidden flex-col w-full relative text-2xl tracking-widest max-md:px-5 max-md:max-w-full">
           {(flights_list ?? []).length > 0 ? (
             flights_list?.map((flight: Flight, index: number) => (
               <div

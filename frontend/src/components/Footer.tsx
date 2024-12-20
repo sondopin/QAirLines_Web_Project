@@ -47,9 +47,8 @@ const Footer: React.FC = () => {
               className="object-contain aspect-[1.68] w-[84px]"
             />
             <p className="mt-5 opacity-75">
-              Hello, we are Lift Media. Our goal is to translate the positive
-              effects from revolutionizing how companies engage with their
-              clients & their team.
+              Hello, we are QAirline! Our goal is to construct a new height of
+              travel experience by providing exceptional service and comfort.
             </p>
           </div>
           <img
@@ -85,9 +84,8 @@ const Footer: React.FC = () => {
                 </form>
               </div>
               <p className="mt-5 text-xs font-medium opacity-75">
-                Hello, we are Lift Media. Our goal is to translate the positive
-                effects from revolutionizing how companies engage with their
-                clients & their team.
+                Hello, we are QAirline! Our goal is to construct a new height of
+                travel experience by providing exceptional service and comfort.
               </p>
             </div>
           </div>
