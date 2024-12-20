@@ -15,8 +15,6 @@ const Hero = ({ children, nums_booking_changed }: HeroProps) => {
     }
   };
 
-  console.log(nums_booking_changed);
-
   return (
     <section className="flex flex-col items-center justify-center overflow-hidden relative px-6 py-20 w-full bg-slate-10 min-h-[400px] max-md:px-5 max-md:text-center">
       {/* Background Image */}
