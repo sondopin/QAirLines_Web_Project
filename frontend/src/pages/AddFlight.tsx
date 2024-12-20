@@ -63,7 +63,7 @@ const validateError: errorProps = {
 
 const AddFlight: React.FC = () => {
   const navigate = useNavigate();
-  const { aircraft_id } = useQueryForm();
+  const { aircraft_id, airplane_number } = useQueryForm();
   const [suggestionAirports, setSuggestionAirports] =
     useState<SuggestionAirports>({
       departure_airport: [],
@@ -73,7 +73,7 @@ const AddFlight: React.FC = () => {
   const [error, setError] = useState<errorProps>(validateError);
   const [isLoading, setIsLoading] = useState(false);
   const { data: aircraft } = useQuery({
-    queryKey: ["flights", aircraft_id],
+    queryKey: ["aircraftId", aircraft_id],
     queryFn: () => getAirCraftById(aircraft_id),
   });
 
@@ -175,11 +175,26 @@ const AddFlight: React.FC = () => {
     try {
       await addFlight(aircraft_id, newFlight);
       setIsLoading(false);
-      navigate("/view-flight");
+      navigate("/view-flight", {
+        state: {
+          aircraftId: aircraft_id,
+          airplaneNumber: airplane_number,
+        },
+      });
     } catch (err) {
       console.log(err);
       setIsLoading(false);
     }
+  };
+
+  const getMinDate = () => {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, "0");
+    const day = String(now.getDate()).padStart(2, "0");
+    const hours = String(now.getHours()).padStart(2, "0");
+    const minutes = String(now.getMinutes()).padStart(2, "0");
+    return `${year}-${month}-${day}T${hours}:${minutes}`;
   };
 
   return (
@@ -269,6 +284,7 @@ const AddFlight: React.FC = () => {
                     </label>
                     <input
                       type="datetime-local"
+                      min={getMinDate()}
                       id="departure_date"
                       onChange={handleChangeProps("scheduled_departure")}
                       className="text-black text-base font-medium font-['DM Sans'] tracking-wide w-5 focus:outline-none"
@@ -374,6 +390,7 @@ const AddFlight: React.FC = () => {
                     <input
                       type="datetime-local"
                       id="arrival_date"
+                      min={getMinDate()}
                       onChange={handleChangeProps("scheduled_arrival")}
                       className="text-black text-base font-medium font-['DM Sans'] tracking-wide w-5 focus:outline-none"
                     />

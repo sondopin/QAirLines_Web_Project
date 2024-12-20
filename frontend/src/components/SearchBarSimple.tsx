@@ -197,6 +197,7 @@ export const SearchBarSimple: React.FC = () => {
                 <input
                   type="date"
                   value={searchForm.departure_time}
+                  min={new Date().toISOString().split("T")[0]}
                   onChange={handleChange("departure_time")}
                   className="w-full p-3 border rounded-md focus:ring-2 focus:ring-blue-500 h-[50px]"
                   required
@@ -252,6 +253,7 @@ export const SearchBarSimple: React.FC = () => {
                   <input
                     type="date"
                     value={searchForm.return_time}
+                    min={new Date().toISOString().split("T")[0]}
                     onChange={handleChange("return_time")}
                     className="w-full p-3 border rounded-md focus:ring-2 focus:ring-blue-500 h-[50px]"
                     required

@@ -47,6 +47,16 @@ const AdjustFlight: React.FC<AdjustFlightProps> = ({
     }
   };
 
+  const getMinDate = () => {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, "0");
+    const day = String(now.getDate()).padStart(2, "0");
+    const hours = String(now.getHours()).padStart(2, "0");
+    const minutes = String(now.getMinutes()).padStart(2, "0");
+    return `${year}-${month}-${day}T${hours}:${minutes}`;
+  };
+
   return (
     <div className="flex md:flex-row flex-col items-center justify-between bg-[#FBFF00] bg-opacity-[20%] rounded-[14px] gap-[10px] md:mx-[75px] mx-[25px] px-[30px] py-[20px] hover:scale-[1.03] transform transition-transform duration-200 shadow-lg">
       <div className="flex flex-col gap-[10px]">
@@ -62,6 +72,7 @@ const AdjustFlight: React.FC<AdjustFlightProps> = ({
             </div>
             <input
               type="datetime-local"
+              min={getMinDate()}
               value={schedule.actual_departure}
               onChange={handleChange("actual_departure")}
               className="bg-[#D9D9D9] bg-opacit-[50%] rounded-tr-[6px] rounded-br-[6px] px-[10px] py-[5px] text-[16px] md:w-full w-[50%]"
@@ -84,6 +95,7 @@ const AdjustFlight: React.FC<AdjustFlightProps> = ({
                 <input
                   type="datetime-local"
                   value={schedule.actual_arrival}
+                  min={getMinDate()}
                   onChange={handleChange("actual_arrival")}
                   className="bg-[#D9D9D9] bg-opacit-[50%] rounded-tr-[6px] rounded-br-[6px] px-[10px] py-[5px] text-[16px] md:w-full w-[50%]"
                 />

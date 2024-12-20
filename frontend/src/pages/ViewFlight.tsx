@@ -49,7 +49,10 @@ const ViewFlight: React.FC<ViewFlightProps> = () => {
         <div
           onClick={() => {
             navigate("/add-flight", {
-              state: { aircraft_id: aircraftId },
+              state: {
+                aircraft_id: aircraftId,
+                airplane_number: airplaneNumber,
+              },
             });
           }}
           className="flex h-[80%] flex-row gap-[20px] justify-center items-center ml-auto transform transition-transform duration-200 hover:scale-[1.05] bg-[#223A60] bg-opacity-75 text-white p-5 rounded-[20px] hover:bg-opacity-100"
