@@ -1,4 +1,5 @@
 import React from "react";
+import { formatCurrency } from "../utils/utils";
 
 interface PopularLocationCardProps {
   image: string;
@@ -34,7 +35,9 @@ const PopularLocationCard: React.FC<PopularLocationCardProps> = ({
       <div className="text-[14px] font-medium opacity-[50%]">{description}</div>
       <hr className="border-dashed border-t-2 border-gray-300 my-4" />
       <div className="flex flex-row">
-        <div className="text-[20px] font-bold self-start">{price} VND</div>
+        <div className="text-[20px] font-bold self-start">
+          {formatCurrency(price)}
+        </div>
         <div className="flex flex-row ml-auto">
           <img src="./location_icon.png" alt="icon" />
           <div className="text-[18px] font-medium whitespace-nowrap">

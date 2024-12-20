@@ -53,3 +53,12 @@ export interface Aircraft {
 }
 
 export type Aircrafts = Aircraft[];
+
+export interface PopularPlace {
+  city: string;
+  booked_seat: number;
+  cheapest_price: number;
+  country: string;
+}
+
+export type PopularPlaces = PopularPlace[];
