@@ -18,10 +18,22 @@ router.get("/me", verifyToken, userController.me);
  * @param {Response} res - The response object to send data back
  */
 
-router.put("/me", verifyToken, userController.update);
+router.get("/me", verifyToken, userController.me);
 
 router.put("/change-password", verifyToken, userController.changePassword);
 
 router.put("/update-profile", verifyToken, userController.update);
+
+router.get(
+  "/get-nums-booking-changed",
+  verifyToken,
+  userController.getNumsBookingChanged
+);
+
+router.put(
+  "/clear-nums-booking-changed",
+  verifyToken,
+  userController.clearNumsBookingChanged
+);
 
 export default router;
