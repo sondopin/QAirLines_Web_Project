@@ -143,7 +143,7 @@ export default function createRoutes() {
       path: PATH.search,
       element: (
         <Layout>
-          <SearchPage />
+          <SearchPage key={Date.now()} />
         </Layout>
       ),
     },
