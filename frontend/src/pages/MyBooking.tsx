@@ -32,7 +32,7 @@ const MyBooking: React.FC<MyBookingProps> = () => {
   };
   const airports = useGetAirports();
   const booking_list: Bookings = [];
-  const LIMIT_ITEMS = 5;
+  const LIMIT_ITEMS = 3;
   let total_page = 1;
   const [page, setPage] = React.useState(1);
   const [bookingOnPage, setBookingOnPage] = React.useState<Bookings>([]);

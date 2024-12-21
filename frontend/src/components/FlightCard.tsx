@@ -55,6 +55,10 @@ const FlightCard: React.FC<FlightCardProps> = ({
 
   const [isAdjust, setIsAdjust] = useState(false);
 
+  const handleClose = () => {
+    setIsAdjust(false);
+  };
+
   return (
     <div>
       <div className="flex flex-col rounded-[20px] scale-[0.9] hover:scale-[0.93] transform transition-transform duration-200">
@@ -158,6 +162,7 @@ const FlightCard: React.FC<FlightCardProps> = ({
           oldReturnDate={
             return_date ? return_time + " " + return_date : undefined
           }
+          handleClose={handleClose}
         />
       )}
     </div>

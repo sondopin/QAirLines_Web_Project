@@ -117,6 +117,16 @@ const Header = () => {
                 >
                   News
                 </NavLink>
+                <NavLink
+                  className={
+                    location.pathname === PATH.admin.chart
+                      ? "flex items-center text-white px-2 font-semibold border-b-2 border-white-500"
+                      : "flex items-center text-white px-2 font-semibold border-b-2 border-transparent"
+                  }
+                  to={PATH.admin.chart}
+                >
+                  Statistics
+                </NavLink>
               </>
             ) : null}
           </>

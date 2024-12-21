@@ -1,7 +1,7 @@
 import Ticket from "../components/Ticket";
 import { useQueryForm } from "../hooks/useQueryForm";
 import { Tickets } from "../types/flight.type";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SearchedFlightInfo from "../components/SearchedFlightInfo";
 import { makeBooking } from "../apis/flight.api";
 import ConfirmBooking from "./ConfirmBooking";
@@ -27,6 +27,10 @@ const Booking = () => {
   const [errors, setErrors] = useState<{
     [key: number]: { [key: string]: string };
   }>({});
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const [booking, setBooking] = useState<Tickets>(
     Array.from({ length: busi_tickets + eco_tickets }, (_, index) => ({

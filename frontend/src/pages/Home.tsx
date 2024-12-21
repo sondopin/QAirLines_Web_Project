@@ -60,7 +60,7 @@ const Home = () => {
         {popularPlaces.data.map((place: PopularPlace) => (
           <PopularLocationCard
             key={place.city}
-            image="./hanoi.png"
+            image={`./${place.city}.jpg`}
             location={place.city}
             price={place.cheapest_price}
             description=""

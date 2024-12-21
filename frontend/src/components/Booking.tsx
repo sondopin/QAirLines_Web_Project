@@ -64,6 +64,15 @@ const Booking: React.FC<BookingProps> = ({
     nums_eco_book: economyTickets,
     total_price: totalPrice,
   };
+
+  if (status === "Confirmed") {
+    if (new Date(departureTime).getTime() < new Date().getTime()) {
+      status = "Completed";
+    } else {
+      status = "Up Coming";
+    }
+  }
+
   const departureDate = formatDate(departureTime);
   departureTime = formatTime(departureTime);
   const arrivalDate = arrivalTime ? formatDate(arrivalTime) : undefined;
@@ -73,14 +82,6 @@ const Booking: React.FC<BookingProps> = ({
   bookingDate = formatDate(bookingDate);
 
   const navigate = useNavigate();
-
-  if (status === "Confirmed") {
-    if (new Date(departureTime).getTime() < new Date().getTime()) {
-      status = "Completed";
-    } else {
-      status = "Up Coming";
-    }
-  }
 
   return (
     <div>
