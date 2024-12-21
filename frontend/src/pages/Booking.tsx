@@ -207,6 +207,8 @@ const Booking = () => {
 
   return (
     <div>
+      {/* Render departure flights */}
+
       <div className="flex flex-row gap-[30px] items-center ml-[30px] mb-[10px] mt-[20px] bg-gradient-to-r from-blue-400 to-blue-10 w-max pr-[100px] transition-transform duration-500 ease-out transform hover:translate-x-10">
         <div className="text-[32px] font-medium">Departure flight</div>
         <img
@@ -220,6 +222,9 @@ const Booking = () => {
         nums_eco_book={eco_tickets}
         nums_busi_book={busi_tickets}
       />
+
+      {/* Render return flights */}
+
       {flight_return_info ? (
         <div className="flex flex-row gap-[30px] items-center mr-[30px] justify-end mx-auto mb-[50px] mt-[20px] bg-gradient-to-l from-blue-400 to-blue-10 w-max pl-[100px] transition-transform duration-500 ease-out transform hover:-translate-x-10">
           <img
@@ -237,13 +242,21 @@ const Booking = () => {
           nums_busi_book={busi_tickets}
         />
       ) : null}
+
+      {/* Reminder */}
+
       <div className="italic mx-[100px] my-10">
         <p className="text-sm">
           Please fill in these fields neccessary information for us. We commits
           in protecting your information and only use for the flight.
         </p>
       </div>
+
+      {/* Render all bookings */}
+
       <form onSubmit={handleSubmit}>
+        {/* Render business tickets */}
+
         {busi_tickets > 0 ? (
           <div className="px-10">
             <h2 className="font-bold text-3xl ml-[85px]">Business Tickets</h2>
@@ -261,6 +274,9 @@ const Booking = () => {
             ))}
           </div>
         ) : null}
+
+        {/* Render economy tickets */}
+
         {eco_tickets > 0 ? (
           <div className="px-10 mt-[100px]">
             <h2 className="font-bold text-3xl ml-[85px]">Economy Tickets</h2>
@@ -278,6 +294,8 @@ const Booking = () => {
             ))}
           </div>
         ) : null}
+
+        {/* Total price part */}
 
         <section className="flex overflow-hidden flex-col justify-center px-24 py-14 text-right text-black max-md:px-5">
           <div className="w-1/6 self-end mb-5 flex flex-col">
@@ -311,6 +329,9 @@ const Booking = () => {
           </button>
         </section>
       </form>
+
+      {/* Display confirm booking alert */}
+
       {confirm && (
         <div
           className={`fixed inset-0 bg-[#000000] z-50 flex items-center justify-center transition-transform duration-500 ease-out transform bg-opacity-70 backdrop-blur-sm`}
@@ -324,6 +345,8 @@ const Booking = () => {
           />
         </div>
       )}
+
+      {/* Display */}
       {isLoading && <Loading />}
       {isSuccessful && (
         <Successful message="Suceessful" to_path={PATH.user.mybooking} />

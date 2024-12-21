@@ -4,19 +4,6 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import NewsAdmin from "../components/NewsAdmin";
 
-/**
- * The `NewsListAdmin` component renders a list of news articles for the admin interface.
- * It includes a header, a search input, a link to add a new news article, and a list of news articles.
- *
- * @component
- * @example
- * return (
- *   <NewsListAdmin />
- * )
- *
- * @returns {JSX.Element} The rendered component.
- */
-
 const NewsListAdmin: React.FC = () => {
   return (
     <div className="flex flex-col gap-12 p-4 md:p-8 lg:p-12">

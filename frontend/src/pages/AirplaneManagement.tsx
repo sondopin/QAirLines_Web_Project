@@ -22,6 +22,8 @@ const AirplaneManagement: React.FC = () => {
 
   return (
     <div className="flex flex-col bg-[#F6FBFF] rounded-[20px] my-5">
+      {/* Background */}
+
       <div className="fixed inset-0 -z-10 h-screen">
         <video
           src="./cloud_animation_2.mp4"
@@ -31,12 +33,14 @@ const AirplaneManagement: React.FC = () => {
           className="w-full h-full object-cover"
         ></video>
       </div>
+
       <div className="relative flex justify-center ">
         <img
           src="./airplane_background.png"
           className="rounded-[20px]"
           alt="Background"
         />
+
         <div
           onClick={() => {
             navigate("/add-airplane");
@@ -47,6 +51,9 @@ const AirplaneManagement: React.FC = () => {
           <div className="ml-2">Add new airplane</div>
         </div>
       </div>
+
+      {/* AirlaneCard container */}
+
       <div className=" relative top-[-70px] flex flex-col gap-[100px] items-center mt-[20px]">
         {aircraft_list.map((chunk, rowIndex) => (
           <div
@@ -55,7 +62,7 @@ const AirplaneManagement: React.FC = () => {
           >
             {chunk.map((aircraft) => (
               <AirplaneCard
-                key={aircraft._id} // Sử dụng _id làm key thay vì index
+                key={aircraft._id}
                 aircraftId={aircraft._id}
                 airplaneNumber={aircraft.code}
                 name={aircraft.name}
