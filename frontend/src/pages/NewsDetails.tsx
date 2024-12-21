@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { getBlogById } from "../apis/blogs.api";
@@ -11,6 +11,10 @@ const NewsDetails: React.FC = () => {
     queryKey: ["blog", param.id],
     queryFn: () => getBlogById(param.id as string),
   });
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const navigate = useNavigate();
 

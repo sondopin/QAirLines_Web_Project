@@ -4,7 +4,7 @@ import { get } from "http";
 
 const BlogController = {
   getAllBlogs: async (req: Request, res: Response) => {
-    const blogs = await Blog.find();
+    const blogs = await Blog.find().sort({ createdAt: -1 });
     res.json(blogs);
   },
 

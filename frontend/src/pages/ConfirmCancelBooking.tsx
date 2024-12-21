@@ -38,6 +38,19 @@ const ConfirmCancelBooking: React.FC = () => {
     }
   };
 
+  const eco_tickets_list = [];
+  const busi_tickets_list = [];
+
+  if (tickets?.data) {
+    for (let i = 0; i < busi_tickets; i++) {
+      busi_tickets_list.push(tickets.data[i]);
+    }
+
+    for (let i = busi_tickets; i < busi_tickets + eco_tickets; i++) {
+      eco_tickets_list.push(tickets.data[i]);
+    }
+  }
+
   return (
     <div className="flex flex-col gap-[83px] py-[43px] bg-[#F6FBFF]">
       <div className="sticky top-0">
@@ -56,20 +69,22 @@ const ConfirmCancelBooking: React.FC = () => {
         />
       </div>
       <div className="flex flex-col gap-[70px] px-[50px]">
-        {tickets?.data.map((ticket, id) => (
-          <Ticket key={id} data={ticket} index={id + 1} />
-        ))}
-
         {busi_tickets > 0 ? (
           <div className="px-10">
             <h2 className="text-bold text-3xl">Business Tickets</h2>
           </div>
         ) : null}
+        {busi_tickets_list.map((ticket, id) => (
+          <Ticket key={id} data={ticket} index={id + 1} />
+        ))}
         {eco_tickets > 0 ? (
           <div className="px-10">
             <h2 className="text-bold text-3xl">Economy Tickets</h2>
           </div>
         ) : null}
+        {eco_tickets_list.map((ticket, id) => (
+          <Ticket key={id} data={ticket} index={id + 1} />
+        ))}
       </div>
       <div className="flex flex-col gap-[33px] px-[94px] py-[56px] items-end">
         <div className="text-[40px]">Total Price</div>

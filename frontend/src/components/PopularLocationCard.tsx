@@ -30,7 +30,11 @@ const PopularLocationCard: React.FC<PopularLocationCardProps> = ({
 }) => {
   return (
     <div className="flex flex-col gap-[22px] rounded-[24px] shadow-lg bg-[#D8EBFE] w-full px-[18px] py-[18px] hover:scale-[1.05] transform transition-transform duration-200">
-      <img src={image} alt="Image" />
+      <img
+        src={image}
+        alt="Image"
+        className="w-[400px] h-[300px] object-cover"
+      />
       <div className="text-[20px] font-bold">{location}</div>
       <div className="text-[14px] font-medium opacity-[50%]">{description}</div>
       <hr className="border-dashed border-t-2 border-gray-300 my-4" />

@@ -8,6 +8,7 @@ interface AdjustFlightProps {
   oldReturnDate: string | undefined;
   flightId: string;
   aircraftId: string;
+  handleClose: () => void;
 }
 
 interface ScheduleChange {
@@ -20,6 +21,7 @@ const AdjustFlight: React.FC<AdjustFlightProps> = ({
   oldReturnDate,
   flightId,
   aircraftId,
+  handleClose,
 }) => {
   const [schedule, setSchedule] = useState<ScheduleChange>({
     actual_departure: undefined,
@@ -41,6 +43,7 @@ const AdjustFlight: React.FC<AdjustFlightProps> = ({
         queryKey: ["flights", aircraftId],
         exact: true,
       });
+      handleClose();
       console.log("Flight updated");
     } catch (error) {
       console.error(error);
