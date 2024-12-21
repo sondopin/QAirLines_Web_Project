@@ -10,7 +10,7 @@ const FinalConfirmCancel: React.FC<FinalConfirmCancelProps> = ({
   confirm,
 }) => {
   return (
-    <div className="flex flex-col gap-[17px] px-[23px] py-[36px] items-center justify-center border shadow-lg bg-[#D8EEFE] w-full">
+    <div className="flex flex-col gap-[17px] px-[23px] py-[36px] border-t-[10px] border-b-[10px] border-[#223A60] rounded-[20px] items-center justify-center border shadow-lg bg-[#D8EEFE] w-full">
       <div className="text-[#223A60] text-[40px] font-bold">
         Confirm Deletion
       </div>

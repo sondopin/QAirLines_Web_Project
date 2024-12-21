@@ -191,9 +191,9 @@ const Booking: React.FC<BookingProps> = ({
                     state: data,
                   })
                 }
-                className="self-end bg-red-500 text-white px-[20px] py-[10px] rounded-[6px] mt-[10px] md:mt-0 hover:scale-[1.05] transform transition-transform duration-200 shadow-lg"
+                className="self-end bg-[#223A60] text-white font-semibold px-[20px] py-[10px] rounded-[6px] mt-[10px] md:mt-0 hover:scale-[1.05] transform transition-transform duration-200 shadow-lg"
               >
-                Cancel
+                View details
               </button>
             </div>
           </div>

@@ -178,7 +178,7 @@ export const SearchBar: React.FC = () => {
         {/* Form Section */}
         <section className="w-full p-6 sm:p-8 bg-gray-100 bg-opacity-[80%] border-b-[10px] border-[#223A60] rounded-tr-[20px] rounded-bl-[20px] rounded-br-[20px] shadow-lg">
           <form className="flex flex-col gap-[15px]" onSubmit={handleSubmit}>
-            <div className="flex flex-row gap-[50px]">
+            <div className="flex flex-col md:flex-row gap-[50px]">
               <div className="flex flex-col gap-[15px] w-full">
                 {/* Departure Point */}
                 <div>

@@ -203,7 +203,7 @@ const Booking = () => {
 
   return (
     <div>
-      <div className="flex flex-row gap-[30px] items-center ml-[50px] mb-[10px] mt-[20px] bg-gradient-to-r from-blue-400 to-blue-10 w-max pr-[200px] transition-transform duration-500 ease-out transform hover:translate-x-10">
+      <div className="flex flex-row gap-[30px] items-center ml-[30px] mb-[10px] mt-[20px] bg-gradient-to-r from-blue-400 to-blue-10 w-max pr-[100px] transition-transform duration-500 ease-out transform hover:translate-x-10">
         <div className="text-[32px] font-medium">Departure flight</div>
         <img
           src="./airplane_icon_dark_blue.png"
@@ -217,7 +217,7 @@ const Booking = () => {
         nums_busi_book={busi_tickets}
       />
       {flight_return_info ? (
-        <div className="flex flex-row gap-[30px] items-center mr-[50px] justify-end mx-auto mb-[50px] mt-[20px] bg-gradient-to-l from-blue-400 to-blue-10 w-max pl-[200px] transition-transform duration-500 ease-out transform hover:-translate-x-10">
+        <div className="flex flex-row gap-[30px] items-center mr-[30px] justify-end mx-auto mb-[50px] mt-[20px] bg-gradient-to-l from-blue-400 to-blue-10 w-max pl-[100px] transition-transform duration-500 ease-out transform hover:-translate-x-10">
           <img
             src="./airplane_icon_dark_blue.png"
             alt=""

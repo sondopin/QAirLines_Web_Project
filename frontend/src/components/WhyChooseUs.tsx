@@ -21,7 +21,7 @@ export const WhyChooseUs = () => {
       );
 
   return (
-    <section className="flex gap-20 items-center my-[100px] w-[90%] mx-auto">
+    <section className="flex flex-col md:flex-row gap-20 items-center my-[100px] w-[90%] mx-auto">
       <img
         loading="lazy"
         src="https://cdn.builder.io/api/v1/image/assets/TEMP/9d2bca20508a599eebcf197f0bf74f3ce7bf36184819ff6b3af0a020dc4a2aff?placeholderIfAbsent=true&apiKey=cdf4ef6bf30f4b36bc29a527c8e3e010"

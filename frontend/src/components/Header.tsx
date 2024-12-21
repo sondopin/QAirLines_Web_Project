@@ -49,97 +49,93 @@ const Header = () => {
   ];
 
   return (
-    <div className="flex flex-row bg-black h-[60px] items-center justify-center px-[10px] py-[10px] bg-opacity-[30%]">
-      <div className="w-full mx-auto flex justify-between">
-        <span className="text-3xl text-white font-bold tracking-tight md:mx-auto self-start">
-          <NavLink to="/">
-            <img
-              src="./QAirline_Logo_White.png"
-              className="self-center w-[200px] h-full"
-            />
+    <div className="flex flex-col md:gap-[10px] gap-[10px] md:flex-row bg-black h-max items-center px-[10px] py-[10px] bg-opacity-[30%]">
+      <NavLink to="/">
+      <img src="./QAirline_Logo_White.png" className="w-[150px] h-full md:w-[200px] min-w-[150px]" />
+      </NavLink>
+
+      <div className="flex flex-col gap-[10px] mx-auto md:gap-[20px] md:flex-row">
+      <NavLink
+        className={
+        location.pathname === "/"
+          ? "flex items-center text-white px-2 font-semibold border-b-2 border-white-500"
+          : "flex items-center text-white px-2 font-semibold border-b-2 border-transparent"
+        }
+        to="/"
+      >
+        Home
+      </NavLink>
+      
+      {isAuthenticated && (
+        <>
+        {!isAdmin ? (
+          <NavLink
+          className={
+            location.pathname === PATH.user.mybooking
+            ? "flex items-center text-white px-2 font-semibold border-b-2 border-white-500"
+            : "flex items-center text-white px-2 font-semibold border-b-2 border-transparent"
+          }
+          to={PATH.user.mybooking}
+          >
+          My Bookings{" "}
+          {(user?.nums_booking_changed ?? 0) > 0 &&
+            `(${user?.nums_booking_changed} new)`}
           </NavLink>
-        </span>
-        <div className="md:flex hidden justify-center space-x-2 flex-grow">
+        ) : null}
+        {isAdmin ? (
+          <>
           <NavLink
             className={
-              location.pathname === "/"
-                ? "flex items-center text-white px-2 font-semibold border-b-2 border-white-500"
-                : "flex items-center text-white px-2 font-semibold border-b-2 border-transparent"
+            location.pathname === PATH.admin.manage
+              ? "flex items-center text-white px-2 font-semibold border-b-2 border-white-500"
+              : "flex items-center text-white px-2 font-semibold border-b-2 border-transparent"
             }
-            to="/"
+            to={PATH.admin.manage}
           >
-            Home
+            My Aircrafts
           </NavLink>
-          {isAuthenticated && (
-            <>
-              {!isAdmin ? (
-                <NavLink
-                  className={
-                    location.pathname === PATH.user.mybooking
-                      ? "flex items-center text-white px-2 font-semibold border-b-2 border-white-500"
-                      : "flex items-center text-white px-2 font-semibold border-b-2 border-transparent"
-                  }
-                  to={PATH.user.mybooking}
-                >
-                  My Bookings{" "}
-                  {(user?.nums_booking_changed ?? 0) > 0 &&
-                    `(${user?.nums_booking_changed} new)`}
-                </NavLink>
-              ) : null}
-              {isAdmin ? (
-                <>
-                  <NavLink
-                    className={
-                      location.pathname === PATH.admin.manage
-                        ? "flex items-center text-white px-2 font-semibold border-b-2 border-white-500"
-                        : "flex items-center text-white px-2 font-semibold border-b-2 border-transparent"
-                    }
-                    to={PATH.admin.manage}
-                  >
-                    My Aircrafts
-                  </NavLink>
-                  <NavLink
-                    className={
-                      location.pathname === PATH.admin.view_news
-                        ? "flex items-center text-white px-2 font-semibold border-b-2 border-white-500"
-                        : "flex items-center text-white px-2 font-semibold border-b-2 border-transparent"
-                    }
-                    to={PATH.admin.view_news}
-                  >
-                    News
-                  </NavLink>
-                </>
-              ) : null}
-            </>
-          )}
+          <NavLink
+            className={
+            location.pathname === PATH.admin.view_news
+              ? "flex items-center text-white px-2 font-semibold border-b-2 border-white-500"
+              : "flex items-center text-white px-2 font-semibold border-b-2 border-transparent"
+            }
+            to={PATH.admin.view_news}
+          >
+            News
+          </NavLink>
+          </>
+        ) : null}
+        </>
+      )}
+      </div>
+      <div className="flex space-x-2 w-[150px] md:space-x-4 md:w-[200px]">
+      {isAuthenticated ? (
+        <Dropdown menu={{ items: menuItems }}>
+        <div className="flex flex-row items-center">
+          <img
+          src="./image.png"
+          className="w-8 h-6 text-2xl cursor-pointer md:w-12 md:h-8 min-w-8"
+          />
+          <div className="text-white text-[16px] font-semibold">My Account</div>
         </div>
-        <div className="flex space-x-4 w-[200px]">
-          {isAuthenticated ? (
-            <Dropdown menu={{ items: menuItems }}>
-              <div className="flex items-center">
-                <img
-                  src="./image.png"
-                  className="w-12 h-8 text-2xl cursor-pointer"
-                />
-              </div>
-            </Dropdown>
-          ) : (
-            <Fragment>
-              <NavLink
-                to="/login"
-                className="text-[18px] font-bold text-white my-auto transition-transform duration-200 ease-in-out hover:scale-[1.2]"
-              >
-                Login
-              </NavLink>
-              <NavLink
-                to="/register"
-                className="text-[18px] font-bold text-white my-auto transition-transform duration-200 ease-in-out hover:scale-[1.2]"
-              >
-                Register
-              </NavLink>
-            </Fragment>
-          )}
-        </div>
+        </Dropdown>
+      ) : (
+        <Fragment>
+        <NavLink
+          to="/login"
+          className="text-[14px] font-bold text-white my-auto transition-transform duration-200 ease-in-out hover:scale-[1.2] md:text-[18px]"
+        >
+          Login
+        </NavLink>
+        <NavLink
+          to="/register"
+          className="text-[14px] font-bold text-white my-auto transition-transform duration-200 ease-in-out hover:scale-[1.2] md:text-[18px]"
+        >
+          Register
+        </NavLink>
+        </Fragment>
+      )}
       </div>
     </div>
   );

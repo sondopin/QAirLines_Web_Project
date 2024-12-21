@@ -26,7 +26,7 @@ const Hero = ({ children, nums_booking_changed }: HeroProps) => {
       />
 
       {/* Children (Flight Details) */}
-      <div className="flex flex-row w-full gap-[30px] px-[20px]">
+      <div className="flex flex-col md:flex-row w-full gap-[30px] px-[20px]">
         {/* Hero Content */}
         <div className="flex flex-col items-ce relative mb-16 text-center space-y-6 max-w-4xl px-[40px]">
           <h1 className="text-slate-700 text-5xl font-bold max-md:text-4xl text-left">
