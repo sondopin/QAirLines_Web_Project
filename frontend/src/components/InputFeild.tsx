@@ -36,7 +36,7 @@ const InputField: React.FC<InputFieldProps> = ({
         aria-label={placeholder}
         {...register(name)}
       />
-      {error ? <div>{error}</div> : null}
+      {error ? <div className="text-red-600">{error}</div> : null}
     </div>
   );
 };

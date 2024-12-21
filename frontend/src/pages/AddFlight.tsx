@@ -277,7 +277,7 @@ const AddFlight: React.FC = () => {
                   </div>
 
                   <div className="flex flex-row text-[16px] w-[100px] md:w-[136px] font-medium text-center justify-center items-center border-[0.5px] border-[#000000] border-opacity-[50%] rounded-tr-[6px] rounded-br-[6px]">
-                    {suggestionAirports.departure_airport[0]?.code.slice(0, -1)}
+                    {suggestionAirports.departure_airport[0]?.code}
                   </div>
                 </div>
                 <span className="text-red-500">{error.ori_place}</span>
@@ -344,7 +344,6 @@ const AddFlight: React.FC = () => {
                       ))}
                     </select>
                   </div>
-                  <div className="flex flex-row text-[16px] w-[100px] md:w-[136px] font-medium text-center justify-center items-center border-[0.5px] border-[#000000] border-opacity-[50%] rounded-tr-[6px] rounded-br-[6px]"></div>
                 </div>
                 <span className="text-red-500">{error.ori_airport}</span>
               </div>
@@ -380,10 +379,7 @@ const AddFlight: React.FC = () => {
                   </div>
 
                   <div className="flex flex-row text-[16px] w-[100px] md:w-[136px] font-medium text-center justify-center items-center border-[0.5px] border-[#000000] border-opacity-[50%] rounded-tr-[6px] rounded-br-[6px]">
-                    {suggestionAirports.destination_airport[0]?.code.slice(
-                      0,
-                      -1
-                    )}
+                    {suggestionAirports.destination_airport[0]?.code}
                   </div>
                 </div>
                 <span className="text-red-500">{error.des_place}</span>
@@ -448,7 +444,6 @@ const AddFlight: React.FC = () => {
                       ))}
                     </select>
                   </div>
-                  <div className="flex flex-row text-[16px] w-[100px] md:w-[136px] font-medium text-center justify-center items-center border-[0.5px] border-[#000000] border-opacity-[50%] rounded-tr-[6px] rounded-br-[6px]"></div>
                 </div>
                 <span className="text-red-500">{error.des_airport}</span>
               </div>

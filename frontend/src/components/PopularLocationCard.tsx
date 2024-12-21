@@ -33,7 +33,7 @@ const PopularLocationCard: React.FC<PopularLocationCardProps> = ({
       <img
         src={image}
         alt="Image"
-        className="w-[400px] h-[300px] object-cover"
+        className="md:w-[400px] md:h-[300px] object-cover"
       />
       <div className="text-[20px] font-bold">{location}</div>
       <div className="text-[14px] font-medium opacity-[50%]">{description}</div>
