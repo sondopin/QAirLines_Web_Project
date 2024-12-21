@@ -94,7 +94,7 @@ const flightController = {
       );
 
       const max_deadline = new Date(
-        flight.scheduled_departure.getTime() - 1 * 24 * 60 * 60 * 1000
+        flight.actual_departure.getTime() - 1 * 24 * 60 * 60 * 1000
       );
       if (cancellation_deadline > max_deadline) {
         cancellation_deadline = max_deadline;
