@@ -27,6 +27,8 @@ const Home = () => {
 
   return (
     <div className="scroll-smooth">
+      {/* Background */}
+
       <div className="fixed inset-0 -z-10 h-screen">
         <video
           src="./cloud_animation_2.mp4"
@@ -36,16 +38,20 @@ const Home = () => {
           className="w-full h-full object-cover"
         ></video>
       </div>
+
       <Hero nums_booking_changed={user?.nums_booking_changed || 0}>
         <SearchBar />
       </Hero>
+      
       <div className="relative top-[-20px] z-50 md:sticky">
         <SearchBarSimple />
       </div>
+
       <div className="flex flex-col mx-auto items-center justify-center">
         <div id="news"></div>
         <LatestNews />
       </div>
+      
       <div id="why-choose-us"></div>
       <WhyChooseUs />
 
