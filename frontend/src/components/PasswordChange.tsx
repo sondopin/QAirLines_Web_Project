@@ -1,23 +1,24 @@
-import { useForm } from "react-hook-form";
-import * as apiClient from "../apis/user.api";
+import { useForm } from "react-hook-form"; 
+import * as apiClient from "../apis/user.api"; 
 import { ChangePasswordParams } from "../types/user.type";
-import { Button } from "antd";
-import { useNavigate } from "react-router-dom";
+import { Button } from "antd"; 
+import { useNavigate } from "react-router-dom"; 
+
 
 const PasswordChange = () => {
-  const navigate = useNavigate();
+  const navigate = useNavigate(); 
 
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm<ChangePasswordParams>();
+  } = useForm<ChangePasswordParams>(); // Using useForm hook to manage form data and validation
 
   const onSubmit = async (data: ChangePasswordParams) => {
     try {
-      await apiClient.changePassword(data);
-      navigate("/");
+      await apiClient.changePassword(data); 
+      navigate("/"); 
     } catch (error: any) {
       console.error(error);
     }
@@ -37,6 +38,7 @@ const PasswordChange = () => {
         </p>
       </div>
       <div className="border-t border-gray-200">
+        {/* Current Password Input */}
         <div className="flex flex-row px-4 py-4 sm:px-6">
           <label className="text-gray-700 text-sm font-bold min-w-36 mt-1">
             Current Password
@@ -46,20 +48,22 @@ const PasswordChange = () => {
               className="border border-mint rounded w-full py-1 px-2 font-normal"
               type="password"
               {...register("currentPassword", {
-                required: "This field is required",
+                required: "This field is required", // Validation message if field is empty
                 minLength: {
                   value: 6,
-                  message: "Password must be at least 6 characters",
+                  message: "Password must be at least 6 characters", 
                 },
               })}
             />
             {errors.currentPassword && (
               <span className="text-red-500 font-normal mt-1">
-                {errors.currentPassword.message}
+                {errors.currentPassword.message} 
               </span>
             )}
           </div>
         </div>
+
+        {/* New Password Input */}
         <div className="flex flex-row px-4 py-4 sm:px-6">
           <label className="text-gray-700 text-sm font-bold min-w-36 mt-1">
             New Password
@@ -69,20 +73,22 @@ const PasswordChange = () => {
               type="password"
               className="border border-mint rounded w-full py-1 px-2 font-normal"
               {...register("newPassword", {
-                required: "This field is required",
+                required: "This field is required", // Validation message if field is empty
                 minLength: {
                   value: 6,
-                  message: "Password must be at least 6 characters",
+                  message: "Password must be at least 6 characters", 
                 },
               })}
             />
             {errors.newPassword && (
               <span className="text-red-500 font-normal mt-1">
-                {errors.newPassword.message}
+                {errors.newPassword.message} 
               </span>
             )}
           </div>
         </div>
+
+        {/* Confirm Password Input */}
         <div className="flex flex-row px-4 py-4 sm:px-6">
           <label className="text-gray-700 text-sm font-bold min-w-36 mt-1">
             Confirm Password
@@ -92,24 +98,26 @@ const PasswordChange = () => {
               type="password"
               className="border border-mint rounded w-full py-1 px-2 font-normal"
               {...register("confirmNewPassword", {
-                required: "This field is required",
+                required: "This field is required", // Validation message if field is empty
                 validate: (value) =>
                   value === watch("newPassword") ||
-                  "The passwords do not match",
+                  "The passwords do not match", // Validation to ensure passwords match
               })}
             />
             {errors.confirmNewPassword && (
               <span className="text-red-500 font-normal mt-1">
-                {errors.confirmNewPassword.message}
+                {errors.confirmNewPassword.message} 
               </span>
             )}
           </div>
         </div>
+
+        {/* Submit Button */}
         <div className="flex justify-end px-4 py-3 bg-gray-50 text-right sm:px-6">
           <Button
             type="primary"
             className="bg-mint text-black font-semibold"
-            onClick={handleSubmit(onSubmit)}
+            onClick={handleSubmit(onSubmit)} 
           >
             Save
           </Button>

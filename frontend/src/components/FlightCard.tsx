@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { formatDate, formatTime } from "../utils/utils";
 import AdjustFlight from "./AdjustFlight";
 
+// Define the props for the FlightCard component
 interface FlightCardProps {
   aircraftId: string;
   flightId: string;
@@ -17,23 +18,6 @@ interface FlightCardProps {
   totalSeats: number;
 }
 
-/**
- * FlightCard component displays detailed information about a flight.
- *
- * @component
- * @param {FlightCardProps} props - The properties for the FlightCard component.
- * @param {string} props.flightNumber - The flight number.
- * @param {string} props.status - The status of the flight (e.g., "Up Coming").
- * @param {string} props.departureCityCode - The IATA code of the departure city.
- * @param {string} props.destinationCityCode - The IATA code of the destination city.
- * @param {string} props.departureCityName - The name of the departure city.
- * @param {string} props.destinationCityName - The name of the destination city.
- * @param {string} props.departureDate - The departure date of the flight.
- * @param {string} props.returnDate - The return date of the flight.
- * @param {number} props.passengers - The number of passengers.
- * @returns {JSX.Element} The rendered FlightCard component.
- */
-
 const FlightCard: React.FC<FlightCardProps> = ({
   aircraftId,
   flightId,
@@ -48,13 +32,16 @@ const FlightCard: React.FC<FlightCardProps> = ({
   passengers,
   totalSeats,
 }) => {
+  // Format the departure and return dates
   const departure_date = formatDate(departureDate);
   const depature_time = formatTime(departureDate);
   const return_date = returnDate ? formatDate(returnDate) : undefined;
   const return_time = returnDate ? formatTime(returnDate) : undefined;
 
+  // State to toggle the visibility of the adjust flight modal
   const [isAdjust, setIsAdjust] = useState(false);
 
+  // Handle closing the adjust flight modal
   const handleClose = () => {
     setIsAdjust(false);
   };
@@ -69,11 +56,11 @@ const FlightCard: React.FC<FlightCardProps> = ({
           }`}
         >
           <div className="bg-[#223A60] rounded-[6px] text-center px-[17px] py-[5px] hover:scale-[1.05] transform transition-transform duration-200">
-            {flightNumber}
+            {flightNumber} 
           </div>
           <div className="text-[#000000] scale-[1.2] opacity-[60%]">|</div>
           <div className="bg-[#223A60] rounded-[6px] text-center px-[17px] py-[5px] hover:scale-[1.05] transform transition-transform duration-200">
-            {status}
+            {status} 
           </div>
         </div>
         {/* Flight Info */}
@@ -85,21 +72,17 @@ const FlightCard: React.FC<FlightCardProps> = ({
           {/* Place */}
           <div className="flex flex-col md:flex-row gap-auto w-full justify-center items-center max-w-[500px]">
             <div className="flex flex-col w-full items-center">
-              <div className="font-bold text-[32px]">{departureCityCode}</div>
-              <div className="font-semibold text-[20px]">
-                {departureCityName}
-              </div>
+              <div className="font-bold text-[32px]">{departureCityCode}</div> 
+              <div className="font-semibold text-[20px]">{departureCityName}</div> 
             </div>
             <img
               src="./arrow_switch_horizontal.png"
-              alt=""
+              alt="arrow"
               className="w-[40px] h-[24px] my-[10px] md:my-0"
             />
             <div className="flex flex-col w-full items-center">
-              <div className="font-bold text-[32px]">{destinationCityCode}</div>
-              <div className="font-semibold text-[20px]">
-                {destinationCityName}
-              </div>
+              <div className="font-bold text-[32px]">{destinationCityCode}</div> 
+              <div className="font-semibold text-[20px]">{destinationCityName}</div> 
             </div>
           </div>
           <img
@@ -132,7 +115,7 @@ const FlightCard: React.FC<FlightCardProps> = ({
               className="w-[24px] py-[24px]"
             />
             <div className="text-[16px]">
-              {passengers} / {totalSeats} passengers
+              {passengers} / {totalSeats} passengers 
             </div>
           </div>
           <img
@@ -140,20 +123,21 @@ const FlightCard: React.FC<FlightCardProps> = ({
             alt="Line"
             className="hidden md:block scale-[0.8]"
           />
+          {/* Adjust button */}
           <button
             onClick={() => setIsAdjust(!isAdjust)}
             disabled={status === "Completed"}
-            className={
-              `bg-[#223A60] rounded-[14px] p-2 text-[#FFFFFF] text-[16px] font-medium w-full md:w-[170px] h-[40px] self-center  transform transition-transform duration-200` +
-              (status === "Completed"
+            className={`bg-[#223A60] rounded-[14px] p-2 text-[#FFFFFF] text-[16px] font-medium w-full md:w-[170px] h-[40px] self-center transform transition-transform duration-200${
+              status === "Completed"
                 ? " cursor-not-allowed "
-                : "hover:bg-[#5681C6] hover:scale-[1.05]")
-            }
+                : "hover:bg-[#5681C6] hover:scale-[1.05]"
+            }`}
           >
-            Adjust
+            Adjust 
           </button>
         </div>
       </div>
+      {/* AdjustFlight modal */}
       {isAdjust && (
         <AdjustFlight
           aircraftId={aircraftId}

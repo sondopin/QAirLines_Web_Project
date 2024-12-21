@@ -7,25 +7,6 @@ interface RichTextEditorProps {
   change: (content: string) => void;
 }
 
-/**
- * RichTextEditor component using ReactQuill for rich text editing.
- *
- * @component
- * @param {RichTextEditorProps} props - The props for the RichTextEditor component.
- * @param {string} [props.initalValue] - The initial value for the editor.
- *
- * @returns {JSX.Element} The rendered RichTextEditor component.
- *
- * @example
- * <RichTextEditor initalValue="Hello, world!" />
- *
- * @remarks
- * This component uses ReactQuill for rich text editing. The editor's value is managed
- * using a state hook, and changes to the editor's content are handled by the `handleChange` function.
- * The toolbar includes options for font, bold, italic, underline, color, background, script, alignment,
- * blockquote, code block, lists, size, header, indent, direction, link, image, video, and cleaning the editor.
- */
-
 const RichTextEditor: React.FC<RichTextEditorProps> = ({
   initalValue,
   change,
