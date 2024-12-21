@@ -164,8 +164,15 @@ const EditNews: React.FC = () => {
             initalValue={news.content}
             change={handleContentChange}
           />
+          <div className="flex md:justify-end justify-center mt-5">
+            <button
+              className="bg-blue-300 w-[200px] md:max-w-[200px] py-3 px-2 rounded-[20px] hover:bg-blue-400"
+              onClick={(e) => handleClick(e)}
+            >
+              {isEditMode ? "Save Blog" : "Upload Blog"}
+            </button>
+          </div>
         </div>
-        <button onClick={(e) => handleClick(e)}>Save</button>
       </div>
     </>
   );
