@@ -77,9 +77,20 @@ const Hero = ({ children, nums_booking_changed }: HeroProps) => {
                 alt="News"
                 className="w-[50px] h-[50px] rounded-full shadow-lg opacity-[70%] hover:opacity-100"
               />
-              <div className="text-[#223A60] text-[16px] font-bold">
+              <div className="text-[#223A60] text-[16px] font-bold flex gap-3">
                 Check your bookings{" "}
-                {nums_booking_changed > 0 && `(${nums_booking_changed} new)`}
+                {nums_booking_changed > 0 && (
+                  <div className="relative top-1">
+                    <img
+                      src="noti.gif"
+                      alt="noti"
+                      className="w-[20px] h-[20px]"
+                    />
+                    <div className="text-sm text-white absolute px-1 top-[-10px] left-[12px] bg-[#de3f3f] rounded-[20px]">
+                      {nums_booking_changed}
+                    </div>
+                  </div>
+                )}
               </div>
             </Link>
 
