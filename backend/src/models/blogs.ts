@@ -7,6 +7,7 @@ const blogSchema = new mongoose.Schema<BlogType>({
   title: { type: String },
   cover_url: { type: String },
   subtitle: { type: String },
+  createdAt: { type: Date, default: Date.now },
 });
 
 const Blog = mongoose.model<BlogType>("Blog", blogSchema);

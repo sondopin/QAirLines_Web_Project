@@ -90,4 +90,5 @@ export type BlogType = {
   title: string;
   cover_url: string;
   subtitle: string;
+  createdAt: Date;
 };

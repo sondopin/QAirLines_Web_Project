@@ -146,7 +146,10 @@ const myAircraftController = {
   getFlights: async (req: Request, res: Response) => {
     try {
       const { aircraft_id } = req.params;
-      const flights = await Flight.find({ aircraft_id });
+      // Sort by actual departure date
+      const flights = await Flight.find({ aircraft_id }).sort({
+        actual_departure: 1,
+      });
       res.status(200).json(flights);
     } catch (error) {
       console.error(error);
