@@ -8,6 +8,6 @@ export default function AdminRoute() {
   return isAdmin && isAuthenticated ? (
     <Outlet />
   ) : (
-    <Error message="You are not admin" />
+    <Error message="You can't reach the page because you are not admin" />
   );
 }

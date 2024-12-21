@@ -55,9 +55,6 @@ const LatestNews = () => {
     queryFn: getLatestBlogs,
   });
 
-  const handleNext = () => sliderRef.current?.slickNext(); // Xử lý khi nhấn nút Next
-  const handlePrev = () => sliderRef.current?.slickPrev(); // Xử lý khi nhấn nút Previous
-
   return (
     <div className="flex flex-col bg-[#EAF0F0] bg-opacity-[20%] w-2/3 mt-[50px] rounded-[20px] px-[60px] py-[30px] border-t-[5px] border-b-[5px] border-blue-200 shadow-inner shadow-lg">
       <div className="md:max-w-[148</div>0px] md:px-0">

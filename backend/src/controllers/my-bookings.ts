@@ -15,14 +15,18 @@ const myBookingController = {
       const { user_id } = req;
       const result = [];
 
-      const bookings = await Booking.find({ user_id });
+      const bookings = await Booking.find({ user_id }).sort({
+        booking_date: -1,
+      });
       if (!bookings) {
         res.status(404).json({ message: "No bookings found for this user" });
         return;
       }
 
       for (let i = 0; i < bookings.length; i++) {
-        const flight = await Flight.findById(bookings[i].flight_id);
+        const flight = await Flight.findById(bookings[i].flight_id).sort({
+          actual_departure: -1,
+        });
         result.push({ booking: bookings[i], flight });
       }
 

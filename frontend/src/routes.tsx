@@ -70,7 +70,7 @@ export default function createRoutes() {
           path: PATH.admin.view_flight,
           element: (
             <Layout>
-              <ViewFlight flightNumber="Hekko" />
+              <ViewFlight />
             </Layout>
           ),
         },

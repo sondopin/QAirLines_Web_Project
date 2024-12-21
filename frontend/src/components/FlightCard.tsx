@@ -14,6 +14,7 @@ interface FlightCardProps {
   departureDate: Date;
   returnDate: Date;
   passengers: number;
+  totalSeats: number;
 }
 
 /**
@@ -45,6 +46,7 @@ const FlightCard: React.FC<FlightCardProps> = ({
   departureDate,
   returnDate,
   passengers,
+  totalSeats,
 }) => {
   const departure_date = formatDate(departureDate);
   const depature_time = formatTime(departureDate);
@@ -125,7 +127,9 @@ const FlightCard: React.FC<FlightCardProps> = ({
               alt="Passenger Icon"
               className="w-[24px] py-[24px]"
             />
-            <div className="text-[16px]">{passengers} passengers</div>
+            <div className="text-[16px]">
+              {passengers} / {totalSeats} passengers
+            </div>
           </div>
           <img
             src="./verticle_line.png"

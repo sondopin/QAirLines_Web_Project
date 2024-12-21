@@ -16,6 +16,10 @@ type SortType = {
 
 const Search = () => {
   const { search_query, isReturn, flight_depart_info } = useQueryForm() || {};
+  const result_search = document.getElementById("search_result");
+  if (result_search) {
+    result_search.scrollIntoView({ behavior: "smooth" });
+  }
   const navigate = useNavigate();
 
   const [sort, setSort] = useState<SortType>({});
@@ -139,7 +143,10 @@ const Search = () => {
         "Country/Region", please check the currency carefully before paying.
       </section>
       {/* End note */}
-      <h1 className="pt-10 text-5xl font-bold text-center text-black tracking-[3.12px] max-md:max-w-full max-md:text-4xl mb-10">
+      <h1
+        id="search_result"
+        className="pt-10 text-5xl font-bold text-center text-black tracking-[3.12px] max-md:max-w-full max-md:text-4xl mb-10"
+      >
         <span className="leading-[61px]">
           {isReturn ? "Return" : "Departure"} flights from{" "}
         </span>
@@ -226,7 +233,7 @@ const Search = () => {
           </div>
         )}
 
-        <section className="flex flex-col px-[30px] mb-[50px] overflow-hidden flex-col w-full relative text-2xl tracking-widest max-md:px-5 max-md:max-w-full">
+        <section className="flex px-[30px] mb-[50px] overflow-hidden flex-col w-full relative text-2xl tracking-widest max-md:px-5 max-md:max-w-full">
           {(flights_list ?? []).length > 0 ? (
             flights_list?.map((flight: Flight, index: number) => (
               <div
