@@ -2,17 +2,13 @@ import React, { useEffect } from "react";
 import FlightCard from "../components/FlightCard";
 import { useQueryForm } from "../hooks/useQueryForm";
 import { useQuery } from "@tanstack/react-query";
-import { getAllFlights } from "../apis/admin.api";
+import { getAirCraftById, getAllFlights } from "../apis/admin.api";
 import { Flight } from "../types/flight.type";
 import { useGetAirports } from "../hooks/useGetAirports";
 import { useNavigate } from "react-router-dom";
 import { Pagination } from "../components/Pagination";
 
-interface ViewFlightProps {
-  flightNumber: string;
-}
-
-const ViewFlight: React.FC<ViewFlightProps> = () => {
+const ViewFlight: React.FC = () => {
   const LIMIT_ITEMS = 5;
   let total_page = 1;
   const { aircraftId, airplaneNumber } = useQueryForm();
@@ -24,6 +20,12 @@ const ViewFlight: React.FC<ViewFlightProps> = () => {
     queryKey: ["flights", aircraftId],
     queryFn: () => getAllFlights({ aircraft_id: aircraftId }),
   });
+
+  const { data: aircraft_infor } = useQuery({
+    queryKey: ["aircraft_infor", aircraftId],
+    queryFn: () => getAirCraftById(aircraftId),
+  });
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -124,8 +126,10 @@ const ViewFlight: React.FC<ViewFlightProps> = () => {
               departureDate={flight.actual_departure}
               returnDate={flight.actual_arrival}
               passengers={
-                flight.nums_busi_seat_avail + flight.nums_eco_seat_avail
+                aircraft_infor?.data.nums_seat -
+                (flight.nums_busi_seat_avail + flight.nums_eco_seat_avail)
               }
+              totalSeats={aircraft_infor?.data.nums_seat}
             />
           );
         })}

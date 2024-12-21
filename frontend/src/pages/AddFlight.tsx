@@ -115,12 +115,18 @@ const AddFlight: React.FC = () => {
   const handleChangeProps =
     (name: keyof AddFlightProps) =>
     (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+      setError((prev) => ({ ...prev, [name]: "" }));
       setNewFlight((prev) => ({ ...prev, [name]: e.target.value }));
     };
 
   const handleChangeSuggestions =
     (name: keyof SuggestionAirports) =>
     (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+      if (name == "departure_airport") {
+        setError((prev) => ({ ...prev, ori_place: "" }));
+      } else {
+        setError((prev) => ({ ...prev, des_place: "" }));
+      }
       setSuggestionAirports((prev) => ({
         ...prev,
         [name]: airports_group_city[e.target.value] || [],
@@ -173,6 +179,16 @@ const AddFlight: React.FC = () => {
     if (handleError()) return;
     setIsLoading(true);
     try {
+      if (newFlight.nums_busi_seat_avail > aircraft?.data.nums_seat * 0.25) {
+        newFlight.nums_busi_seat_avail = Math.floor(
+          aircraft?.data.nums_seat * 0.25
+        );
+      }
+      if (newFlight.nums_eco_seat_avail > aircraft?.data.nums_seat * 0.75) {
+        newFlight.nums_eco_seat_avail = Math.ceil(
+          aircraft?.data.nums_seat * 0.75
+        );
+      }
       await addFlight(aircraft_id, newFlight);
       setIsLoading(false);
       navigate("/view-flight", {
@@ -261,7 +277,7 @@ const AddFlight: React.FC = () => {
                   </div>
 
                   <div className="flex flex-row text-[16px] w-[100px] md:w-[136px] font-medium text-center justify-center items-center border-[0.5px] border-[#000000] border-opacity-[50%] rounded-tr-[6px] rounded-br-[6px]">
-                    {/* {suggestionAirports?.length} */}
+                    {suggestionAirports.departure_airport[0]?.code.slice(0, -1)}
                   </div>
                 </div>
                 <span className="text-red-500">{error.ori_place}</span>
@@ -293,7 +309,7 @@ const AddFlight: React.FC = () => {
                   <input
                     type="text"
                     placeholder={departure_time}
-                    className="flex flex-row text-[16px] w-[100px] md:w-[136px] font-medium text-center justify-center items-center border-[0.5px] border-[#000000] border-opacity-[50%] rounded-tr-[6px] rounded-br-[6px]"
+                    className="flex flex-row text-[16px] w-[100px] font-medium text-center justify-center items-center border-[0.5px] border-[#000000] border-opacity-[50%] rounded-tr-[6px] rounded-br-[6px]"
                     maxLength={8}
                   />
                 </div>
@@ -328,9 +344,7 @@ const AddFlight: React.FC = () => {
                       ))}
                     </select>
                   </div>
-                  <div className="flex flex-row text-[16px] w-[100px] md:w-[136px] font-medium text-center justify-center items-center border-[0.5px] border-[#000000] border-opacity-[50%] rounded-tr-[6px] rounded-br-[6px]">
-                    {/* {suggestionAirports?.length} */}
-                  </div>
+                  <div className="flex flex-row text-[16px] w-[100px] md:w-[136px] font-medium text-center justify-center items-center border-[0.5px] border-[#000000] border-opacity-[50%] rounded-tr-[6px] rounded-br-[6px]"></div>
                 </div>
                 <span className="text-red-500">{error.ori_airport}</span>
               </div>
@@ -366,7 +380,10 @@ const AddFlight: React.FC = () => {
                   </div>
 
                   <div className="flex flex-row text-[16px] w-[100px] md:w-[136px] font-medium text-center justify-center items-center border-[0.5px] border-[#000000] border-opacity-[50%] rounded-tr-[6px] rounded-br-[6px]">
-                    SGN
+                    {suggestionAirports.destination_airport[0]?.code.slice(
+                      0,
+                      -1
+                    )}
                   </div>
                 </div>
                 <span className="text-red-500">{error.des_place}</span>
@@ -398,7 +415,7 @@ const AddFlight: React.FC = () => {
                   <input
                     type="text"
                     placeholder={arrival_time}
-                    className="flex flex-row text-[16px] w-[100px] md:w-[136px] font-medium text-center justify-center items-center border-[0.5px] border-[#000000] border-opacity-[50%] rounded-tr-[6px] rounded-br-[6px]"
+                    className="flex flex-row text-[16px] w-[100px] font-medium text-center justify-center items-center border-[0.5px] border-[#000000] border-opacity-[50%] rounded-tr-[6px] rounded-br-[6px]"
                     maxLength={8}
                   />
                 </div>
@@ -431,6 +448,7 @@ const AddFlight: React.FC = () => {
                       ))}
                     </select>
                   </div>
+                  <div className="flex flex-row text-[16px] w-[100px] md:w-[136px] font-medium text-center justify-center items-center border-[0.5px] border-[#000000] border-opacity-[50%] rounded-tr-[6px] rounded-br-[6px]"></div>
                 </div>
                 <span className="text-red-500">{error.des_airport}</span>
               </div>
@@ -454,9 +472,7 @@ const AddFlight: React.FC = () => {
                     <img src="./price_icon_black.png" alt="Location icon" />
                     <input
                       type="text"
-                      disabled
-                      value={newFlight.base_price * 1.5}
-                      placeholder="2,500,000"
+                      placeholder="450,000"
                       className="text-black text-base font-medium font-['DM Sans'] tracking-wide w-full focus:outline-none"
                     />
                   </div>
@@ -465,6 +481,7 @@ const AddFlight: React.FC = () => {
                     VND
                   </div>
                 </div>
+                <span className="text-red-500">{error.base_price}</span>
               </div>
 
               {/* Economy Ticket Price field */}
@@ -479,7 +496,7 @@ const AddFlight: React.FC = () => {
                     <input
                       type="number"
                       onChange={handleChangeProps("base_price")}
-                      placeholder="1,200,000"
+                      placeholder="300,000"
                       className="text-black text-base font-medium font-['DM Sans'] tracking-wide w-full focus:outline-none"
                     />
                   </div>
@@ -495,7 +512,7 @@ const AddFlight: React.FC = () => {
 
               <div className="flex flex-col gap-[10px] w-full">
                 <div className="text-black text-lg font-medium font-['DM Sans'] tracking-wide w-full">
-                  Airplane
+                  Flight
                 </div>
                 <div className="flex flex-row w-full bg-[#FFFFFF] rounded-[6px]">
                   <div className="flex flex-row gap-[10px] px-[10px] py-[10px] w-full border-[0.5px] border-[#000000] border-opacity-[50%] rounded-[6px]">
@@ -525,8 +542,12 @@ const AddFlight: React.FC = () => {
                     <div className="text-[16px] font-medium">Business:</div>
                     <input
                       type="number"
-                      max={Math.floor(aircraft?.data.nums_seat * 0.25)}
-                      value={newFlight.nums_busi_seat_avail}
+                      value={
+                        newFlight.nums_busi_seat_avail >
+                        Math.floor(aircraft?.data.nums_seat * 0.25)
+                          ? Math.floor(aircraft?.data.nums_seat * 0.25)
+                          : newFlight.nums_busi_seat_avail
+                      }
                       min={0}
                       onChange={handleChangeProps("nums_busi_seat_avail")}
                       className="bg-[#FFFFFF] rounded-[6px] w-[65px] border-[#000000] border-[0.5px] border-opacity-[50%] pl-[10px] font-medium"
@@ -539,9 +560,13 @@ const AddFlight: React.FC = () => {
                     <div className="text-[16px] font-medium">Economy:</div>
                     <input
                       type="number"
-                      value={newFlight.nums_eco_seat_avail}
+                      value={
+                        (newFlight.nums_eco_seat_avail ?? 0) >
+                        Math.ceil(aircraft?.data.nums_seat * 0.75)
+                          ? Math.ceil(aircraft?.data.nums_seat * 0.75)
+                          : newFlight.nums_eco_seat_avail
+                      }
                       min={0}
-                      max={Math.ceil(aircraft?.data.nums_seat * 0.75)}
                       onChange={handleChangeProps("nums_eco_seat_avail")}
                       className="bg-[#FFFFFF] rounded-[6px] w-[65px] border-[#000000] border-[0.5px] border-opacity-[50%] pl-[10px] font-medium"
                     />
