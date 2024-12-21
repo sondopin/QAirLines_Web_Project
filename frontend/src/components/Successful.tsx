@@ -8,7 +8,7 @@ const Successful = ({
   message: string;
   to_path: string;
 }) => {
-  const [countdown, setCountdown] = useState(5);
+  const [countdown, setCountdown] = useState(3);
   const navigate = useNavigate();
 
   useEffect(() => {
