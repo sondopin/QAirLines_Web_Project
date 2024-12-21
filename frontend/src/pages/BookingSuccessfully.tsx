@@ -6,28 +6,6 @@ interface BookingSuccessfullyProps {
   backgroundDestination: string;
 }
 
-/**
- * BookingSuccessfully component displays a success message after a booking is completed
- * and redirects the user to the booking list page after a short delay.
- *
- * @component
- * @param {BookingSuccessfullyProps} props - The properties passed to the component.
- * @param {string} props.backgrouDeparture - The URL of the background image for the departure location.
- * @param {string} props.backgroundDestination - The URL of the background image for the destination location.
- *
- * @returns {JSX.Element} The rendered BookingSuccessfully component.
- *
- * @example
- * <BookingSuccessfully
- *   backgrouDeparture="path/to/departure.jpg"
- *   backgroundDestination="path/to/destination.jpg"
- * />
- *
- * @remarks
- * This component uses the `useNavigate` hook from `react-router-dom` to navigate to the booking list page
- * after a 2-second delay. It also applies various Tailwind CSS classes for styling and animations.
- */
-
 const BookingSuccessfully: React.FC<BookingSuccessfullyProps> = ({
   backgrouDeparture,
   backgroundDestination,

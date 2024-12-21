@@ -8,26 +8,6 @@ import Loading from "../components/Loading";
 import { BlogCard } from "../types/blogs.type";
 import { Pagination } from "../components/Pagination";
 
-/**
- * The `NewsList` component renders a list of news articles with a search input.
- *
- * @component
- * @example
- * return (
- *   <NewsList />
- * )
- *
- * @returns {JSX.Element} A React component that displays a list of news articles.
- *
- * @remarks
- * This component uses Tailwind CSS for styling and includes a `Header` and `Footer` component.
- * The search input is sticky and remains at the top of the page while scrolling.
- *
- * @see {@link Header} for the header component.
- * @see {@link Footer} for the footer component.
- * @see {@link News} for the individual news article component.
- */
-
 const NewsList: React.FC = () => {
   const LIMIT_ITEMS = 5;
   let total_page = 1;

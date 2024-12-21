@@ -13,25 +13,6 @@ interface WaitForBookingProps {
   backgroundDestination: string;
 }
 
-/**
- * Component that displays a waiting screen for booking confirmation.
- * It shows departure and destination city names, dates, number of tickets, airplane type, and price.
- * It also includes a loading animation and navigates to the booking success page after a delay.
- *
- * @component
- * @param {Object} props - Component props
- * @param {string} props.departureCityName - Name of the departure city
- * @param {string} props.destinationCityName - Name of the destination city
- * @param {string} props.departureDate - Departure date (Tue, 22/11/2024, 10:30 AM)
- * @param {string} props.returnDate - Return date (Sat, 25/12/2024, 08:15 PM)
- * @param {number[]} props.numberOfTickets - Array containing the number of business and economy tickets
- * @param {string} props.airplain - Type of airplane (QAxx Operated by QAirline)
- * @param {string} props.price - Price of the tickets
- * @param {string} props.backgrouDeparture - URL of the background image for the departure city
- * @param {string} props.backgroundDestination - URL of the background image for the destination city
- * @returns {JSX.Element} The rendered component
- */
-
 const WaitForBooking: React.FC<WaitForBookingProps> = ({
   departureCityName,
   destinationCityName,

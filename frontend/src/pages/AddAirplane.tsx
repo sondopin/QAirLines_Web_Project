@@ -37,6 +37,34 @@ const validateError: errorProps = {
   manufactured_year: "",
 };
 
+/**
+ * Page for adding a new airplane.
+ *
+ * @returns {JSX.Element} The rendered component.
+ *
+ * @typedef {Object} AirPlaneProps
+ * @property {string} name - The name of the airplane.
+ * @property {string} code - The code of the airplane.
+ * @property {string} model - The model of the airplane.
+ * @property {number} nums_seat - The number of seats in the airplane.
+ * @property {string} manufacturer - The manufacturer of the airplane.
+ * @property {number} manufactured_year - The year the airplane was manufactured.
+ *
+ * @function handleChange
+ * @description Handles input changes for the airplane form fields.
+ * @param {keyof AirPlaneProps} name - The name of the field being changed.
+ * @returns {function} A function that takes an event and updates the airplane state.
+ *
+ * @function validate
+ * @description Validates the airplane form fields.
+ * @returns {boolean} True if there are validation errors, otherwise false.
+ *
+ * @function handleSubmit
+ * @description Handles the form submission for adding a new airplane.
+ * @param {React.FormEvent<HTMLFormElement>} e - The form submission event.
+ * @returns {Promise<void>} A promise that resolves when the form submission is complete.
+ */
+
 const AddAirplane: React.FC = () => {
   const [airplane, setAirplane] = useState<AirPlaneProps>(initalValue);
   const [error, setError] = useState<errorProps>(validateError);
@@ -96,6 +124,7 @@ const AddAirplane: React.FC = () => {
       setError(errorData);
     }
   };
+
   return (
     <>
       {isLoading && <Loading />}
@@ -130,6 +159,7 @@ const AddAirplane: React.FC = () => {
           >
             <div className="flex flex-col md:flex-row w-full md:gap-[50px] gap-[20px]">
               {/* Left Part */}
+
               <div className="flex flex-col gap-[20px] w-full">
                 <div className="flex flex-col">
                   <label
@@ -188,7 +218,9 @@ const AddAirplane: React.FC = () => {
                   )}
                 </div>
               </div>
+
               {/* Right Part */}
+
               <div className="flex flex-col gap-[20px] w-full">
                 <div className="flex flex-col">
                   <label
