@@ -1,19 +1,20 @@
 import React, { useState } from "react";
 import "react-datepicker/dist/react-datepicker.css";
-import { updateFlight } from "../apis/admin.api";
-import { useQueryClient } from "@tanstack/react-query";
+import { updateFlight } from "../apis/admin.api"; 
+import { useQueryClient } from "@tanstack/react-query"; 
 
 interface AdjustFlightProps {
-  oldDepartureDate: string;
-  oldReturnDate: string | undefined;
-  flightId: string;
-  aircraftId: string;
-  handleClose: () => void;
+  oldDepartureDate: string; // Old departure date to be displayed
+  oldReturnDate: string | undefined; // Old return date to be displayed (optional)
+  flightId: string; // Flight ID to update
+  aircraftId: string; // Aircraft ID to update related flights
+  handleClose: () => void; // Function to close the modal or component
 }
 
+// Define the type for the schedule change data
 interface ScheduleChange {
-  actual_departure: undefined | string;
-  actual_arrival: undefined | string;
+  actual_departure: undefined | string; // Actual departure date to be updated
+  actual_arrival: undefined | string; // Actual arrival date to be updated (optional)
 }
 
 const AdjustFlight: React.FC<AdjustFlightProps> = ({
@@ -23,6 +24,7 @@ const AdjustFlight: React.FC<AdjustFlightProps> = ({
   aircraftId,
   handleClose,
 }) => {
+  // State to manage the schedule change (departure and arrival dates)
   const [schedule, setSchedule] = useState<ScheduleChange>({
     actual_departure: undefined,
     actual_arrival: undefined,
@@ -30,26 +32,30 @@ const AdjustFlight: React.FC<AdjustFlightProps> = ({
 
   const queryClient = useQueryClient();
 
+  // Handler for updating the schedule state
   const handleChange =
     (name: keyof ScheduleChange) =>
     (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
       setSchedule((prev) => ({ ...prev, [name]: e.target.value }));
     };
 
+  // Handle confirming the flight update
   const handleConfirm = async () => {
     try {
       await updateFlight(flightId, aircraftId, schedule);
+      // Invalidate the related queries to fetch updated data
       queryClient.invalidateQueries({
         queryKey: ["flights", aircraftId],
         exact: true,
       });
-      handleClose();
+      handleClose(); // Close the modal or component after successful update
       console.log("Flight updated");
     } catch (error) {
       console.error(error);
     }
   };
 
+  // Function to return the minimum date and time for the input fields (current date and time)
   const getMinDate = () => {
     const now = new Date();
     const year = now.getFullYear();
@@ -63,11 +69,14 @@ const AdjustFlight: React.FC<AdjustFlightProps> = ({
   return (
     <div className="flex md:flex-row flex-col items-center justify-between bg-[#FBFF00] bg-opacity-[20%] rounded-[14px] gap-[10px] md:mx-[75px] mx-[25px] px-[30px] py-[20px] hover:scale-[1.03] transform transition-transform duration-200 shadow-lg">
       <div className="flex flex-col gap-[10px]">
-        <div className="flex  md:flex-row flex-col gap-[10px]">
+        {/*Old departure date */}
+        <div className="flex md:flex-row flex-col gap-[10px]">
           <div className="text-[16px] font-semibold">Departure Date:</div>
           <div className="italic text-[16px]">{oldDepartureDate}</div>
         </div>
-        <div className="flex  md:flex-row flex-col gap-[20px]">
+
+        {/* Input change the departure date */}
+        <div className="flex md:flex-row flex-col gap-[20px]">
           <div className="text-[16px] font-semibold">Change to:</div>
           <div className="flex flex-row">
             <div className="bg-[#D9D9D9] bg-opacit-[50%] rounded-tl-[6px] rounded-bl-[6px] px-[10px] py-[5px]">
@@ -75,21 +84,22 @@ const AdjustFlight: React.FC<AdjustFlightProps> = ({
             </div>
             <input
               type="datetime-local"
-              min={getMinDate()}
+              min={getMinDate()} // Set the minimum date to the current date and time
               value={schedule.actual_departure}
-              onChange={handleChange("actual_departure")}
+              onChange={handleChange("actual_departure")} 
               className="bg-[#D9D9D9] bg-opacit-[50%] rounded-tr-[6px] rounded-br-[6px] px-[10px] py-[5px] text-[16px] md:w-full w-[50%]"
             />
           </div>
         </div>
 
+        {/* Arrival date section if it exists */}
         {oldReturnDate && (
           <>
             <div className="flex md:flex-row flex-col gap-[10px]">
               <div className="text-[16px] font-semibold">Arrival Date:</div>
               <div className="italic text-[16px]">{oldReturnDate}</div>
             </div>
-            <div className="flex  md:flex-row flex-col gap-[20px]">
+            <div className="flex md:flex-row flex-col gap-[20px]">
               <div className="text-[16px] font-semibold">Change to:</div>
               <div className="flex flex-row items-center">
                 <div className="bg-[#D9D9D9] bg-opacit-[50%] rounded-tl-[6px] rounded-bl-[6px] px-[10px] py-[5px]">
@@ -98,7 +108,7 @@ const AdjustFlight: React.FC<AdjustFlightProps> = ({
                 <input
                   type="datetime-local"
                   value={schedule.actual_arrival}
-                  min={getMinDate()}
+                  min={getMinDate()} // Set the minimum date to the current date and time
                   onChange={handleChange("actual_arrival")}
                   className="bg-[#D9D9D9] bg-opacit-[50%] rounded-tr-[6px] rounded-br-[6px] px-[10px] py-[5px] text-[16px] md:w-full w-[50%]"
                 />
@@ -107,9 +117,12 @@ const AdjustFlight: React.FC<AdjustFlightProps> = ({
           </>
         )}
       </div>
+
       <img src="./QAirline_Logo.png" alt="Logo" className="self-center" />
+
+      {/* Confirm button */}
       <div
-        onClick={handleConfirm}
+        onClick={handleConfirm} 
         className=" cursor-pointer flex flex-row gap-[10px] items-center bg-red-500 rounded-[20px] px-2 hover:bg-red-600"
       >
         <img

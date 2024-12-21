@@ -9,30 +9,6 @@ import {
 import AdjustedFlightNotification from "./AdjustedFlightNotification";
 import { BookingProps } from "../types/flight.type";
 
-/**
- * Booking component displays the details of a booking including the booking date, status,
- * departure and destination information, travel dates, ticket information, and total price.
- * It also provides an option to cancel the booking if it is within the allowed cancellation period.
- *
- * @component
- * @param {Object} props - The properties object.
- * @param {string} props.bookingDate - The date when the booking was made (dd/mm/yyy).
- * @param {string} props.status - The current status of the booking ("Up Coming", "Completed", "Cancelled").
- * @param {string} props.departureCityCode - The code of the departure city.
- * @param {string} props.destinationCityCode - The code of the destination city.
- * @param {string} props.departureCityName - The name of the departure city.
- * @param {string} props.destinationCityName - The name of the destination city.
- * @param {string} props.departureDate - The date of departure (date, dd/mm/yyy).
- * @param {string} props.departureTime - The time of departure (Time format 12 hours. Ex. "08:15 AM").
- * @param {string} props.arrivalDate - The date of arrival (date, dd/mm/yyy).
- * @param {string} props.arrivalTime - The time of arrival (Time format 12 hours. Ex. "08:15 AM").
- * @param {number} props.businessTickets - The number of business class tickets booked.
- * @param {number} props.economyTickets - The number of economy class tickets booked.
- * @param {number} props.totalPrice - The total price of the booking in VND.
- * @param {string} props.cancelAvailableUntil - The date until which the booking can be canceled.
- * @arrivals {JSX.Element} The Booking component.
- */
-
 const Booking: React.FC<BookingProps> = ({
   bookingId,
   flightId,
@@ -65,6 +41,7 @@ const Booking: React.FC<BookingProps> = ({
     total_price: totalPrice,
   };
 
+  // Update the booking status based on the current date and departure time.
   if (status === "Confirmed") {
     if (new Date(departureTime).getTime() < new Date().getTime()) {
       status = "Completed";
@@ -73,11 +50,13 @@ const Booking: React.FC<BookingProps> = ({
     }
   }
 
+  // Format the date and time fields for display.
   const departureDate = formatDate(departureTime);
   departureTime = formatTime(departureTime);
   const arrivalDate = arrivalTime ? formatDate(arrivalTime) : undefined;
   arrivalTime = arrivalTime ? formatTime(arrivalTime) : undefined;
 
+  // Format the cancellation date and booking date.
   cancelAvailableUntil = formatDate(cancelAvailableUntil);
   bookingDate = formatDate(bookingDate);
 
@@ -125,7 +104,7 @@ const Booking: React.FC<BookingProps> = ({
               </div>
               <img
                 src="./arrow_switch_horizontal.png"
-                alt=""
+                alt="Arrow"
                 className="w-[40px] h-[24px]"
               />
               <div className="flex flex-col w-full items-center">
@@ -200,6 +179,7 @@ const Booking: React.FC<BookingProps> = ({
           </div>
         </div>
       </div>
+      {/* Notification if the flight is delayed */}
       {status === "Delayed" && (
         <AdjustedFlightNotification
           oldDepartureDate={formatDateTime(departureTimeOld)}
@@ -214,4 +194,5 @@ const Booking: React.FC<BookingProps> = ({
     </div>
   );
 };
+
 export default Booking;

@@ -4,36 +4,42 @@ import * as apiClient from "../apis/user.api";
 import { UserProfileFormData } from "../types/user.type";
 import { Button } from "antd";
 
+
 const InformationChange = () => {
 
+  // useForm hook to handle form submission, validation, and setting form values
   const {
     register,
     handleSubmit,
     setValue,
     formState: { errors },
   } = useForm<UserProfileFormData>();
+
   const [isEditing, setIsEditing] = useState(false);
 
+  // useEffect to fetch current user details when the component mounts
   useEffect(() => {
     const fetchUser = async () => {
       try {
         const user = await apiClient.fetchCurrentUser();
         setValue("fullname", user.fullname);
-        setValue("email", user.email);
+        setValue("email", user.email); 
       } catch (error) {
         console.error("Failed to fetch user:", error);
       }
     };
 
     fetchUser();
-  }, [setValue]);
+  }, [setValue]); 
 
+  // Handle form submission to update user profile
   const onSubmit = async (data: UserProfileFormData) => {
     try {
+      // Send updated user data to the server
       await apiClient.updateUserProfile(data);
-      setIsEditing(false);
+      setIsEditing(false); // Exit edit mode after successful update
     } catch (error) {
-        console.error("Failed to update user profile:", error);
+      console.error("Failed to update user profile:", error);
     }
   };
 
@@ -62,7 +68,7 @@ const InformationChange = () => {
             }`}
             type="text"
             {...register("fullname", {
-              required: "This field is required",
+              required: "This field is required", // Validation for required field
             })}
             disabled={!isEditing}
           />
@@ -72,7 +78,7 @@ const InformationChange = () => {
             style={{ fontSize: "14px" }}
             className="text-red-500 font-normal"
           >
-            {errors.fullname.message}
+            {errors.fullname.message} 
           </span>
         )}
         <div className="flex flex-row items-center px-4 py-4 sm:px-6">
@@ -83,9 +89,9 @@ const InformationChange = () => {
             className="bg-white rounded w-full py-1 px-2 font-normal"
             type="text"
             {...register("email", {
-              required: "This field is required",
+              required: "This field is required", // Validation for required field
             })}
-            disabled
+            disabled 
           />
         </div>
         {errors.email && (
@@ -93,7 +99,7 @@ const InformationChange = () => {
             style={{ fontSize: "14px" }}
             className="text-red-500 font-normal"
           >
-            {errors.email.message}
+            {errors.email.message} 
           </span>
         )}
         <div className="flex justify-between px-4 py-3 bg-gray-50 text-right sm:px-6">
@@ -102,14 +108,14 @@ const InformationChange = () => {
               <Button
                 type="primary"
                 className="bg-mint text-black font-semibold"
-                onClick={() => setIsEditing(false)}
+                onClick={() => setIsEditing(false)} 
               >
                 Cancel
               </Button>
               <Button
                 type="primary"
                 className="bg-mint text-black font-semibold"
-                onClick={handleSubmit(onSubmit)}
+                onClick={handleSubmit(onSubmit)} 
               >
                 Save
               </Button>
@@ -118,7 +124,7 @@ const InformationChange = () => {
             <Button
               type="primary"
               className="bg-mint text-black font-semibold"
-              onClick={() => setIsEditing(true)}
+              onClick={() => setIsEditing(true)} 
             >
               Edit
             </Button>
@@ -128,4 +134,5 @@ const InformationChange = () => {
     </div>
   );
 };
+
 export default InformationChange;

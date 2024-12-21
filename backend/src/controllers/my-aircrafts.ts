@@ -1,9 +1,7 @@
 import Aircraft from "../models/aircraft";
 import { AircraftType } from "../models/types";
-import express, { Request, Response } from "express";
+import { Request, Response } from "express";
 import Flight from "../models/flight";
-import mongoose from "mongoose";
-import { FlightType } from "../models/types";
 import Seat from "../models/seat";
 import { SeatType } from "../models/types";
 import User from "../models/user";
@@ -27,6 +25,7 @@ const myAircraftController = {
       res.status(500).json({ message: (e as Error).message });
     }
   },
+
   getAircrafts: async (req: Request, res: Response) => {
     try {
       const aircrafts = await Aircraft.find({ user_id: req.user_id });
@@ -36,6 +35,7 @@ const myAircraftController = {
       res.status(500).json({ message: "Error fetching aircrafts" });
     }
   },
+
   getAircraftById: async (req: Request, res: Response) => {
     const aircraft_id = req.params.aircraft_id.toString();
     try {
@@ -48,6 +48,7 @@ const myAircraftController = {
       res.status(500).json({ message: "Error fetching aircrafts" });
     }
   },
+
   updateAircraft: async (req: Request, res: Response) => {
     try {
       const { aircraft_id } = req.params;
@@ -78,6 +79,7 @@ const myAircraftController = {
       res.status(500).json({ message: "Something went wrong" });
     }
   },
+
   deleteAircraft: async (req: Request, res: Response) => {
     const aircraft_id = req.params.aircraft_id.toString();
     try {
@@ -96,6 +98,7 @@ const myAircraftController = {
       res.status(500).json({ message: "Error removing Aircraft" });
     }
   },
+
   addFlight: async (req: Request, res: Response) => {
     const aircraft_id = req.params.aircraft_id.toString();
     try {
@@ -143,19 +146,18 @@ const myAircraftController = {
       res.status(500).json({ message: (error as Error).message });
     }
   },
+
   getFlights: async (req: Request, res: Response) => {
     try {
       const { aircraft_id } = req.params;
-      // Sort by actual departure date
-      const flights = await Flight.find({ aircraft_id }).sort({
-        actual_departure: 1,
-      });
+      const flights = await Flight.find({ aircraft_id });
       res.status(200).json(flights);
     } catch (error) {
       console.error(error);
       res.status(500).json({ message: "Something went wrong" });
     }
   },
+
   updateFlight: async (req: Request, res: Response) => {
     try {
       const { aircraft_id, flight_id } = req.params;
@@ -300,16 +302,20 @@ const myAircraftController = {
 };
 
 async function updateAircraftSeats(aircraftId: string, seatChange: number) {
+  // Fetch all flights associated with the specified aircraft
   const flights = await Flight.find({ aircraft_id: aircraftId });
 
   for (const flight of flights) {
     const seatsToAdd: Partial<SeatType>[] = [];
     const currentSeatCount =
       flight.nums_busi_seat_avail + flight.nums_eco_seat_avail;
+    
+    // Calculate the number of new business and economy seats
     const numNewBusinessSeats = Math.floor(Math.abs(seatChange) * 0.25);
     const numNewEconomySeats = Math.abs(seatChange) - numNewBusinessSeats;
 
     if (seatChange > 0) {
+      // If seatChange is positive, add new seats
       for (let i = 0; i < numNewBusinessSeats; i++) {
         seatsToAdd.push({
           flight_id: flight._id,
@@ -328,10 +334,16 @@ async function updateAircraftSeats(aircraftId: string, seatChange: number) {
         });
       }
 
+      // Insert new seats into the database
       await Seat.insertMany(seatsToAdd);
+      
+      // Update the flight's available seat counts
       flight.nums_busi_seat_avail += numNewBusinessSeats;
       flight.nums_eco_seat_avail += numNewEconomySeats;
     } else {
+      // If seatChange is negative, remove available seats
+      
+      // Find available business seats to remove
       const businessSeatsToRemove = await Seat.find({
         flight_id: flight._id,
         seat_class: "Business",
@@ -340,6 +352,7 @@ async function updateAircraftSeats(aircraftId: string, seatChange: number) {
         .limit(numNewBusinessSeats)
         .select("_id");
 
+      // Find available economy seats to remove
       const economySeatsToRemove = await Seat.find({
         flight_id: flight._id,
         seat_class: "Economy",
@@ -348,14 +361,19 @@ async function updateAircraftSeats(aircraftId: string, seatChange: number) {
         .limit(numNewEconomySeats)
         .select("_id");
 
+      // Combine seat IDs to remove
       const seatsToRemove = [...businessSeatsToRemove, ...economySeatsToRemove];
       const seatIdsToRemove = seatsToRemove.map((seat) => seat._id);
 
+      // Remove the identified seats from the database
       await Seat.deleteMany({ _id: { $in: seatIdsToRemove } });
+      
+      // Update the flight's available seat counts
       flight.nums_busi_seat_avail -= businessSeatsToRemove.length;
       flight.nums_eco_seat_avail -= economySeatsToRemove.length;
     }
 
+    // Save the updated flight details
     await flight.save();
   }
 }

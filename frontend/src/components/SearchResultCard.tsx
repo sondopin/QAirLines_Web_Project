@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router-dom";
 import { formatTime, getTimeDifference } from "../utils/utils";
 interface SearchResultCardProps {
   _id: string;

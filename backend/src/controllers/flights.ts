@@ -4,10 +4,7 @@ import Flight from "../models/flight";
 import Seat from "../models/seat";
 import Booking from "../models/booking";
 import Ticket from "../models/ticket";
-import User from "../models/user";
-import { SeatType } from "../models/types";
 import Airport from "../models/airport";
-import { log } from "console";
 
 const flightController = {
   searchFlights: async (req: Request, res: Response) => {
@@ -17,6 +14,7 @@ const flightController = {
 
       const departureTime = new Date(departure_time);
 
+      // Find flights that match the search criteria (availability of seats)
       const flights = await Flight.find({
         ori_airport,
         des_airport,
@@ -29,6 +27,7 @@ const flightController = {
         return;
       }
 
+      // Filter flights based on departure date
       const flights_result = flights.filter((flight) => {
         return flight.actual_departure.getDate() == departureTime.getDate();
       });
@@ -51,17 +50,20 @@ const flightController = {
       } = req.body;
       const user_id = req.user_id;
 
+      // Find the flight by ID
       const flight = await Flight.findById(flight_id);
       if (!flight) {
         res.status(404).json({ message: "Flight not found" });
         return;
       }
 
+      // Check for discount code and apply a discount if applicable
       let discount = 1;
       if (discount_code === "QAirLine is the best") {
         discount = 0.9;
       }
 
+      // Find available business class seats
       let businessSeats: any = [];
       if (busi_tickets != 0) {
         businessSeats = await Seat.find({
@@ -71,6 +73,7 @@ const flightController = {
         }).limit(busi_tickets);
       }
 
+      // Find available economy class seats
       let economySeats: any = [];
       if (eco_tickets != 0) {
         economySeats = await Seat.find({
@@ -80,6 +83,7 @@ const flightController = {
         }).limit(eco_tickets);
       }
 
+      // Check if the requested number of seats is available
       if (
         businessSeats.length < busi_tickets ||
         economySeats.length < eco_tickets
@@ -88,11 +92,13 @@ const flightController = {
         return;
       }
 
+      // Calculate the booking cancellation deadline (5 days from booking date)
       const booking_date = new Date();
       let cancellation_deadline = new Date(
         booking_date.getTime() + 5 * 24 * 60 * 60 * 1000
       );
 
+      // Ensure cancellation deadline does not exceed the day before departure
       const max_deadline = new Date(
         flight.actual_departure.getTime() - 1 * 24 * 60 * 60 * 1000
       );
@@ -103,6 +109,7 @@ const flightController = {
       let total_amount = 0;
       let seatCounter = 0;
 
+      // Create a new booking entry
       const booking = new Booking({
         user_id,
         flight_id,
@@ -115,11 +122,13 @@ const flightController = {
         type,
       });
 
+      // Book each available business class seat
       for (const seat of businessSeats) {
         const price = flight.base_price * 1.5 * discount;
         seat.is_available = false;
         await seat.save();
 
+        // Create a ticket for the seat and link to the booking
         const passenger = tickets[seatCounter];
         const ticket = new Ticket({
           booking_id: booking._id,
@@ -133,6 +142,7 @@ const flightController = {
         seatCounter++;
       }
 
+       // Book each available economy class seat
       for (const seat of economySeats) {
         const price = flight.base_price * discount;
         seat.is_available = false;
@@ -155,15 +165,14 @@ const flightController = {
 
       await booking.save();
 
+      // Update flight revenue and seat availability
       flight.revenue = flight.revenue + booking.total_amount;
       flight.nums_busi_seat_avail -= busi_tickets;
       flight.nums_eco_seat_avail -= eco_tickets;
 
       await flight.save();
 
-      res
-        .status(201)
-        .json({ message: "Booking created successfully", booking });
+      res.status(201).json({ message: "Booking created successfully", booking });
     } catch (error) {
       res.status(500).json({ message: "Error creating booking" });
     }
@@ -188,6 +197,7 @@ const flightController = {
       const month_ago = date_1_month_ago.getMonth();
       const year_ago = date_1_month_ago.getFullYear();
 
+      // Create a map of airports and their corresponding cities
       const airports = await Airport.find();
       const airportMap = new Map(
         airports.map((airport) => [airport._id.toString(), airport.city])
@@ -201,6 +211,7 @@ const flightController = {
         );
       });
 
+      // Create a map of aircraft and their seating capacity
       const aircrafts = await Aircraft.find();
       const aircraftMap = new Map(
         aircrafts.map((aircraft) => [
@@ -209,6 +220,7 @@ const flightController = {
         ])
       );
 
+      // Calculate the number of booked seats for each destination city
       const placeWithBookedSeat = new Map<string, number>();
       for (const flight of flights) {
         const nums_seat = aircraftMap.get(flight.aircraft_id.toString()) || 0;
@@ -229,6 +241,7 @@ const flightController = {
         (a, b) => b[1] - a[1]
       );
 
+      // Find the cheapest price for each destination city
       const cheapestPriceforPlace = new Map<string, number>();
       for (const flight of flights) {
         const des_city = airportMap.get(flight.des_airport);
@@ -244,6 +257,7 @@ const flightController = {
         }
       }
 
+      // Create a list of popular places with the number of booked seats and the cheapest price
       const popularPlacesWithPrice = popularPlaces.map((place) => ({
         city: place[0],
         booked_seat: place[1],
@@ -251,7 +265,7 @@ const flightController = {
         country: airports.find((airport) => airport.city === place[0])?.country,
       }));
 
-      res.status(200).json(popularPlacesWithPrice.slice(0, 3));
+      res.status(200).json(popularPlacesWithPrice);
     } catch (error) {
       res.status(500).json({ message: "Error getting popular places" });
     }
