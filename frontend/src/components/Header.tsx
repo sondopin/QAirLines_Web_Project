@@ -16,7 +16,7 @@ const Header = () => {
     queryKey: ["nums_book_changed", isAuthenticated],
     queryFn: () => fetchCurrentUser(),
     enabled: isAuthenticated,
-    staleTime: 1000 * 30,
+    staleTime: 1000 * 15,
   });
 
   const menuItems = [

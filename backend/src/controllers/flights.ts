@@ -251,7 +251,7 @@ const flightController = {
         country: airports.find((airport) => airport.city === place[0])?.country,
       }));
 
-      res.status(200).json(popularPlacesWithPrice);
+      res.status(200).json(popularPlacesWithPrice.slice(0, 3));
     } catch (error) {
       res.status(500).json({ message: "Error getting popular places" });
     }

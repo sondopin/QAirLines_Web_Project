@@ -52,6 +52,14 @@ export default function createRoutes() {
             </Layout>
           ),
         },
+        {
+          path: PATH.user.userProfile,
+          element: (
+            <Layout>
+              <UserProfile />
+            </Layout>
+          ),
+        },
       ],
     },
     {
@@ -114,6 +122,14 @@ export default function createRoutes() {
             </Layout>
           ),
         },
+        {
+          path: PATH.admin.chart,
+          element: (
+            <Layout>
+              <Chart />
+            </Layout>
+          ),
+        },
       ],
     },
     {
@@ -152,22 +168,6 @@ export default function createRoutes() {
       element: (
         <Layout>
           <NewsDetails />
-        </Layout>
-      ),
-    },
-    {
-      path: PATH.admin.chart,
-      element: (
-        <Layout>
-          <Chart />
-        </Layout>
-      ),
-    },
-    {
-      path: PATH.user.userProfile,
-      element: (
-        <Layout>
-          <UserProfile />
         </Layout>
       ),
     },
