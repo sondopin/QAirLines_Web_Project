@@ -142,7 +142,7 @@ const flightController = {
         seatCounter++;
       }
 
-       // Book each available economy class seat
+      // Book each available economy class seat
       for (const seat of economySeats) {
         const price = flight.base_price * discount;
         seat.is_available = false;
@@ -172,7 +172,9 @@ const flightController = {
 
       await flight.save();
 
-      res.status(201).json({ message: "Booking created successfully", booking });
+      res
+        .status(201)
+        .json({ message: "Booking created successfully", booking });
     } catch (error) {
       res.status(500).json({ message: "Error creating booking" });
     }
@@ -265,7 +267,7 @@ const flightController = {
         country: airports.find((airport) => airport.city === place[0])?.country,
       }));
 
-      res.status(200).json(popularPlacesWithPrice);
+      res.status(200).json(popularPlacesWithPrice.slice(0, 3));
     } catch (error) {
       res.status(500).json({ message: "Error getting popular places" });
     }
